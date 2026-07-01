@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>❤️ Симулятор свиданий — от первого лица</title>
+    <title>Tantan — знакомства</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,526 +11,776 @@
             padding: 0;
         }
         body {
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: #1a1a28;
+            font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a12;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 6px;
         }
         #app {
-            max-width: 440px;
+            max-width: 390px;
             width: 100%;
-            background: #2b2b3c;
-            border-radius: 36px 36px 28px 28px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
-            padding: 18px 16px 22px;
+            height: 780px;
+            background: #111122;
+            border-radius: 36px;
+            padding: 10px 12px 12px;
             color: #f0eef7;
-            border: 1px solid #4a4a62;
-            position: relative;
-        }
-        .ad-banner {
-            background: #3d3d55;
-            border-radius: 20px;
-            padding: 8px 12px;
-            margin-bottom: 16px;
+            border: 1px solid #222244;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #b9b3d6;
-            border: 1px solid #5d5d7a;
-            box-shadow: inset 0 0 8px #1f1f2e;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
-        .ad-banner span {
-            background: #5a4b7a;
-            padding: 4px 12px;
-            border-radius: 40px;
-            color: #f0eafb;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 0 8px;
+            flex-shrink: 0;
+        }
+        .top-bar .time {
+            font-size: 13px;
             font-weight: 600;
+            color: #c8c0e0;
             letter-spacing: 0.3px;
         }
-        .ad-banner i {
-            font-style: normal;
-            background: #4f3f6b;
-            padding: 4px 8px;
-            border-radius: 30px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-        }
-        .header h1 {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f7a1c4, #d86b9a);
+        .top-bar .logo {
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b9d, #ff3b7a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
-        .step-indicator {
-            background: #3c3c54;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid #5a5a78;
-        }
-        .card {
-            background: #35354b;
-            border-radius: 28px;
-            padding: 18px 16px;
-            margin-bottom: 16px;
-            border: 1px solid #4e4e6b;
-            box-shadow: 0 6px 0 #1b1b26;
-        }
-        .flex-row {
+        .top-bar .icons {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
+            gap: 14px;
+            font-size: 16px;
+            color: #8880aa;
         }
-        img.avatar {
-            width: 90px;
-            height: 90px;
+        .top-bar .icons span {
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .top-bar .icons span:hover {
+            color: #d0c8f0;
+        }
+        .profile-card {
+            background: #1a1a36;
+            border-radius: 20px;
+            padding: 10px 10px 8px;
+            border: 1px solid #2a2a4e;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* СЦЕНА СВИДАНИЯ — КАРТИНКА НА ВСЁ ПРОСТРАНСТВО */
+        .date-scene {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid #2a2a4e;
+        }
+        .date-scene .scene-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+        .date-scene .scene-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px 10px 8px;
+            background: rgba(8, 8, 20, 0.3);
+            backdrop-filter: blur(1px);
+        }
+        .date-scene .affection-container {
+            background: rgba(18, 18, 42, 0.8);
             border-radius: 40px;
-            object-fit: cover;
-            background: #555577;
-            border: 3px solid #b291c9;
-            box-shadow: 0 4px 0 #1b1b26;
+            padding: 2px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+            height: 22px;
+            border: 1px solid rgba(42, 42, 72, 0.6);
+            backdrop-filter: blur(4px);
+            margin-bottom: 4px;
         }
-        .persona-preview {
+        .date-scene .affection-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(26, 26, 54, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .date-scene .affection-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4d8a, #ff6b9d);
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+        .date-scene .affection-label {
+            font-weight: 600;
+            font-size: 10px;
+            min-width: 30px;
+            text-align: right;
+            color: #d0c8f0;
+        }
+
+        .date-scene .partner-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            margin-bottom: 3px;
+            background: rgba(8, 8, 20, 0.5);
+            padding: 4px 10px 4px 4px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .date-scene .partner-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff4d8a;
+        }
+        .date-scene .partner-info .pname {
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+        }
+        .date-scene .partner-info .pstatus {
+            font-size: 10px;
+            color: #b0a8d0;
+        }
+
+        .date-scene .profile-mini {
+            flex-shrink: 0;
+            margin: 2px 0 3px;
+            background: rgba(8, 8, 20, 0.5);
+            padding: 4px 10px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .date-scene .profile-mini .name-age {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .date-scene .profile-mini .name-age .age {
+            font-weight: 400;
+            color: #b0a8d0;
+            font-size: 14px;
+        }
+        .date-scene .profile-mini .tag {
+            font-size: 11px;
+            color: #c0b8d8;
+        }
+        .date-scene .profile-mini .badge {
+            font-size: 10px;
+            color: #ff9bb8;
+            background: rgba(255, 77, 138, 0.15);
+            padding: 1px 8px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 1px;
+            border: 1px solid rgba(255, 77, 138, 0.2);
+        }
+
+        .date-scene .dialog-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            margin: 2px 0;
+        }
+        .date-scene .story-text {
+            background: rgba(18, 18, 42, 0.75);
+            padding: 6px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            border-left: 3px solid #ff4d8a;
+            flex-shrink: 0;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(42, 42, 72, 0.4);
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+        }
+        .date-scene .btn-group {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 3px 0 2px;
+            flex-shrink: 0;
+        }
+        .date-scene .btn-group button {
+            background: rgba(26, 26, 62, 0.8);
+            border: 1px solid rgba(58, 58, 94, 0.5);
+            padding: 4px 8px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #d0c8f0;
+            font-size: 10px;
+            transition: 0.15s ease;
+            cursor: pointer;
+            flex: 0 1 auto;
+            min-width: 40px;
+            box-shadow: none;
+            border-bottom: none;
+            backdrop-filter: blur(4px);
+        }
+        .date-scene .btn-group button:active {
+            transform: scale(0.95);
+            background: rgba(42, 42, 82, 0.8);
+        }
+        .date-scene .btn-group button.primary {
+            background: rgba(255, 77, 138, 0.7);
+            border-color: rgba(255, 77, 138, 0.4);
+            color: white;
+        }
+
+        .date-scene .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 4px 0 2px;
+            border-top: 1px solid rgba(26, 26, 54, 0.5);
+            margin-top: auto;
+            flex-shrink: 0;
+            background: rgba(8, 8, 20, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+        }
+        .date-scene .bottom-nav .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 10px 0 4px;
-        }
-        button {
-            background: #4c4c6a;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 60px;
-            font-weight: 600;
-            color: #f0ecff;
-            font-size: 15px;
-            border-bottom: 3px solid #26263a;
-            transition: 0.08s ease;
+            font-size: 8px;
+            color: #6a6290;
             cursor: pointer;
-            box-shadow: 0 2px 0 #1a1a28;
-            flex: 1 1 auto;
-            min-width: 80px;
+            transition: 0.2s;
+            gap: 1px;
         }
-        button:active {
-            transform: translateY(2px);
-            border-bottom-width: 1px;
+        .date-scene .bottom-nav .nav-item.active {
+            color: #ff4d8a;
         }
-        button.primary {
-            background: #a96bc2;
-            border-bottom-color: #5e3d72;
-            color: white;
-            text-shadow: 0 1px 2px #3f284b;
+        .date-scene .bottom-nav .nav-item .icon {
+            font-size: 16px;
         }
-        button.secondary {
-            background: #5b5b7e;
-            border-bottom-color: #35354b;
+
+        .btn-reset {
+            background: rgba(58, 42, 58, 0.6);
+            border: 1px solid rgba(90, 58, 74, 0.4);
+            padding: 3px 12px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #c0a0b0;
+            font-size: 10px;
+            cursor: pointer;
+            flex: 0 1 auto;
+            box-shadow: none;
+            border-bottom: none;
+            backdrop-filter: blur(4px);
         }
-        button.like-btn {
-            background: #d47b9e;
-            border-bottom-color: #8f5472;
+        .btn-reset:active {
+            transform: scale(0.95);
         }
-        button.next-btn {
-            background: #6f9fd1;
-            border-bottom-color: #3f6190;
-        }
-        button:disabled {
-            opacity: 0.4;
-            transform: translateY(2px);
-            border-bottom-width: 1px;
-            pointer-events: none;
-        }
-        button.success {
-            background: #7bc98a;
-            border-bottom-color: #3f7a4f;
-            color: #1a2a1a;
-        }
+
+        /* ДРУГИЕ СЦЕНЫ */
         .hidden {
             display: none !important;
         }
-        .footer-ad {
-            margin-top: 16px;
-            padding: 12px;
-            background: #2c2c42;
-            border-radius: 40px;
+        .flex-1 {
+            flex: 1;
+        }
+        .mt-auto {
+            margin-top: auto;
+        }
+        .mb-1 {
+            margin-bottom: 3px;
+        }
+        .text-center {
             text-align: center;
+        }
+
+        .scene-container {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            flex-shrink: 0;
+            border: 1px solid #2a2a4e;
+            overflow: hidden;
+        }
+        .scene-container .avatar-overlay {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(8, 8, 20, 0.75);
+            backdrop-filter: blur(6px);
+            padding: 4px 10px 4px 4px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .scene-container .avatar-overlay img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff4d8a;
+        }
+        .scene-container .avatar-overlay .info .name {
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .scene-container .avatar-overlay .info .desc {
+            font-size: 9px;
+            color: #b0a8d0;
+        }
+
+        .chat-container {
+            background: #0e0e22;
+            border-radius: 14px;
+            padding: 6px;
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 3px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            border: 1px solid #2a2a4a;
+            scroll-behavior: smooth;
+            min-height: 0;
+        }
+        .chat-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: #0a0a1a;
+            border-radius: 10px;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #4a4a7a;
+            border-radius: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 4px 10px;
+            border-radius: 14px;
             font-size: 12px;
-            color: #8f8bb0;
-            border: 1px dashed #5b5b7a;
-            letter-spacing: 0.5px;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: msgAppear 0.2s ease;
         }
-        .footer-ad strong {
-            color: #d6b0e6;
+        @keyframes msgAppear {
+            0% { opacity: 0; transform: translateY(4px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
+        .message.mine {
+            background: #4a6a9a;
+            align-self: flex-end;
+            border-bottom-right-radius: 3px;
+        }
+        .message.theirs {
+            background: #222248;
+            align-self: flex-start;
+            border-bottom-left-radius: 3px;
+        }
+        .chat-reply-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .chat-reply-buttons button {
+            width: 100%;
+            text-align: left;
+            padding: 3px 10px;
+            background: #1a1a3e;
+            border: 1px solid #3a3a5e;
+            font-weight: 400;
+            font-size: 11px;
+            min-width: unset;
+            flex: none;
+            border-radius: 60px;
+            box-shadow: none;
+            border-bottom: none;
+            color: #d0c8f0;
+        }
+        .chat-reply-buttons button:active {
+            transform: scale(0.97);
+            background: #2a2a52;
+        }
+
         .catalog-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin: 8px 0;
+            gap: 4px;
+            margin: 3px 0;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 160px;
         }
         .catalog-item {
-            background: #40405a;
-            padding: 8px 14px;
+            background: #16163a;
+            padding: 3px 10px;
             border-radius: 60px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            border: 1px solid #5a5a7a;
+            gap: 8px;
+            border: 1px solid #2a2a4e;
             cursor: pointer;
             transition: 0.1s;
-            box-shadow: 0 3px 0 #1f1f2e;
+            flex-shrink: 0;
         }
         .catalog-item:active {
-            transform: translateY(3px);
-            box-shadow: none;
+            transform: scale(0.98);
         }
         .catalog-item img {
-            width: 44px;
-            height: 44px;
+            width: 28px;
+            height: 28px;
             border-radius: 30px;
             object-fit: cover;
-            background: #64648a;
+            background: #2a2a4a;
         }
         .catalog-item .info {
             flex: 1;
         }
         .catalog-item .info h4 {
-            font-size: 16px;
+            font-size: 12px;
+            color: #e0d8f0;
         }
         .catalog-item .info p {
-            font-size: 12px;
-            color: #b7b2d4;
+            font-size: 9px;
+            color: #9088b0;
         }
         .catalog-item.selected {
-            border: 2px solid #c9a0e0;
-            background: #4a4a68;
+            border: 2px solid #ff4d8a;
+            background: #1e1e4a;
         }
-        .chat-container {
-            background: #25253a;
-            border-radius: 24px;
-            padding: 12px;
-            max-height: 220px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .message {
-            max-width: 85%;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            line-height: 1.4;
-            word-break: break-word;
-        }
-        .message.mine {
-            background: #5f7db0;
-            align-self: flex-end;
-            border-bottom-right-radius: 6px;
-        }
-        .message.theirs {
-            background: #40405e;
-            align-self: flex-start;
-            border-bottom-left-radius: 6px;
-        }
-        .chat-reply-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 4px;
-        }
-        .chat-reply-buttons button {
-            width: 100%;
-            text-align: left;
-            padding: 8px 16px;
-            background: #3b3b57;
-            border-bottom-color: #24243a;
-            font-weight: 400;
-            font-size: 14px;
-        }
-        .chat-reply-buttons button:active {
-            transform: translateY(2px);
-        }
-        .affection-container {
-            background: #2d2d44;
-            border-radius: 40px;
-            padding: 6px 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .affection-bar {
-            flex: 1;
-            height: 10px;
-            background: #1f1f30;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .affection-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #d47b9e, #f7a1c4);
-            border-radius: 20px;
-            transition: width 0.4s ease;
-        }
-        .affection-label {
-            font-weight: 600;
-            font-size: 15px;
-            min-width: 48px;
-            text-align: right;
-            color: #e0d6f0;
-        }
-        .location-scene {
-            width: 100%;
-            height: 140px;
-            border-radius: 24px;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 12px;
-            border: 2px solid #5a5a7a;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 8px;
-            background-color: #3a3a52;
-        }
-        .location-scene .partner-overlay {
-            background: rgba(20, 20, 35, 0.7);
-            backdrop-filter: blur(2px);
-            padding: 4px 16px;
-            border-radius: 40px;
-            font-weight: 500;
-            border: 1px solid #b291c9;
-        }
-        .date-view {
+
+        .persona-preview {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .date-view .person-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+        .persona-preview img.avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
             object-fit: cover;
-            border: 3px solid #d4b0e8;
-            margin-bottom: 4px;
+            border: 3px solid #ff4d8a;
+            background: #2a2a4a;
         }
-        .story-text {
-            background: #2d2d44;
-            padding: 14px;
-            border-radius: 24px;
-            font-size: 15px;
+        .flex-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-1 {
+            gap: 3px;
+        }
+        .mt-1 {
+            margin-top: 3px;
+        }
+        .mt-2 {
+            margin-top: 6px;
+        }
+
+        /* Стили для простых сцен */
+        .simple-card {
+            background: #1a1a36;
+            border-radius: 20px;
+            padding: 12px;
+            border: 1px solid #2a2a4e;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .simple-card .btn-group button {
+            background: #2a2a4e;
+            border: 1px solid #3a3a5e;
+            padding: 5px 12px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #d0c8f0;
+            font-size: 11px;
+            flex: 0 1 auto;
+            min-width: 44px;
+            box-shadow: none;
+            border-bottom: none;
+        }
+        .simple-card .btn-group button:active {
+            transform: scale(0.95);
+            background: #3a3a5e;
+        }
+        .simple-card .btn-group button.primary {
+            background: #ff4d8a;
+            border-color: #ff4d8a;
+            color: white;
+        }
+        .simple-card .btn-group button.next-btn {
+            background: #4a6aaa;
+            border-color: #4a6aaa;
+            color: white;
+        }
+        .simple-card .btn-group button:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .ending-text {
+            background: rgba(18, 18, 46, 0.8);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border-left: 3px solid #ff4d8a;
+            font-size: 13px;
             line-height: 1.5;
-            border-left: 4px solid #b58fd1;
-            margin: 8px 0 14px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(42, 42, 72, 0.4);
+        }
+
+        /* скролл для диалога на свидании */
+        .dialog-scroll {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .dialog-scroll::-webkit-scrollbar {
+            width: 2px;
+        }
+        .dialog-scroll::-webkit-scrollbar-track {
+            background: rgba(10, 10, 26, 0.3);
+            border-radius: 10px;
+        }
+        .dialog-scroll::-webkit-scrollbar-thumb {
+            background: rgba(74, 74, 122, 0.5);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <div class="ad-banner">
-            <span>📢 Реклама</span>
-            <i>❤️ Знакомства без границ</i>
-            <span style="background:#4f3f6b;">Установить</span>
+        <div class="top-bar">
+            <span class="time">9:42</span>
+            <span class="logo">TANTAN</span>
+            <div class="icons">
+                <span>🔔</span>
+                <span>⚙️</span>
+            </div>
         </div>
 
-        <div class="header">
-            <h1>💞 Свидание</h1>
-            <div class="step-indicator" id="stepDisplay">Шаг 1/5</div>
-        </div>
-
-        <div id="sceneContainer">
-            <!-- Сцена 1: Выбор пола -->
-            <div id="scene1">
-                <div class="card">
-                    <div style="text-align:center; margin-bottom: 8px;">👤 Выбери свой пол</div>
+        <div id="sceneContainer" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+            <!-- СЦЕНА 1: ВЫБОР ПОЛА -->
+            <div id="scene1" style="flex:1; display:flex; flex-direction:column;">
+                <div class="simple-card">
+                    <div style="text-align:center; margin-bottom:4px; font-size:14px; color:#b0a8d0;">👤 Выбери свой пол</div>
                     <div class="btn-group">
                         <button class="primary" data-gender="male">Мужчина</button>
                         <button class="primary" data-gender="female">Женщина</button>
                     </div>
-                    <div id="customizeArea" style="margin-top: 12px;">
+                    <div style="margin-top:8px; flex:1; display:flex; align-items:center; justify-content:center;">
                         <div class="persona-preview">
-                            <img id="avatarPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%238a6d9b'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E" alt="аватар" class="avatar">
-                            <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; justify-content:center;">
+                            <img id="avatarPreview" src="assets/default.png" alt="аватар" class="avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%238a6d9b\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 55 Q50 68 65 55\' stroke=\'%23f0d0c0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E'">
+                            <div style="display:flex; gap:3px; margin-top:3px; flex-wrap:wrap; justify-content:center;">
                                 <button class="secondary" data-style="style1">Стиль 1</button>
                                 <button class="secondary" data-style="style2">Стиль 2</button>
                                 <button class="secondary" data-style="style3">Стиль 3</button>
                             </div>
                         </div>
                     </div>
-                    <button class="next-btn" id="toScene2" disabled>Далее →</button>
+                    <button class="next-btn" id="toScene2" disabled style="margin-top:auto; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Далее →</button>
                 </div>
             </div>
 
-            <!-- Сцена 2: Поиск партнёра -->
-            <div id="scene2" class="hidden">
-                <div class="card">
-                    <div style="display:flex; justify-content:space-between;">
-                        <span id="searchLabel">🔥 Найди свою пару</span>
-                        <span id="matchCounter">❤️ 0</span>
+            <!-- СЦЕНА 2: ПОИСК -->
+            <div id="scene2" class="hidden" style="flex:1; display:flex; flex-direction:column;">
+                <div class="simple-card">
+                    <div style="display:flex; justify-content:space-between; flex-shrink:0; padding:0 2px;">
+                        <span id="searchLabel" style="font-size:13px; color:#b0a8d0;">🔥 Найди свою пару</span>
+                        <span id="matchCounter" style="font-size:13px; color:#ff4d8a;">❤️ 0</span>
                     </div>
-                    <div id="tinderCard" style="margin:10px 0;">
-                        <img id="tinderAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23b38b5a'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 52 Q50 62 65 52' stroke='%23dbb594' stroke-width='4' fill='none' /%3E%3C/svg%3E" style="width:100%; max-height:140px; object-fit:contain; border-radius:28px; background:#3a3a52;">
-                        <h3 id="tinderName" style="margin-top:6px;">Анна</h3>
-                        <p id="tinderDesc" style="font-size:13px; color:#b9b2d4;">📌 Любит кофе и книги</p>
+                    <div id="tinderCard" style="margin:4px 0; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                        <img id="tinderAvatar" src="assets/girl1.png" style="width:100%; max-height:140px; object-fit:contain; border-radius:16px; background:#12122a;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%23b38b5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 52 Q50 62 65 52\' stroke=\'%23dbb594\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E'">
+                        <h3 id="tinderName" style="margin-top:2px; font-size:16px; color:#f0ecff;">Анна</h3>
+                        <p id="tinderDesc" style="font-size:11px; color:#9088b0; text-align:center;">Interior Designer • Scorpio</p>
                     </div>
-                    <div class="btn-group">
-                        <button class="secondary" id="tinderDislike">👎</button>
-                        <button class="like-btn" id="tinderLike">❤️ Лайк</button>
+                    <div class="btn-group" style="flex-shrink:0;">
+                        <button class="secondary" id="tinderDislike" style="background:#2a2a4e; border:1px solid #3a3a5e; padding:4px 14px; border-radius:60px; color:#d0c8f0; font-size:12px;">👎</button>
+                        <button class="primary" id="tinderLike" style="background:#ff4d8a; border:1px solid #ff4d8a; padding:4px 14px; border-radius:60px; color:white; font-size:12px;">❤️</button>
                     </div>
-                    <button class="next-btn" id="toChat">💬 Написать →</button>
+                    <button id="toChat" style="margin-top:3px; flex-shrink:0; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">💬 Написать</button>
                 </div>
             </div>
 
-            <!-- Сцена 3: Переписка -->
-            <div id="scene3" class="hidden">
-                <div class="card">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-                        <img id="chatPartnerAvatar" src="" style="width:40px;height:40px;border-radius:50%;background:#5d5d7a;">
-                        <span id="chatPartnerName" style="font-weight:600;">Анна</span>
+            <!-- СЦЕНА 3: ПЕРЕПИСКА -->
+            <div id="scene3" class="hidden" style="flex:1; display:flex; flex-direction:column;">
+                <div class="simple-card" style="padding:8px;">
+                    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; padding:0 2px;">
+                        <img id="chatPartnerAvatar" src="assets/girl1.png" style="width:28px;height:28px;border-radius:50%;background:#2a2a4a;border:2px solid #ff4d8a;" onerror="this.style.display='none'">
+                        <span id="chatPartnerName" style="font-weight:600; font-size:14px; color:#f0ecff;">Анна</span>
+                        <span style="margin-left:auto; font-size:10px; color:#6a6290;">онлайн</span>
                     </div>
                     <div class="chat-container" id="chatMessages">
                         <div class="message theirs">Привет! 😊 Как дела?</div>
                     </div>
                     <div class="chat-reply-buttons" id="chatReplies"></div>
-                    <button class="next-btn" id="toLocations" disabled style="margin-top:8px;">Выбрать место →</button>
+                    <button id="toLocations" disabled style="margin-top:3px; flex-shrink:0; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Выбрать место</button>
                 </div>
             </div>
 
-            <!-- Сцена 4: Выбор локации -->
-            <div id="scene4" class="hidden">
-                <div class="card">
-                    <div style="display:flex; gap:8px; align-items:center; margin-bottom: 12px;">
-                        <span>📍 Выбери место для свидания</span>
+            <!-- СЦЕНА 4: ЛОКАЦИИ -->
+            <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column;">
+                <div class="simple-card">
+                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:0 2px;">
+                        <span style="font-size:13px; color:#b0a8d0;">📍 Выбери место</span>
                     </div>
                     <div id="locationCatalog" class="catalog-grid"></div>
-                    <button class="next-btn" id="toDate">Назначить встречу →</button>
+                    <button id="toDate" style="flex-shrink:0; margin-top:3px; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Назначить встречу</button>
                 </div>
             </div>
 
-            <!-- Сцена 5: Свидание -->
-            <div id="scene5" class="hidden">
-                <div class="card">
-                    <div class="affection-container">
-                        <span style="font-size:14px;">❤️</span>
-                        <div class="affection-bar">
-                            <div class="affection-fill" id="affectionFill" style="width:50%;"></div>
+            <!-- СЦЕНА 5: СВИДАНИЕ - КАРТИНКА НА ВСЁ ПРОСТРАНСТВО -->
+            <div id="scene5" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+                <div class="date-scene" id="dateScene">
+                    <div class="scene-bg" id="sceneBg"></div>
+                    <div class="scene-content">
+                        <div class="affection-container">
+                            <span style="font-size:10px;">❤️</span>
+                            <div class="affection-bar">
+                                <div class="affection-fill" id="affectionFill" style="width:50%;"></div>
+                            </div>
+                            <span class="affection-label" id="affectionLabel">50%</span>
                         </div>
-                        <span class="affection-label" id="affectionLabel">50%</span>
+
+                        <div class="partner-info" id="partnerInfo">
+                            <img id="datePartnerAvatar" src="assets/girl1.png" alt="партнёр" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%23b38b5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 52 Q50 62 65 52\' stroke=\'%23dbb594\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E'">
+                            <div>
+                                <div class="pname" id="datePartnerName">Анна</div>
+                                <div class="pstatus" id="datePartnerStatus">💬 онлайн</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-mini">
+                            <div class="name-age">
+                                <span id="profileName">Анна</span>
+                                <span class="age" id="profileAge">24</span>
+                            </div>
+                            <div class="tag" id="profileTag">Interior Designer • Scorpio</div>
+                            <div class="badge" id="profileBadge">📌 3 общих интереса</div>
+                        </div>
+
+                        <div class="dialog-area">
+                            <div class="dialog-scroll" id="dialogScroll">
+                                <div class="story-text" id="dateDialog">
+                                    Она улыбается тебе. Что скажешь?
+                                </div>
+                                <div id="dateChoices" class="btn-group"></div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:center; margin-top:2px; flex-shrink:0; gap:8px;">
+                            <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
+                        </div>
+
+                        <div class="bottom-nav">
+                            <div class="nav-item active">
+                                <span class="icon">🔥</span>
+                                <span>Live</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">👥</span>
+                                <span>Meet</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">💬</span>
+                                <span>Message</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">👤</span>
+                                <span>Me</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="location-scene" id="locationScene" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\' viewBox=\'0 0 400 200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%233a4a5a\'/%3E%3Ccircle cx=\'80\' cy=\'120\' r=\'40\' fill=\'%235a7a4a\'/%3E%3Ccircle cx=\'320\' cy=\'100\' r=\'60\' fill=\'%234a6a5a\'/%3E%3C/svg%3E');">
-                        <div class="partner-overlay" id="locationPartnerName">👤 Партнёр</div>
-                    </div>
-
-                    <div class="date-view">
-                        <img class="person-avatar" id="datePartnerAvatar" src="" alt="партнёр">
-                        <div style="font-weight:600; margin:2px 0;" id="datePartnerName">Партнёр</div>
-                    </div>
-
-                    <div class="story-text" id="dateDialog">
-                        Он/она смотрит на тебя. Что скажешь?
-                    </div>
-
-                    <div id="dateChoices" class="btn-group"></div>
-
-                    <button id="resetGame" class="secondary" style="margin-top:12px; width:100%;">🔄 Начать сначала</button>
                 </div>
             </div>
-        </div>
-
-        <div class="footer-ad">
-            <strong>🎮 Реклама</strong> · Играй в <i>«Любовь на перекрестках»</i> · 18+
         </div>
     </div>
     <script>
         (function() {
-            console.log('[AD] Баннер показан (заглушка)');
+            console.log('[APP] Tantan style loaded');
 
-            // ---------- ДАННЫЕ: ВСЁ ПО РОДАМ ----------
-            const PARTNERS = {
-                male: [
-                    { name: 'Анна', desc: '📌 Любит кофе и книги', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%23b38b5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 52 Q50 62 65 52\' stroke=\'%23dbb594\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' },
-                    { name: 'Марина', desc: '🎨 Художница, обожает природу', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%236b8f7a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 54 Q50 64 65 54\' stroke=\'%23bcd4c0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' },
-                    { name: 'Елена', desc: '🍣 Фуд-блогер, ищет приключений', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%23b5788a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 50 Q50 62 65 50\' stroke=\'%23f0c8d0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' }
-                ],
-                female: [
-                    { name: 'Алексей', desc: '💼 Бизнесмен, любит путешествия', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%235a7a8a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 52 Q50 62 65 52\' stroke=\'%23b0c8d8\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' },
-                    { name: 'Дмитрий', desc: '🎸 Музыкант, романтик', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%238a6a5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 54 Q50 64 65 54\' stroke=\'%23d4b8a0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' },
-                    { name: 'Игорь', desc: '🏀 Спортсмен, активный', avatar: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%236a7a5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 50 Q50 62 65 50\' stroke=\'%23bcd4a0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E' }
-                ]
-            };
+            // ---------- ЗАГРУЗКА ДАННЫХ ИЗ data.json ----------
+            let gameData = null;
+            let dataLoaded = false;
 
-            const LOCATIONS = [
-                { name: 'Кафе "Уют"', bg: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\' viewBox=\'0 0 400 200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%233a2a1a\'/%3E%3Crect x=\'50\' y=\'40\' width=\'300\' height=\'120\' fill=\'%235a4a3a\' rx=\'10\'/%3E%3Ccircle cx=\'100\' cy=\'80\' r=\'15\' fill=\'%23d6b17e\'/%3E%3C/svg%3E', desc: 'Уютно, вкусный кофе' },
-                { name: 'Парк "Заря"', bg: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\' viewBox=\'0 0 400 200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%232a4a3a\'/%3E%3Ccircle cx=\'200\' cy=\'100\' r=\'80\' fill=\'%233a6a4a\'/%3E%3Ccircle cx=\'120\' cy=\'60\' r=\'30\' fill=\'%234a7a5a\'/%3E%3C/svg%3E', desc: 'Свежий воздух, прогулка' },
-                { name: 'Кинотеатр "Космос"', bg: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'200\' viewBox=\'0 0 400 200\'%3E%3Crect width=\'400\' height=\'200\' fill=\'%231a1a3a\'/%3E%3Crect x=\'60\' y=\'30\' width=\'280\' height=\'140\' fill=\'%233a3a5a\' rx=\'5\'/%3E%3Ccircle cx=\'200\' cy=\'100\' r=\'20\' fill=\'%235a5a8a\'/%3E%3C/svg%3E', desc: 'Фильм и попкорн' }
-            ];
-
-            // ---------- ДИАЛОГИ: ВСЁ ПО РОДАМ ----------
-            function getDialogs(gender) {
-                if (gender === 'male') {
-                    // Мужик — мужской род
-                    return [{
-                        text: 'Она смотрит на тебя с улыбкой. Чувствуется лёгкое напряжение.',
-                        choices: ['Сделать комплимент её глазам', 'Пошутить, разрядить обстановку', 'Спросить, чем она занимается'],
-                        effects: [15, 10, 10],
-                        flirtLow: 'Она немного смущается, но улыбается.',
-                        flirtHigh: 'Она смеётся и игриво касается твоего плеча. "Ты забавный... Мне это нравится."'
-                    }, {
-                        text: 'Вы обсуждаете фильмы. Она явно заинтересована в продолжении.',
-                        choices: ['Предложить сходить на новый боевик', 'Рассказать о любимом кино', 'Спросить, что она любит'],
-                        effects: [10, 5, 15],
-                        flirtLow: 'Она кивает, слушая тебя с интересом.',
-                        flirtHigh: 'Она наклоняется ближе. "У тебя отличный вкус. Может, сходим вместе?"'
-                    }, {
-                        text: 'Атмосфера становится более расслабленной. Она явно чувствует себя комфортно.',
-                        choices: ['Пригласить на танец', 'Сделать комплимент её стилю', 'Рассказать смешную историю'],
-                        effects: [20, 10, 5],
-                        flirtLow: 'Она улыбается и наслаждается вечером.',
-                        flirtHigh: 'Она смотрит тебе в глаза и тихо говорит: "Знаешь... я очень рада, что согласилась на эту встречу."'
-                    }];
-                } else {
-                    // Женщина — женский род
-                    return [{
-                        text: 'Он смотрит на тебя с лёгкой улыбкой. Ты чувствуешь его интерес.',
-                        choices: ['Сделать комплимент его глазам', 'Легко пошутить', 'Спросить, чем он увлекается'],
-                        effects: [15, 10, 10],
-                        flirtLow: 'Он слегка смущается, но улыбается в ответ.',
-                        flirtHigh: 'Он смеётся и наклоняется ближе. "Ты очаровательна... Мне нравится с тобой общаться."'
-                    }, {
-                        text: 'Вы говорите о путешествиях. Он явно заинтригован.',
-                        choices: ['Предложить вместе куда-нибудь съездить', 'Рассказать о своей мечте', 'Спросить, где он был'],
-                        effects: [15, 5, 10],
-                        flirtLow: 'Он внимательно слушает, задавая уточняющие вопросы.',
-                        flirtHigh: 'Он мягко касается твоей руки. "Ты такая интересная... Может, расскажешь ещё?"'
-                    }, {
-                        text: 'Вечер проходит чудесно. Вы оба чувствуете взаимную симпатию.',
-                        choices: ['Предложить прогуляться', 'Сделать комплимент его вкусу', 'Рассказать забавную историю'],
-                        effects: [20, 10, 5],
-                        flirtLow: 'Он довольно улыбается и наслаждается моментом.',
-                        flirtHigh: 'Он смотрит тебе в глаза и тихо произносит: "Я рад, что мы встретились... Этот вечер особенный."'
-                    }];
+            async function loadGameData() {
+                try {
+                    const response = await fetch('data.json');
+                    if (!response.ok) throw new Error('Файл не найден');
+                    const data = await response.json();
+                    if (data.partners && data.locations && data.dialogs && data.chatFlow) {
+                        gameData = data;
+                        console.log('[DATA] Загружено из data.json');
+                    } else {
+                        throw new Error('Неверная структура');
+                    }
+                } catch (e) {
+                    console.warn('[DATA] Ошибка загрузки data.json:', e);
+                    // БЕЗ ЗАГЛУШЕК — просто показываем ошибку
+                    gameData = null;
+                }
+                dataLoaded = true;
+                if (state.gender) {
+                    renderTinder();
                 }
             }
 
@@ -557,7 +807,6 @@
                 scene4: document.getElementById('scene4'),
                 scene5: document.getElementById('scene5'),
             };
-            const stepDisplay = document.getElementById('stepDisplay');
             const avatarPreview = document.getElementById('avatarPreview');
             const affectionFill = document.getElementById('affectionFill');
             const affectionLabel = document.getElementById('affectionLabel');
@@ -569,34 +818,46 @@
             }
 
             function updateStep() {
-                const map = { 1: 'Шаг 1/5', 2: 'Шаг 2/5', 3: 'Шаг 3/5', 4: 'Шаг 4/5', 5: 'Шаг 5/5' };
-                stepDisplay.textContent = map[state.step] || 'Шаг 1/5';
+                const map = { 1: '1/5', 2: '2/5', 3: '3/5', 4: '4/5', 5: '5/5' };
+                const el = document.querySelector('.step-indicator');
+                if (el) el.textContent = map[state.step] || '1/5';
             }
 
             function updateAffectionUI() {
                 const val = Math.min(100, Math.max(0, state.affection));
-                affectionFill.style.width = val + '%';
-                affectionLabel.textContent = val + '%';
-                if (val >= 70) {
-                    console.log('[AD] Реклама: «Симпатия зашкаливает!» (заглушка)');
-                }
+                if (affectionFill) affectionFill.style.width = val + '%';
+                if (affectionLabel) affectionLabel.textContent = val + '%';
             }
 
             function getPartners() {
-                return state.gender === 'male' ? PARTNERS.male : PARTNERS.female;
+                if (!gameData) return null;
+                return gameData.partners[state.gender === 'male' ? 'male' : 'female'];
             }
 
-            function getPartnerLabel() {
-                return state.gender === 'male' ? 'Найди свою девушку ❤️' : 'Найди своего парня ❤️';
+            function getDialogs() {
+                if (!gameData) return null;
+                return gameData.dialogs[state.gender === 'male' ? 'male' : 'female'];
             }
 
-            // ---------- СЦЕНА 1: ПОЛ ----------
+            function getChatFlow() {
+                if (!gameData) return null;
+                return gameData.chatFlow[state.gender === 'male' ? 'male' : 'female'];
+            }
+
+            function getLocations() {
+                if (!gameData) return null;
+                return gameData.locations;
+            }
+
+            // ---------- СЦЕНА 1 ----------
             document.querySelectorAll('[data-gender]').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     state.gender = e.target.dataset.gender;
-                    const color = state.gender === 'male' ? '#6a7a9b' : '#b58f9f';
-                    avatarPreview.src =
-                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='${color}'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+                    avatarPreview.src = state.gender === 'male' ? 'assets/boy_default.png' : 'assets/girl_default.png';
+                    avatarPreview.onerror = function() {
+                        this.src =
+                            `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='${state.gender === 'male' ? '%236a7a9b' : '%23b58f9f'}'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+                    };
                     document.getElementById('toScene2').disabled = false;
                 });
             });
@@ -604,8 +865,8 @@
             document.querySelectorAll('[data-style]').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     state.style = e.target.dataset.style;
-                    const styleMap = { style1: '#8a6d9b', style2: '#6b8f7a', style3: '#b5788a' };
-                    const color = styleMap[state.style] || '#8a6d9b';
+                    const colors = { style1: '#8a6d9b', style2: '#6b8f7a', style3: '#b5788a' };
+                    const color = colors[state.style] || '#8a6d9b';
                     avatarPreview.src =
                         `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='${color}'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
                 });
@@ -618,23 +879,35 @@
                 showScene('scene2');
                 state.likedIndex = 0;
                 state.likedList = [];
-                document.getElementById('searchLabel').textContent = getPartnerLabel();
+                document.getElementById('searchLabel').textContent = state.gender === 'male' ? '🔥 Найди свою девушку' :
+                    '🔥 Найди своего парня';
                 renderTinder();
             });
 
-            // ---------- СЦЕНА 2: TINDER ----------
+            // ---------- СЦЕНА 2 ----------
             function renderTinder() {
                 const partners = getPartners();
+                if (!partners || partners.length === 0) {
+                    document.getElementById('tinderName').textContent = 'Ошибка загрузки';
+                    document.getElementById('tinderDesc').textContent = 'Проверь data.json';
+                    return;
+                }
                 const idx = state.likedIndex % partners.length;
                 const p = partners[idx];
-                document.getElementById('tinderAvatar').src = p.avatar;
-                document.getElementById('tinderName').textContent = p.name;
-                document.getElementById('tinderDesc').textContent = p.desc;
+                const avatarEl = document.getElementById('tinderAvatar');
+                avatarEl.src = p.avatar || 'assets/default.png';
+                avatarEl.onerror = function() {
+                    this.src =
+                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23b38b5a'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 52 Q50 62 65 52' stroke='%23dbb594' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+                };
+                document.getElementById('tinderName').textContent = p.name || 'Неизвестный';
+                document.getElementById('tinderDesc').textContent = p.desc || '';
                 document.getElementById('matchCounter').textContent = `❤️ ${state.likedList.length}`;
             }
 
             document.getElementById('tinderLike').addEventListener('click', () => {
                 const partners = getPartners();
+                if (!partners || partners.length === 0) return;
                 const idx = state.likedIndex % partners.length;
                 const p = partners[idx];
                 if (!state.likedList.some(pp => pp.name === p.name)) {
@@ -642,7 +915,6 @@
                 }
                 state.likedIndex++;
                 renderTinder();
-                console.log('[AD] Показ рекламы после лайка (заглушка)');
             });
 
             document.getElementById('tinderDislike').addEventListener('click', () => {
@@ -662,63 +934,38 @@
                 initChat();
             });
 
-            // ---------- СЦЕНА 3: ПЕРЕПИСКА (ВСЁ ПО РОДАМ) ----------
+            // ---------- СЦЕНА 3 ----------
             const chatContainer = document.getElementById('chatMessages');
             const chatReplies = document.getElementById('chatReplies');
             const chatPartnerAvatar = document.getElementById('chatPartnerAvatar');
             const chatPartnerName = document.getElementById('chatPartnerName');
 
-            function getChatFlow(gender) {
-                if (gender === 'male') {
-                    // Мужик — мужской род
-                    return [
-                        { theirs: 'Привет! 😊 Как дела?', replies: ['Привет! Норм, у тебя как?', 'Привет. Давай встретимся, чё тянуть?',
-                                'Норм выглядишь, кстати'
-                            ] },
-                        { theirs: 'Ого, ты прямолинейный 😄 Мне нравится', replies: ['А чё стесняться?', 'Я за живое общение',
-                                'Ты тоже ничего такая'
-                            ] },
-                        { theirs: 'Может, встретимся где-нибудь?', replies: ['Давай, без проблем', 'Я знаю классное место',
-                                'Могу подъехать в любое время'
-                            ] },
-                        { theirs: 'Договорились! Выбирай место, я согласна ✨', replies: ['Отлично, жди!', 'Буду на месте'] }
-                    ];
-                } else {
-                    // Тёлка — женский род
-                    return [
-                        { theirs: 'Привет! 😊 Как дела?', replies: ['Привет! Отлично, а у тебя?', 'Приветик! Может, встретимся?',
-                                'Ты очень интересный человек'
-                            ] },
-                        { theirs: 'Я тоже хорошо! Очень рада, что мы совпали ❤️', replies: ['Ты очень милый', 'Хочу тебя увидеть',
-                                'Какие у тебя планы на вечер?'
-                            ] },
-                        { theirs: 'Может, встретимся где-нибудь?', replies: ['Да, давай! Где тебе удобно?', 'Я знаю отличное место',
-                                'Может, в кафе?'
-                            ] },
-                        { theirs: 'Отлично! Тогда выбирай место, я согласна ✨', replies: ['Договорились!', 'Буду ждать встречи!'] }
-                    ];
-                }
-            }
-
             function initChat() {
                 state.chatStep = 0;
                 state.chatDone = false;
                 document.getElementById('toLocations').disabled = true;
-                chatPartnerAvatar.src = state.currentPartner.avatar;
-                chatPartnerName.textContent = state.currentPartner.name;
-                const flow = getChatFlow(state.gender);
+                chatPartnerAvatar.src = state.currentPartner.avatar || 'assets/default.png';
+                chatPartnerAvatar.onerror = function() { this.style.display = 'none'; };
+                chatPartnerName.textContent = state.currentPartner.name || 'Партнёр';
+                const flow = getChatFlow();
+                if (!flow) {
+                    chatContainer.innerHTML = '<div class="message theirs">Ошибка загрузки диалогов</div>';
+                    return;
+                }
                 chatContainer.innerHTML = `<div class="message theirs">${flow[0].theirs}</div>`;
                 renderChatReplies(0);
             }
 
             function renderChatReplies(step) {
-                const flow = getChatFlow(state.gender);
+                const flow = getChatFlow();
+                if (!flow) return;
                 if (step >= flow.length) {
                     chatContainer.innerHTML +=
-                        `<div class="message theirs">✨ Договорились! Выбирай место встречи ✨</div>`;
+                        `<div class="message theirs">✨ Договорились! Выбирай место ✨</div>`;
                     document.getElementById('toLocations').disabled = false;
                     state.chatDone = true;
                     chatReplies.innerHTML = '';
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                     return;
                 }
                 chatReplies.innerHTML = '';
@@ -740,7 +987,6 @@
                             chatReplies.innerHTML = '';
                         }
                         chatContainer.scrollTop = chatContainer.scrollHeight;
-                        console.log('[AD] Реклама в переписке (заглушка)');
                     });
                     chatReplies.appendChild(btn);
                 });
@@ -754,17 +1000,22 @@
                 renderLocations();
             });
 
-            // ---------- СЦЕНА 4: ЛОКАЦИИ ----------
+            // ---------- СЦЕНА 4 ----------
             function renderLocations() {
                 const container = document.getElementById('locationCatalog');
+                const locations = getLocations();
+                if (!locations) {
+                    container.innerHTML = '<div style="color:#9088b0;text-align:center;">Ошибка загрузки локаций</div>';
+                    return;
+                }
                 container.innerHTML = '';
-                LOCATIONS.forEach((loc, i) => {
+                locations.forEach((loc, i) => {
                     const div = document.createElement('div');
                     div.className = 'catalog-item' + (i === state.selectedLocationIndex ? ' selected' : '');
                     div.dataset.index = i;
                     div.innerHTML = `
-                        <img src="${loc.bg}" alt="${loc.name}">
-                        <div class="info"><h4>${loc.name}</h4><p>${loc.desc}</p></div>
+                        <img src="${loc.bg || 'assets/default_bg.jpg'}" alt="${loc.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%233a3a52\'/%3E%3C/svg%3E'">
+                        <div class="info"><h4>${loc.name}</h4><p>${loc.desc || ''}</p></div>
                     `;
                     div.addEventListener('click', () => {
                         state.selectedLocationIndex = i;
@@ -785,59 +1036,74 @@
                 renderDateScene();
             });
 
-            // ---------- СЦЕНА 5: СВИДАНИЕ (ВСЁ ПО РОДАМ) ----------
+            // ---------- СЦЕНА 5: СВИДАНИЕ ----------
             function renderDateScene() {
                 const partner = state.currentPartner;
-                const loc = LOCATIONS[state.selectedLocationIndex] || LOCATIONS[0];
-                const dialogs = getDialogs(state.gender);
+                const locations = getLocations();
+                const loc = (locations && locations[state.selectedLocationIndex]) || locations?.[0] || { bg: '',
+                    name: 'Локация' };
+                const dialogs = getDialogs();
 
-                document.getElementById('datePartnerAvatar').src = partner.avatar;
-                document.getElementById('datePartnerName').textContent = partner.name;
-                document.getElementById('locationScene').style.backgroundImage = `url('${loc.bg}')`;
-                document.getElementById('locationPartnerName').textContent = `👤 ${partner.name}`;
+                if (!dialogs || dialogs.length === 0) {
+                    document.getElementById('dateDialog').textContent = 'Ошибка: нет диалогов в data.json';
+                    return;
+                }
+
+                // Фон
+                const bgEl = document.getElementById('sceneBg');
+                bgEl.style.backgroundImage = `url('${loc.bg || 'assets/default_bg.jpg'}')`;
+
+                // Аватар
+                const avatarEl = document.getElementById('datePartnerAvatar');
+                avatarEl.src = partner?.avatar || 'assets/default.png';
+                avatarEl.onerror = function() {
+                    this.src =
+                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23b38b5a'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 52 Q50 62 65 52' stroke='%23dbb594' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+                };
+                document.getElementById('datePartnerName').textContent = partner?.name || 'Партнёр';
+                document.getElementById('profileName').textContent = partner?.name || 'Партнёр';
+                document.getElementById('profileAge').textContent = partner?.age || '24';
+                document.getElementById('profileTag').textContent = partner?.desc || '✨ Интересная личность';
 
                 const dialog = dialogs[state.dialogIndex % dialogs.length];
                 const aff = state.affection;
-                let dialogText = dialog.text;
-                if (aff >= 60) {
-                    dialogText += ' ' + dialog.flirtHigh;
-                } else {
-                    dialogText += ' ' + dialog.flirtLow;
-                }
-                document.getElementById('dateDialog').textContent = dialogText;
+                let reactionText = '';
+                if (aff >= 65) reactionText = ' 😍 Она явно заинтересована!';
+                else if (aff >= 45) reactionText = ' 😊 Она улыбается.';
+                else if (aff >= 25) reactionText = ' 😐 Она смотрит в сторону.';
+                else reactionText = ' 😒 Она выглядит разочарованной.';
+
+                document.getElementById('dateDialog').textContent = dialog.text + reactionText;
 
                 const choicesContainer = document.getElementById('dateChoices');
                 choicesContainer.innerHTML = '';
                 dialog.choices.forEach((choice, i) => {
                     const btn = document.createElement('button');
-                    btn.className = 'secondary';
                     btn.textContent = choice;
                     btn.dataset.choice = i;
                     btn.addEventListener('click', () => {
-                        const effect = dialog.effects[i] || 5;
-                        state.affection = Math.min(100, Math.max(0, state.affection + effect));
+                        const effectVal = dialog.effects[i] || 0;
+                        state.affection = Math.min(100, Math.max(0, state.affection + effectVal));
                         updateAffectionUI();
                         state.dialogIndex++;
-                        console.log('[AD] Реклама после выбора (заглушка)');
                         if (state.dialogIndex >= dialogs.length) {
                             let endingText = '';
-                            if (state.affection >= 80) {
+                            if (state.affection >= 70) {
                                 endingText = state.gender === 'male' ?
-                                    '💖 Отлично! Ты её зацепил. Впереди явно что-то будет...' :
-                                    '💖 Отлично! Ты его зацепила. Впереди явно что-то будет...';
-                            } else if (state.affection >= 50) {
+                                    '💖 Отлично! Ты её зацепил! Она хочет продолжения.' :
+                                    '💖 Отлично! Ты его зацепила! Он хочет продолжения.';
+                            } else if (state.affection >= 45) {
                                 endingText = state.gender === 'male' ?
-                                    '❤️ Неплохо. Она улыбается и говорит, что хочет увидеться снова.' :
-                                    '❤️ Неплохо. Он улыбается и говорит, что хочет увидеться снова.';
+                                    '❤️ Неплохо. Она улыбается и говорит "Напиши завтра".' :
+                                    '❤️ Неплохо. Он улыбается и говорит "Напиши завтра".';
                             } else {
                                 endingText = state.gender === 'male' ?
-                                    '💔 Ну такое... Она вежливо прощается и уходит.' :
-                                    '💔 Ну такое... Он вежливо прощается и уходит.';
+                                    '💔 Она извиняется и уходит. Ты облажался.' :
+                                    '💔 Он извиняется и уходит. Ты облажалась.';
                             }
-                            document.getElementById('dateDialog').textContent = '🏁 КОНЕЦ. ' + endingText;
-                            choicesContainer.innerHTML =
-                                `<button class="primary" id="resetGame2">Начать заново</button>`;
-                            document.getElementById('resetGame2').addEventListener('click', resetGame);
+                            document.getElementById('dateDialog').innerHTML =
+                                `<div class="ending-text">🏁 ${endingText}</div>`;
+                            choicesContainer.innerHTML = '';
                             return;
                         }
                         renderDateScene();
@@ -867,10 +1133,16 @@
                 updateStep();
                 showScene('scene1');
                 updateAffectionUI();
-                avatarPreview.src =
-                    `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%238a6d9b'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
-                console.log('[AD] Игра перезапущена (заглушка)');
+                avatarPreview.src = 'assets/default.png';
+                avatarPreview.onerror = function() {
+                    this.src =
+                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%238a6d9b'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+                };
+                console.log('[GAME] Перезапущена');
             }
+
+            // ---------- ЗАГРУЗКА ----------
+            loadGameData();
 
             // Инициализация
             showScene('scene1');
