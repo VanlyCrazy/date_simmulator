@@ -69,33 +69,191 @@
         .top-bar .icons span:hover {
             color: #d0c8f0;
         }
-        .profile-card {
-            background: #1a1a36;
-            border-radius: 20px;
-            padding: 10px 10px 8px;
-            border: 1px solid #2a2a4e;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+        .hidden {
+            display: none !important;
         }
 
-        /* СЦЕНА СВИДАНИЯ — КАРТИНКА НА ВСЁ ПРОСТРАНСТВО */
-        .date-scene {
+        /* ----- СЦЕНА 1: НОВЫЙ ДИЗАЙН ----- */
+        #scene1 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            gap: 6px;
+        }
+
+        /* Верх: выбор пола */
+        .gender-selector {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 2px 0;
+        }
+        .gender-selector .label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #b0a8d0;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .gender-selector .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .gender-selector .btn-group button {
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: #9088b0;
+            flex: 1;
+            max-width: 140px;
+        }
+        .gender-selector .btn-group button:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .gender-selector .btn-group button.active-male {
+            border-color: #4a8af4;
+            background: rgba(74, 138, 244, 0.15);
+            color: #8ab8ff;
+        }
+        .gender-selector .btn-group button.active-female {
+            border-color: #ff4d8a;
+            background: rgba(255, 77, 138, 0.15);
+            color: #ff8aad;
+        }
+
+        /* Фотка на весь экран (между кнопками) */
+        .avatar-display {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0a0a18;
+            position: relative;
+        }
+        .avatar-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .avatar-display .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #3a3a5a;
+            background: #0a0a18;
+        }
+
+        /* Стили внизу — увеличены, красиво */
+        .style-selector {
+            flex-shrink: 0;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            padding: 2px 0 4px;
+        }
+        .style-selector button {
+            flex: 1;
+            padding: 10px 8px;
+            border-radius: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+            color: #9088b0;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            max-width: 100px;
+        }
+        .style-selector button .icon {
+            font-size: 22px;
+            line-height: 1.2;
+        }
+        .style-selector button .label {
+            font-size: 10px;
+            color: #6a6290;
+        }
+        .style-selector button:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .style-selector button.active {
+            border-color: #ff4d8a;
+            background: rgba(255, 77, 138, 0.08);
+            color: #fff;
+        }
+        .style-selector button.active .label {
+            color: #ff8aad;
+        }
+
+        /* Кнопка "Далее" */
+        .next-btn-wrap {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            padding: 2px 0;
+        }
+        .next-btn-wrap button {
+            padding: 10px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+            background: #4a6aaa;
+            color: white;
+            width: 100%;
+            max-width: 200px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .next-btn-wrap button.enabled {
+            opacity: 1;
+            pointer-events: auto;
+            background: #ff4d8a;
+        }
+        .next-btn-wrap button.enabled:hover {
+            background: #e63a77;
+            transform: scale(1.02);
+        }
+        .next-btn-wrap button.enabled:active {
+            transform: scale(0.97);
+        }
+
+        /* ----- СЦЕНА 5: СВИДАНИЕ (реал лайф) ----- */
+        #scene5 {
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 0;
             position: relative;
-            border-radius: 16px;
+            border-radius: 0;
             overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid #2a2a4e;
+            background: #0d0d20;
+            border: none;
+            margin: -10px -12px -12px;
+            padding: 12px 12px 12px;
+            width: calc(100% + 24px);
         }
-        .date-scene .scene-bg {
+
+        .date-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -103,354 +261,262 @@
             bottom: 0;
             background-size: cover;
             background-position: center;
+            opacity: 0.25;
             z-index: 0;
         }
-        .date-scene .scene-content {
+
+        .date-top {
             position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 10px 10px 8px;
-            background: rgba(8, 8, 20, 0.3);
-            backdrop-filter: blur(1px);
-        }
-        .date-scene .affection-container {
-            background: rgba(18, 18, 42, 0.8);
-            border-radius: 40px;
-            padding: 2px 10px;
+            z-index: 2;
+            flex-shrink: 0;
+            padding: 8px 4px 4px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-            height: 22px;
-            border: 1px solid rgba(42, 42, 72, 0.6);
-            backdrop-filter: blur(4px);
-            margin-bottom: 4px;
+            justify-content: space-between;
+            background: linear-gradient(180deg, rgba(13, 13, 32, 0.95) 50%, transparent);
         }
-        .date-scene .affection-bar {
-            flex: 1;
-            height: 4px;
-            background: rgba(26, 26, 54, 0.8);
+        .date-top .partner-name {
+            font-weight: 700;
+            font-size: 24px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .date-top .affection-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .date-top .affection-wrap .bar {
+            width: 80px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 20px;
             overflow: hidden;
         }
-        .date-scene .affection-fill {
+        .date-top .affection-wrap .bar .fill {
             height: 100%;
-            width: 0%;
+            width: 50%;
             background: linear-gradient(90deg, #ff4d8a, #ff6b9d);
             border-radius: 20px;
             transition: width 0.4s ease;
         }
-        .date-scene .affection-label {
-            font-weight: 600;
-            font-size: 10px;
-            min-width: 30px;
-            text-align: right;
-            color: #d0c8f0;
-        }
-
-        .date-scene .partner-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            margin-bottom: 3px;
-            background: rgba(8, 8, 20, 0.5);
-            padding: 4px 10px 4px 4px;
-            border-radius: 60px;
-            backdrop-filter: blur(4px);
-            align-self: flex-start;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .date-scene .partner-info img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ff4d8a;
-        }
-        .date-scene .partner-info .pname {
-            font-weight: 700;
-            font-size: 14px;
-            color: #fff;
-        }
-        .date-scene .partner-info .pstatus {
-            font-size: 10px;
-            color: #b0a8d0;
-        }
-
-        .date-scene .profile-mini {
-            flex-shrink: 0;
-            margin: 2px 0 3px;
-            background: rgba(8, 8, 20, 0.5);
-            padding: 4px 10px;
-            border-radius: 12px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .date-scene .profile-mini .name-age {
+        .date-top .affection-wrap .label {
             font-size: 16px;
             font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .date-scene .profile-mini .name-age .age {
-            font-weight: 400;
-            color: #b0a8d0;
-            font-size: 14px;
-        }
-        .date-scene .profile-mini .tag {
-            font-size: 11px;
-            color: #c0b8d8;
-        }
-        .date-scene .profile-mini .badge {
-            font-size: 10px;
-            color: #ff9bb8;
-            background: rgba(255, 77, 138, 0.15);
-            padding: 1px 8px;
-            border-radius: 40px;
-            display: inline-block;
-            margin-top: 1px;
-            border: 1px solid rgba(255, 77, 138, 0.2);
+            color: #ff4d8a;
+            min-width: 36px;
+            text-align: right;
         }
 
-        .date-scene .dialog-area {
+        .date-chat {
+            position: relative;
+            z-index: 2;
+            flex: 0 1 auto;
+            overflow-y: auto;
+            padding: 4px 4px 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 180px;
+            min-height: 80px;
+            scroll-behavior: smooth;
+        }
+        .date-chat::-webkit-scrollbar {
+            width: 3px;
+        }
+        .date-chat::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .date-chat::-webkit-scrollbar-thumb {
+            background: rgba(255, 77, 138, 0.3);
+            border-radius: 10px;
+        }
+
+        .date-msg {
+            max-width: 88%;
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.4;
+            animation: msgAppear 0.3s ease;
+            word-break: break-word;
+        }
+        @keyframes msgAppear {
+            0% { opacity: 0; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .date-msg.theirs {
+            background: rgba(255, 255, 255, 0.07);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e8e4f0;
+            backdrop-filter: blur(8px);
+        }
+        .date-msg.mine {
+            background: #ff4d8a;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            color: #fff;
+        }
+        .date-msg.system {
+            background: rgba(255, 77, 138, 0.1);
+            border: 1px solid rgba(255, 77, 138, 0.15);
+            align-self: center;
+            color: #ff8aad;
+            font-size: 12px;
+            border-radius: 40px;
+            padding: 4px 14px;
+            max-width: 92%;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .date-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 3px;
+            align-self: flex-start;
+            width: 100%;
+            max-width: 88%;
+        }
+        .date-choices button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 6px 12px;
+            border-radius: 60px;
+            color: #d0c8f0;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.15s ease;
+            width: 100%;
+            backdrop-filter: blur(8px);
+        }
+        .date-choices button:active {
+            transform: scale(0.97);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .date-choices button.primary-choice {
+            background: #ff4d8a;
+            border-color: #ff4d8a;
+            color: #fff;
+        }
+        .date-choices button.primary-choice:active {
+            background: #e63a77;
+        }
+
+        .date-bottom-avatar {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 4px 4px;
+            margin-top: auto;
+            background: linear-gradient(0deg, rgba(13, 13, 32, 0.90) 10%, transparent);
+            min-height: 280px;
+            max-height: 460px;
+        }
+        .date-bottom-avatar .avatar-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .date-bottom-avatar .avatar-wrap img {
+            width: 100%;
+            max-width: 300px;
+            height: 100%;
+            max-height: 440px;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            border-radius: 14px;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .btn-reset {
+            position: relative;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 5px 18px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #9088b0;
+            font-size: 12px;
+            cursor: pointer;
+            flex: 0 0 auto;
+            backdrop-filter: blur(8px);
+            margin: 2px auto 6px;
+            transition: 0.2s;
+        }
+        .btn-reset:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        #scene5 .date-nav {
+            display: none !important;
+        }
+
+        /* Остальные сцены */
+        .simple-card {
+            background: #1a1a36;
+            border-radius: 20px;
+            padding: 12px;
+            border: 1px solid #2a2a4e;
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 0;
-            margin: 2px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
-        .date-scene .story-text {
-            background: rgba(18, 18, 42, 0.75);
-            padding: 6px 10px;
-            border-radius: 12px;
-            font-size: 13px;
-            line-height: 1.4;
-            border-left: 3px solid #ff4d8a;
-            flex-shrink: 0;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(42, 42, 72, 0.4);
-            min-height: 36px;
-            display: flex;
-            align-items: center;
-        }
-        .date-scene .btn-group {
+        .simple-card .btn-group {
             display: flex;
             gap: 4px;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 3px 0 2px;
-            flex-shrink: 0;
         }
-        .date-scene .btn-group button {
-            background: rgba(26, 26, 62, 0.8);
-            border: 1px solid rgba(58, 58, 94, 0.5);
-            padding: 4px 8px;
+        .simple-card .btn-group button {
+            background: #2a2a4e;
+            border: 1px solid #3a3a5e;
+            padding: 5px 12px;
             border-radius: 60px;
             font-weight: 500;
             color: #d0c8f0;
-            font-size: 10px;
-            transition: 0.15s ease;
-            cursor: pointer;
+            font-size: 11px;
             flex: 0 1 auto;
-            min-width: 40px;
+            min-width: 44px;
             box-shadow: none;
             border-bottom: none;
-            backdrop-filter: blur(4px);
+            cursor: pointer;
+            transition: 0.15s;
         }
-        .date-scene .btn-group button:active {
+        .simple-card .btn-group button:active {
             transform: scale(0.95);
-            background: rgba(42, 42, 82, 0.8);
+            background: #3a3a5e;
         }
-        .date-scene .btn-group button.primary {
-            background: rgba(255, 77, 138, 0.7);
-            border-color: rgba(255, 77, 138, 0.4);
+        .simple-card .btn-group button.primary {
+            background: #ff4d8a;
+            border-color: #ff4d8a;
             color: white;
         }
-
-        .date-scene .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 4px 0 2px;
-            border-top: 1px solid rgba(26, 26, 54, 0.5);
-            margin-top: auto;
-            flex-shrink: 0;
-            background: rgba(8, 8, 20, 0.3);
-            backdrop-filter: blur(4px);
-            border-radius: 12px;
+        .simple-card .btn-group button.next-btn {
+            background: #4a6aaa;
+            border-color: #4a6aaa;
+            color: white;
         }
-        .date-scene .bottom-nav .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 8px;
-            color: #6a6290;
-            cursor: pointer;
-            transition: 0.2s;
-            gap: 1px;
-        }
-        .date-scene .bottom-nav .nav-item.active {
-            color: #ff4d8a;
-        }
-        .date-scene .bottom-nav .nav-item .icon {
-            font-size: 16px;
-        }
-
-        .btn-reset {
-            background: rgba(58, 42, 58, 0.6);
-            border: 1px solid rgba(90, 58, 74, 0.4);
-            padding: 3px 12px;
-            border-radius: 60px;
-            font-weight: 500;
-            color: #c0a0b0;
-            font-size: 10px;
-            cursor: pointer;
-            flex: 0 1 auto;
-            box-shadow: none;
-            border-bottom: none;
-            backdrop-filter: blur(4px);
-        }
-        .btn-reset:active {
-            transform: scale(0.95);
-        }
-
-        /* ДРУГИЕ СЦЕНЫ */
-        .hidden {
-            display: none !important;
-        }
-        .flex-1 {
-            flex: 1;
-        }
-        .mt-auto {
-            margin-top: auto;
-        }
-        .mb-1 {
-            margin-bottom: 3px;
-        }
-        .text-center {
-            text-align: center;
-        }
-
-        .scene-container {
-            width: 100%;
-            height: 200px;
-            border-radius: 16px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            flex-shrink: 0;
-            border: 1px solid #2a2a4e;
-            overflow: hidden;
-        }
-        .scene-container .avatar-overlay {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(8, 8, 20, 0.75);
-            backdrop-filter: blur(6px);
-            padding: 4px 10px 4px 4px;
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .scene-container .avatar-overlay img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ff4d8a;
-        }
-        .scene-container .avatar-overlay .info .name {
-            font-weight: 700;
-            font-size: 13px;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .scene-container .avatar-overlay .info .desc {
-            font-size: 9px;
-            color: #b0a8d0;
-        }
-
-        .chat-container {
-            background: #0e0e22;
-            border-radius: 14px;
-            padding: 6px;
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 3px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            border: 1px solid #2a2a4a;
-            scroll-behavior: smooth;
-            min-height: 0;
-        }
-        .chat-container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .chat-container::-webkit-scrollbar-track {
-            background: #0a0a1a;
-            border-radius: 10px;
-        }
-        .chat-container::-webkit-scrollbar-thumb {
-            background: #4a4a7a;
-            border-radius: 10px;
-        }
-        .message {
-            max-width: 80%;
-            padding: 4px 10px;
-            border-radius: 14px;
-            font-size: 12px;
-            line-height: 1.4;
-            word-break: break-word;
-            animation: msgAppear 0.2s ease;
-        }
-        @keyframes msgAppear {
-            0% { opacity: 0; transform: translateY(4px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .message.mine {
-            background: #4a6a9a;
-            align-self: flex-end;
-            border-bottom-right-radius: 3px;
-        }
-        .message.theirs {
-            background: #222248;
-            align-self: flex-start;
-            border-bottom-left-radius: 3px;
-        }
-        .chat-reply-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-        .chat-reply-buttons button {
-            width: 100%;
-            text-align: left;
-            padding: 3px 10px;
-            background: #1a1a3e;
-            border: 1px solid #3a3a5e;
-            font-weight: 400;
-            font-size: 11px;
-            min-width: unset;
-            flex: none;
-            border-radius: 60px;
-            box-shadow: none;
-            border-bottom: none;
-            color: #d0c8f0;
-        }
-        .chat-reply-buttons button:active {
-            transform: scale(0.97);
-            background: #2a2a52;
+        .simple-card .btn-group button:disabled {
+            opacity: 0.3;
+            pointer-events: none;
         }
 
         .catalog-grid {
@@ -500,11 +566,78 @@
             background: #1e1e4a;
         }
 
-        .persona-preview {
+        .chat-container {
+            background: #0e0e22;
+            border-radius: 14px;
+            padding: 6px;
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 3px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 3px;
+            border: 1px solid #2a2a4a;
+            scroll-behavior: smooth;
+            min-height: 0;
         }
+        .chat-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: #0a0a1a;
+            border-radius: 10px;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #4a4a7a;
+            border-radius: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 12px;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: msgAppear 0.2s ease;
+        }
+        .message.mine {
+            background: #4a6a9a;
+            align-self: flex-end;
+            border-bottom-right-radius: 3px;
+        }
+        .message.theirs {
+            background: #222248;
+            align-self: flex-start;
+            border-bottom-left-radius: 3px;
+        }
+        .chat-reply-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .chat-reply-buttons button {
+            width: 100%;
+            text-align: left;
+            padding: 3px 10px;
+            background: #1a1a3e;
+            border: 1px solid #3a3a5e;
+            font-weight: 400;
+            font-size: 11px;
+            min-width: unset;
+            flex: none;
+            border-radius: 60px;
+            box-shadow: none;
+            border-bottom: none;
+            color: #d0c8f0;
+            cursor: pointer;
+        }
+        .chat-reply-buttons button:active {
+            transform: scale(0.97);
+            background: #2a2a52;
+        }
+
         .persona-preview img.avatar {
             width: 60px;
             height: 60px;
@@ -513,103 +646,12 @@
             border: 3px solid #ff4d8a;
             background: #2a2a4a;
         }
-        .flex-row {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-        }
-        .gap-1 {
-            gap: 3px;
-        }
-        .mt-1 {
-            margin-top: 3px;
-        }
-        .mt-2 {
-            margin-top: 6px;
-        }
-
-        /* Стили для простых сцен */
-        .simple-card {
-            background: #1a1a36;
-            border-radius: 20px;
-            padding: 12px;
-            border: 1px solid #2a2a4e;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-        .simple-card .btn-group button {
-            background: #2a2a4e;
-            border: 1px solid #3a3a5e;
-            padding: 5px 12px;
-            border-radius: 60px;
-            font-weight: 500;
-            color: #d0c8f0;
-            font-size: 11px;
-            flex: 0 1 auto;
-            min-width: 44px;
-            box-shadow: none;
-            border-bottom: none;
-        }
-        .simple-card .btn-group button:active {
-            transform: scale(0.95);
-            background: #3a3a5e;
-        }
-        .simple-card .btn-group button.primary {
-            background: #ff4d8a;
-            border-color: #ff4d8a;
-            color: white;
-        }
-        .simple-card .btn-group button.next-btn {
-            background: #4a6aaa;
-            border-color: #4a6aaa;
-            color: white;
-        }
-        .simple-card .btn-group button:disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .ending-text {
-            background: rgba(18, 18, 46, 0.8);
-            padding: 8px 12px;
-            border-radius: 12px;
-            border-left: 3px solid #ff4d8a;
-            font-size: 13px;
-            line-height: 1.5;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(42, 42, 72, 0.4);
-        }
-
-        /* скролл для диалога на свидании */
-        .dialog-scroll {
-            flex: 1;
-            overflow-y: auto;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .dialog-scroll::-webkit-scrollbar {
-            width: 2px;
-        }
-        .dialog-scroll::-webkit-scrollbar-track {
-            background: rgba(10, 10, 26, 0.3);
-            border-radius: 10px;
-        }
-        .dialog-scroll::-webkit-scrollbar-thumb {
-            background: rgba(74, 74, 122, 0.5);
-            border-radius: 10px;
-        }
     </style>
 </head>
 <body>
     <div id="app">
-        <div class="top-bar">
+        <!-- Верхняя панель -->
+        <div class="top-bar" id="mainTopBar">
             <span class="time">9:42</span>
             <span class="logo">TANTAN</span>
             <div class="icons">
@@ -619,25 +661,42 @@
         </div>
 
         <div id="sceneContainer" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-            <!-- СЦЕНА 1: ВЫБОР ПОЛА -->
-            <div id="scene1" style="flex:1; display:flex; flex-direction:column;">
-                <div class="simple-card">
-                    <div style="text-align:center; margin-bottom:4px; font-size:14px; color:#b0a8d0;">👤 Выбери свой пол</div>
+            <!-- СЦЕНА 1: НОВЫЙ ДИЗАЙН -->
+            <div id="scene1" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+                <!-- Выбор пола сверху -->
+                <div class="gender-selector">
+                    <span class="label">👤 Выбери свой пол</span>
                     <div class="btn-group">
-                        <button class="primary" data-gender="male">Мужчина</button>
-                        <button class="primary" data-gender="female">Женщина</button>
+                        <button id="genderMale" data-gender="male">Мужчина</button>
+                        <button id="genderFemale" data-gender="female">Женщина</button>
                     </div>
-                    <div style="margin-top:8px; flex:1; display:flex; align-items:center; justify-content:center;">
-                        <div class="persona-preview">
-                            <img id="avatarPreview" src="assets/default.png" alt="аватар" class="avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%238a6d9b\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 55 Q50 68 65 55\' stroke=\'%23f0d0c0\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E'">
-                            <div style="display:flex; gap:3px; margin-top:3px; flex-wrap:wrap; justify-content:center;">
-                                <button class="secondary" data-style="style1">Стиль 1</button>
-                                <button class="secondary" data-style="style2">Стиль 2</button>
-                                <button class="secondary" data-style="style3">Стиль 3</button>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="next-btn" id="toScene2" disabled style="margin-top:auto; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Далее →</button>
+                </div>
+
+                <!-- Фотка на весь экран -->
+                <div class="avatar-display" id="avatarDisplay">
+                    <img id="mainAvatar" src="assets/boy1.png" alt="аватар" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="avatar-placeholder" style="display:none;">👤</div>
+                </div>
+
+                <!-- Стили внизу -->
+                <div class="style-selector">
+                    <button data-style="style1" class="active">
+                        <span class="icon">🕶️</span>
+                        <span class="label">Стиль 1</span>
+                    </button>
+                    <button data-style="style2">
+                        <span class="icon">🎸</span>
+                        <span class="label">Стиль 2</span>
+                    </button>
+                    <button data-style="style3">
+                        <span class="icon">🧢</span>
+                        <span class="label">Стиль 3</span>
+                    </button>
+                </div>
+
+                <!-- Кнопка Далее -->
+                <div class="next-btn-wrap">
+                    <button id="toScene2" disabled>Далее →</button>
                 </div>
             </div>
 
@@ -654,8 +713,8 @@
                         <p id="tinderDesc" style="font-size:11px; color:#9088b0; text-align:center;">Interior Designer • Scorpio</p>
                     </div>
                     <div class="btn-group" style="flex-shrink:0;">
-                        <button class="secondary" id="tinderDislike" style="background:#2a2a4e; border:1px solid #3a3a5e; padding:4px 14px; border-radius:60px; color:#d0c8f0; font-size:12px;">👎</button>
-                        <button class="primary" id="tinderLike" style="background:#ff4d8a; border:1px solid #ff4d8a; padding:4px 14px; border-radius:60px; color:white; font-size:12px;">❤️</button>
+                        <button id="tinderDislike" style="background:#2a2a4e; border:1px solid #3a3a5e; padding:4px 14px; border-radius:60px; color:#d0c8f0; font-size:12px;">👎</button>
+                        <button id="tinderLike" style="background:#ff4d8a; border:1px solid #ff4d8a; padding:4px 14px; border-radius:60px; color:white; font-size:12px;">❤️</button>
                     </div>
                     <button id="toChat" style="margin-top:3px; flex-shrink:0; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">💬 Написать</button>
                 </div>
@@ -688,77 +747,33 @@
                 </div>
             </div>
 
-            <!-- СЦЕНА 5: СВИДАНИЕ - КАРТИНКА НА ВСЁ ПРОСТРАНСТВО -->
+            <!-- СЦЕНА 5: СВИДАНИЕ -->
             <div id="scene5" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-                <div class="date-scene" id="dateScene">
-                    <div class="scene-bg" id="sceneBg"></div>
-                    <div class="scene-content">
-                        <div class="affection-container">
-                            <span style="font-size:10px;">❤️</span>
-                            <div class="affection-bar">
-                                <div class="affection-fill" id="affectionFill" style="width:50%;"></div>
-                            </div>
-                            <span class="affection-label" id="affectionLabel">50%</span>
+                <div class="date-bg" id="dateBg"></div>
+                <div class="date-top">
+                    <div class="partner-name" id="datePartnerName">Анна</div>
+                    <div class="affection-wrap">
+                        <div class="bar">
+                            <div class="fill" id="affectionFill" style="width:50%;"></div>
                         </div>
-
-                        <div class="partner-info" id="partnerInfo">
-                            <img id="datePartnerAvatar" src="assets/girl1.png" alt="партнёр" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'40\' r=\'30\' fill=\'%23b38b5a\'/%3E%3Ccircle cx=\'35\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'65\' cy=\'35\' r=\'4\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M35 52 Q50 62 65 52\' stroke=\'%23dbb594\' stroke-width=\'4\' fill=\'none\' /%3E%3C/svg%3E'">
-                            <div>
-                                <div class="pname" id="datePartnerName">Анна</div>
-                                <div class="pstatus" id="datePartnerStatus">💬 онлайн</div>
-                            </div>
-                        </div>
-
-                        <div class="profile-mini">
-                            <div class="name-age">
-                                <span id="profileName">Анна</span>
-                                <span class="age" id="profileAge">24</span>
-                            </div>
-                            <div class="tag" id="profileTag">Interior Designer • Scorpio</div>
-                            <div class="badge" id="profileBadge">📌 3 общих интереса</div>
-                        </div>
-
-                        <div class="dialog-area">
-                            <div class="dialog-scroll" id="dialogScroll">
-                                <div class="story-text" id="dateDialog">
-                                    Она улыбается тебе. Что скажешь?
-                                </div>
-                                <div id="dateChoices" class="btn-group"></div>
-                            </div>
-                        </div>
-
-                        <div style="display:flex; justify-content:center; margin-top:2px; flex-shrink:0; gap:8px;">
-                            <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
-                        </div>
-
-                        <div class="bottom-nav">
-                            <div class="nav-item active">
-                                <span class="icon">🔥</span>
-                                <span>Live</span>
-                            </div>
-                            <div class="nav-item">
-                                <span class="icon">👥</span>
-                                <span>Meet</span>
-                            </div>
-                            <div class="nav-item">
-                                <span class="icon">💬</span>
-                                <span>Message</span>
-                            </div>
-                            <div class="nav-item">
-                                <span class="icon">👤</span>
-                                <span>Me</span>
-                            </div>
-                        </div>
+                        <span class="label" id="affectionLabel">50%</span>
                     </div>
                 </div>
+                <div class="date-chat" id="dateChat"></div>
+                <div class="date-bottom-avatar">
+                    <div class="avatar-wrap">
+                        <img id="dateAvatar" src="assets/girl1.png" alt="партнёр" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'533\' viewBox=\'0 0 300 533\'%3E%3Crect width=\'300\' height=\'533\' fill=\'%231a1a2a\'/%3E%3Ccircle cx=\'150\' cy=\'220\' r=\'80\' fill=\'%23b38b5a\'/%3E%3Ccircle cx=\'115\' cy=\'200\' r=\'10\' fill=\'%23f5f0fa\'/%3E%3Ccircle cx=\'185\' cy=\'200\' r=\'10\' fill=\'%23f5f0fa\'/%3E%3Cpath d=\'M110 250 Q150 280 190 250\' stroke=\'%23dbb594\' stroke-width=\'8\' fill=\'none\' /%3E%3C/svg%3E'">
+                    </div>
+                </div>
+                <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
             </div>
         </div>
     </div>
+
     <script>
         (function() {
-            console.log('[APP] Tantan style loaded');
+            console.log('[APP] Tantan — new scene1 design');
 
-            // ---------- ЗАГРУЗКА ДАННЫХ ИЗ data.json ----------
             let gameData = null;
             let dataLoaded = false;
 
@@ -775,7 +790,6 @@
                     }
                 } catch (e) {
                     console.warn('[DATA] Ошибка загрузки data.json:', e);
-                    // БЕЗ ЗАГЛУШЕК — просто показываем ошибку
                     gameData = null;
                 }
                 dataLoaded = true;
@@ -784,11 +798,10 @@
                 }
             }
 
-            // ---------- СОСТОЯНИЕ ----------
             let state = {
                 step: 1,
                 gender: null,
-                style: null,
+                style: 'style1',
                 likedIndex: 0,
                 likedList: [],
                 currentPartner: null,
@@ -797,9 +810,9 @@
                 dialogIndex: 0,
                 chatStep: 0,
                 chatDone: false,
+                dateHistory: [],
             };
 
-            // DOM
             const scenes = {
                 scene1: document.getElementById('scene1'),
                 scene2: document.getElementById('scene2'),
@@ -807,26 +820,36 @@
                 scene4: document.getElementById('scene4'),
                 scene5: document.getElementById('scene5'),
             };
-            const avatarPreview = document.getElementById('avatarPreview');
-            const affectionFill = document.getElementById('affectionFill');
-            const affectionLabel = document.getElementById('affectionLabel');
+
+            const mainTopBar = document.getElementById('mainTopBar');
 
             function showScene(id) {
                 Object.keys(scenes).forEach(key => {
                     scenes[key].classList.toggle('hidden', key !== id);
                 });
-            }
-
-            function updateStep() {
-                const map = { 1: '1/5', 2: '2/5', 3: '3/5', 4: '4/5', 5: '5/5' };
-                const el = document.querySelector('.step-indicator');
-                if (el) el.textContent = map[state.step] || '1/5';
+                if (id === 'scene5') {
+                    mainTopBar.style.display = 'none';
+                    document.getElementById('app').style.borderRadius = '0';
+                    document.getElementById('app').style.border = 'none';
+                    document.getElementById('app').style.boxShadow = 'none';
+                    document.getElementById('app').style.padding = '0';
+                    document.getElementById('app').style.background = '#0d0d20';
+                } else {
+                    mainTopBar.style.display = 'flex';
+                    document.getElementById('app').style.borderRadius = '36px';
+                    document.getElementById('app').style.border = '1px solid #222244';
+                    document.getElementById('app').style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.95)';
+                    document.getElementById('app').style.padding = '10px 12px 12px';
+                    document.getElementById('app').style.background = '#111122';
+                }
             }
 
             function updateAffectionUI() {
                 const val = Math.min(100, Math.max(0, state.affection));
-                if (affectionFill) affectionFill.style.width = val + '%';
-                if (affectionLabel) affectionLabel.textContent = val + '%';
+                const fill = document.getElementById('affectionFill');
+                const label = document.getElementById('affectionLabel');
+                if (fill) fill.style.width = val + '%';
+                if (label) label.textContent = val + '%';
             }
 
             function getPartners() {
@@ -849,33 +872,82 @@
                 return gameData.locations;
             }
 
-            // ---------- СЦЕНА 1 ----------
-            document.querySelectorAll('[data-gender]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    state.gender = e.target.dataset.gender;
-                    avatarPreview.src = state.gender === 'male' ? 'assets/boy_default.png' : 'assets/girl_default.png';
-                    avatarPreview.onerror = function() {
-                        this.src =
-                            `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='${state.gender === 'male' ? '%236a7a9b' : '%23b58f9f'}'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
-                    };
-                    document.getElementById('toScene2').disabled = false;
+            // ---------- СЦЕНА 1: НОВЫЙ ДИЗАЙН ----------
+            const genderMale = document.getElementById('genderMale');
+            const genderFemale = document.getElementById('genderFemale');
+            const mainAvatar = document.getElementById('mainAvatar');
+            const toScene2Btn = document.getElementById('toScene2');
+
+            // Картинки по стилям
+            const styleImages = {
+                male: {
+                    style1: 'assets/boy1.png',
+                    style2: 'assets/boy2.png',
+                    style3: 'assets/boy3.png'
+                },
+                female: {
+                    style1: 'assets/girl1.png',
+                    style2: 'assets/girl2.png',
+                    style3: 'assets/girl3.png'
+                }
+            };
+
+            function updateAvatar() {
+                if (!state.gender || !state.style) return;
+                const genderKey = state.gender;
+                const styleKey = state.style;
+                const imgPath = styleImages[genderKey]?.[styleKey] || 'assets/default.png';
+                mainAvatar.src = imgPath;
+                mainAvatar.style.display = 'block';
+                const placeholder = mainAvatar.nextElementSibling;
+                if (placeholder) placeholder.style.display = 'none';
+            }
+
+            // Выбор пола
+            document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const gender = this.dataset.gender;
+                    state.gender = gender;
+                    // Активный класс
+                    document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(b => {
+                        b.classList.remove('active-male', 'active-female');
+                    });
+                    if (gender === 'male') {
+                        this.classList.add('active-male');
+                    } else {
+                        this.classList.add('active-female');
+                    }
+                    updateAvatar();
+                    checkEnabled();
                 });
             });
 
-            document.querySelectorAll('[data-style]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    state.style = e.target.dataset.style;
-                    const colors = { style1: '#8a6d9b', style2: '#6b8f7a', style3: '#b5788a' };
-                    const color = colors[state.style] || '#8a6d9b';
-                    avatarPreview.src =
-                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='${color}'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
+            // Выбор стиля
+            document.querySelectorAll('#scene1 .style-selector button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.classList.remove(
+                    'active'));
+                    this.classList.add('active');
+                    state.style = this.dataset.style;
+                    updateAvatar();
+                    checkEnabled();
                 });
             });
 
-            document.getElementById('toScene2').addEventListener('click', () => {
-                if (!state.gender) return;
+            function checkEnabled() {
+                if (state.gender && state.style) {
+                    toScene2Btn.classList.add('enabled');
+                    toScene2Btn.disabled = false;
+                } else {
+                    toScene2Btn.classList.remove('enabled');
+                    toScene2Btn.disabled = true;
+                }
+            }
+
+            // Кнопка Далее
+            toScene2Btn.addEventListener('click', () => {
+                if (!state.gender || !state.style) return;
                 state.step = 2;
-                updateStep();
                 showScene('scene2');
                 state.likedIndex = 0;
                 state.likedList = [];
@@ -896,10 +968,6 @@
                 const p = partners[idx];
                 const avatarEl = document.getElementById('tinderAvatar');
                 avatarEl.src = p.avatar || 'assets/default.png';
-                avatarEl.onerror = function() {
-                    this.src =
-                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23b38b5a'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 52 Q50 62 65 52' stroke='%23dbb594' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
-                };
                 document.getElementById('tinderName').textContent = p.name || 'Неизвестный';
                 document.getElementById('tinderDesc').textContent = p.desc || '';
                 document.getElementById('matchCounter').textContent = `❤️ ${state.likedList.length}`;
@@ -929,7 +997,6 @@
                 }
                 state.currentPartner = state.likedList[0];
                 state.step = 3;
-                updateStep();
                 showScene('scene3');
                 initChat();
             });
@@ -945,7 +1012,6 @@
                 state.chatDone = false;
                 document.getElementById('toLocations').disabled = true;
                 chatPartnerAvatar.src = state.currentPartner.avatar || 'assets/default.png';
-                chatPartnerAvatar.onerror = function() { this.style.display = 'none'; };
                 chatPartnerName.textContent = state.currentPartner.name || 'Партнёр';
                 const flow = getChatFlow();
                 if (!flow) {
@@ -995,7 +1061,6 @@
             document.getElementById('toLocations').addEventListener('click', () => {
                 if (!state.chatDone) return;
                 state.step = 4;
-                updateStep();
                 showScene('scene4');
                 renderLocations();
             });
@@ -1028,15 +1093,16 @@
 
             document.getElementById('toDate').addEventListener('click', () => {
                 state.step = 5;
-                updateStep();
                 showScene('scene5');
                 state.dialogIndex = 0;
                 state.affection = 50;
+                state.dateHistory = [];
                 updateAffectionUI();
+                document.getElementById('dateChat').innerHTML = '';
                 renderDateScene();
             });
 
-            // ---------- СЦЕНА 5: СВИДАНИЕ ----------
+            // ---------- СЦЕНА 5 ----------
             function renderDateScene() {
                 const partner = state.currentPartner;
                 const locations = getLocations();
@@ -1045,71 +1111,74 @@
                 const dialogs = getDialogs();
 
                 if (!dialogs || dialogs.length === 0) {
-                    document.getElementById('dateDialog').textContent = 'Ошибка: нет диалогов в data.json';
+                    const chat = document.getElementById('dateChat');
+                    chat.innerHTML =
+                        `<div class="date-msg system">❌ Ошибка: нет диалогов в data.json</div>`;
                     return;
                 }
 
-                // Фон
-                const bgEl = document.getElementById('sceneBg');
+                const bgEl = document.getElementById('dateBg');
                 bgEl.style.backgroundImage = `url('${loc.bg || 'assets/default_bg.jpg'}')`;
 
-                // Аватар
-                const avatarEl = document.getElementById('datePartnerAvatar');
-                avatarEl.src = partner?.avatar || 'assets/default.png';
-                avatarEl.onerror = function() {
-                    this.src =
-                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23b38b5a'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 52 Q50 62 65 52' stroke='%23dbb594' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
-                };
-                document.getElementById('datePartnerName').textContent = partner?.name || 'Партнёр';
-                document.getElementById('profileName').textContent = partner?.name || 'Партнёр';
-                document.getElementById('profileAge').textContent = partner?.age || '24';
-                document.getElementById('profileTag').textContent = partner?.desc || '✨ Интересная личность';
+                const avatarEl = document.getElementById('dateAvatar');
+                avatarEl.src = partner?.avatar || 'assets/girl1.png';
 
-                const dialog = dialogs[state.dialogIndex % dialogs.length];
+                document.getElementById('datePartnerName').textContent = partner?.name || 'Партнёр';
+
+                if (state.dialogIndex >= dialogs.length) {
+                    let endingText = '';
+                    if (state.affection >= 70) {
+                        endingText = state.gender === 'male' ?
+                            '💖 Отлично! Ты её зацепил! Она хочет продолжения.' :
+                            '💖 Отлично! Ты его зацепила! Он хочет продолжения.';
+                    } else if (state.affection >= 45) {
+                        endingText = state.gender === 'male' ?
+                            '❤️ Неплохо. Она улыбается и говорит "Напиши завтра".' :
+                            '❤️ Неплохо. Он улыбается и говорит "Напиши завтра".';
+                    } else {
+                        endingText = state.gender === 'male' ?
+                            '💔 Она извиняется и уходит. Ты облажался.' :
+                            '💔 Он извиняется и уходит. Ты облажалась.';
+                    }
+                    const chat = document.getElementById('dateChat');
+                    chat.innerHTML += `<div class="date-msg system">🏁 ${endingText}</div>`;
+                    chat.scrollTop = chat.scrollHeight;
+                    return;
+                }
+
+                const dialog = dialogs[state.dialogIndex];
                 const aff = state.affection;
                 let reactionText = '';
-                if (aff >= 65) reactionText = ' 😍 Она явно заинтересована!';
-                else if (aff >= 45) reactionText = ' 😊 Она улыбается.';
-                else if (aff >= 25) reactionText = ' 😐 Она смотрит в сторону.';
-                else reactionText = ' 😒 Она выглядит разочарованной.';
+                if (aff >= 65) reactionText = '😍 Она явно заинтересована!';
+                else if (aff >= 45) reactionText = '😊 Она улыбается.';
+                else if (aff >= 25) reactionText = '😐 Она смотрит в сторону.';
+                else reactionText = '😒 Она выглядит разочарованной.';
 
-                document.getElementById('dateDialog').textContent = dialog.text + reactionText;
+                const chat = document.getElementById('dateChat');
+                const partnerMsg = dialog.text + (reactionText ? ' ' + reactionText : '');
+                chat.innerHTML += `<div class="date-msg theirs">${partnerMsg}</div>`;
 
-                const choicesContainer = document.getElementById('dateChoices');
-                choicesContainer.innerHTML = '';
+                const choicesDiv = document.createElement('div');
+                choicesDiv.className = 'date-choices';
                 dialog.choices.forEach((choice, i) => {
                     const btn = document.createElement('button');
                     btn.textContent = choice;
-                    btn.dataset.choice = i;
+                    if (i === 0) btn.classList.add('primary-choice');
                     btn.addEventListener('click', () => {
+                        chat.innerHTML += `<div class="date-msg mine">${choice}</div>`;
                         const effectVal = dialog.effects[i] || 0;
                         state.affection = Math.min(100, Math.max(0, state.affection + effectVal));
                         updateAffectionUI();
                         state.dialogIndex++;
-                        if (state.dialogIndex >= dialogs.length) {
-                            let endingText = '';
-                            if (state.affection >= 70) {
-                                endingText = state.gender === 'male' ?
-                                    '💖 Отлично! Ты её зацепил! Она хочет продолжения.' :
-                                    '💖 Отлично! Ты его зацепила! Он хочет продолжения.';
-                            } else if (state.affection >= 45) {
-                                endingText = state.gender === 'male' ?
-                                    '❤️ Неплохо. Она улыбается и говорит "Напиши завтра".' :
-                                    '❤️ Неплохо. Он улыбается и говорит "Напиши завтра".';
-                            } else {
-                                endingText = state.gender === 'male' ?
-                                    '💔 Она извиняется и уходит. Ты облажался.' :
-                                    '💔 Он извиняется и уходит. Ты облажалась.';
-                            }
-                            document.getElementById('dateDialog').innerHTML =
-                                `<div class="ending-text">🏁 ${endingText}</div>`;
-                            choicesContainer.innerHTML = '';
-                            return;
-                        }
+                        const oldChoices = chat.querySelector('.date-choices');
+                        if (oldChoices) oldChoices.remove();
+                        chat.scrollTop = chat.scrollHeight;
                         renderDateScene();
                     });
-                    choicesContainer.appendChild(btn);
+                    choicesDiv.appendChild(btn);
                 });
+                chat.appendChild(choicesDiv);
+                chat.scrollTop = chat.scrollHeight;
             }
 
             // ---------- СБРОС ----------
@@ -1119,7 +1188,7 @@
                 state = {
                     step: 1,
                     gender: null,
-                    style: null,
+                    style: 'style1',
                     likedIndex: 0,
                     likedList: [],
                     currentPartner: null,
@@ -1128,26 +1197,32 @@
                     dialogIndex: 0,
                     chatStep: 0,
                     chatDone: false,
+                    dateHistory: [],
                 };
-                document.getElementById('toScene2').disabled = true;
-                updateStep();
                 showScene('scene1');
                 updateAffectionUI();
-                avatarPreview.src = 'assets/default.png';
-                avatarPreview.onerror = function() {
-                    this.src =
-                        `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%238a6d9b'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%23f5f0fa'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%23f5f0fa'/%3E%3Cpath d='M35 55 Q50 68 65 55' stroke='%23f0d0c0' stroke-width='4' fill='none' /%3E%3C/svg%3E`;
-                };
+                document.getElementById('dateChat').innerHTML = '';
+                // Сброс UI
+                document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(b => {
+                    b.classList.remove('active-male', 'active-female');
+                });
+                document.querySelectorAll('#scene1 .style-selector button').forEach(b => {
+                    b.classList.remove('active');
+                });
+                document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
+                toScene2Btn.classList.remove('enabled');
+                toScene2Btn.disabled = true;
+                mainAvatar.src = 'assets/boy1.png';
                 console.log('[GAME] Перезапущена');
             }
 
             // ---------- ЗАГРУЗКА ----------
             loadGameData();
-
-            // Инициализация
             showScene('scene1');
-            updateStep();
             updateAffectionUI();
+            // Ставим стиль 1 активным по умолчанию
+            document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
+            state.style = 'style1';
         })();
     </script>
 </body>
