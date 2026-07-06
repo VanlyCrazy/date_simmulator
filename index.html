@@ -412,6 +412,21 @@
         }
         .message.mine { background: #4a6a9a; align-self: flex-end; border-bottom-right-radius: 3px; }
         .message.theirs { background: #222248; align-self: flex-start; border-bottom-left-radius: 3px; }
+        .message.typing {
+            background: transparent;
+            align-self: flex-start;
+            color: #8880aa;
+            font-style: italic;
+            font-size: 14px;
+            animation: dots 1s steps(4) infinite;
+            padding: 4px 0;
+        }
+        @keyframes dots {
+            0% { content: "Печатает"; }
+            25% { content: "Печатает."; }
+            50% { content: "Печатает.."; }
+            75% { content: "Печатает..."; }
+        }
 
         .chat-reply-buttons {
             display: flex;
@@ -440,16 +455,30 @@
         .chat-reply-buttons button:hover { background: #222252; border-color: #4a4a7e; }
         .chat-reply-buttons button:active { transform: scale(0.97); background: #2a2a52; border-color: #ff4d8a; }
 
-        /* ----- СЦЕНА 4: ЛОКАЦИИ ----- */
+        /* ----- СЦЕНА 4: ЛОКАЦИИ (исправленный скролл) ----- */
+        #scene4 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        #scene4 .simple-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            padding: 12px;
+        }
         .catalog-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 2px 8px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin: 8px 0;
-            flex: 1;
-            overflow-y: auto;
+            min-height: 0;
             max-height: none;
-            padding: 0 2px;
         }
         .catalog-grid::-webkit-scrollbar { width: 3px; }
         .catalog-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
@@ -489,6 +518,21 @@
             box-shadow: 0 0 20px rgba(255,77,138,0.15);
         }
         .catalog-item.selected .location-icon { opacity: 1; color: #ff4d8a; }
+
+        #toDate {
+            margin-top: 8px;
+            padding: 10px 32px;
+            font-size: 15px;
+            font-weight: 700;
+            align-self: center;
+            background: linear-gradient(135deg, #ff4d8a, #ff6b9d);
+            border: none;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        #toDate:active { transform: scale(0.97); }
 
         /* ----- СЦЕНА 5: СВИДАНИЕ ----- */
         #scene5 {
@@ -669,7 +713,7 @@
         }
         .btn-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
 
-        /* ----- СЦЕНА 6: КОМНАТА (ПОЛНОСТЬЮ ПЕРЕДЕЛАНА) ----- */
+        /* ----- СЦЕНА 6: КОМНАТА ----- */
         #scene6 {
             flex: 1;
             display: flex;
@@ -685,7 +729,6 @@
             width: calc(100% + 24px);
         }
 
-        /* Фон — картинка комнаты */
         .room-bg {
             position: absolute;
             top: 0;
@@ -697,7 +740,6 @@
             background-repeat: no-repeat;
             z-index: 0;
         }
-        /* Затемнение для читаемости текста */
         .room-overlay {
             position: absolute;
             top: 0;
@@ -715,7 +757,6 @@
             pointer-events: none;
         }
 
-        /* Контент поверх фона */
         .room-content {
             position: relative;
             z-index: 2;
@@ -726,7 +767,6 @@
             min-height: 0;
         }
 
-        /* Верхняя плашка с именем */
         .room-top-bar {
             display: flex;
             align-items: center;
@@ -771,7 +811,6 @@
             50% { opacity: 1; transform: scale(1.15); }
         }
 
-        /* Чат с диалогами — прокручиваемый */
         .room-chat {
             flex: 1;
             overflow-y: auto;
@@ -798,7 +837,6 @@
             background: rgba(255, 77, 138, 0.6);
         }
 
-        /* Сообщения комнаты */
         .room-msg {
             max-width: 85%;
             padding: 10px 16px;
@@ -836,7 +874,6 @@
             backdrop-filter: blur(8px);
         }
 
-        /* Варианты ответов */
         .room-choices {
             display: flex;
             flex-direction: column;
@@ -880,7 +917,6 @@
             background: rgba(255, 77, 138, 0.5);
         }
 
-        /* Ползунок симпатии в стиле комнаты */
         .room-affection-bar-wrap {
             position: relative;
             z-index: 3;
@@ -928,7 +964,6 @@
             flex-shrink: 0;
         }
 
-        /* Кнопка сброса */
         .btn-room-reset {
             position: relative;
             z-index: 3;
@@ -1047,14 +1082,14 @@
                 </div>
             </div>
 
-            <!-- СЦЕНА 4 -->
-            <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column;">
-                <div class="simple-card">
+            <!-- СЦЕНА 4 (исправленный скролл) -->
+            <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+                <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
                     <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;">
                         <span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span>
                     </div>
-                    <div id="locationCatalog" class="catalog-grid"></div>
-                    <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;">Назначить встречу ❤️</button>
+                    <div id="locationCatalog" class="catalog-grid" style="flex:1; overflow-y:auto; padding:4px 2px 8px; display:flex; flex-direction:column; gap:8px; min-height:0;"></div>
+                    <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;flex-shrink:0;">Назначить встречу ❤️</button>
                 </div>
             </div>
 
@@ -1070,7 +1105,7 @@
                 <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
             </div>
 
-            <!-- СЦЕНА 6: КОМНАТА (НОВЫЙ ДИЗАЙН) -->
+            <!-- СЦЕНА 6 -->
             <div id="scene6" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="room-bg" id="roomBg"></div>
                 <div class="room-overlay"></div>
@@ -1299,13 +1334,49 @@
             }
             function renderChatReplies(s){
                 const f=getChatFlow(); if(!f)return;
-                if(s>=f.length){chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';document.getElementById('toLocations').disabled=false;state.chatDone=true;chatRep.innerHTML='';chatCont.scrollTop=chatCont.scrollHeight;return;}
+                if(s>=f.length){
+                    chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';
+                    document.getElementById('toLocations').disabled=false;
+                    state.chatDone=true;
+                    chatRep.innerHTML='';
+                    chatCont.scrollTop=chatCont.scrollHeight;
+                    return;
+                }
                 chatRep.innerHTML='';
-                f[s].replies.forEach((r,i)=>{const b=document.createElement('button');b.textContent=r;b.addEventListener('click',()=>{chatCont.innerHTML+=`<div class="message mine">${r}</div>`;const n=s+1;if(n<f.length){chatCont.innerHTML+=`<div class="message theirs">${f[n].theirs}</div>`;renderChatReplies(n);}else{chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';document.getElementById('toLocations').disabled=false;state.chatDone=true;chatRep.innerHTML='';}chatCont.scrollTop=chatCont.scrollHeight;});chatRep.appendChild(b);});
+                f[s].replies.forEach((r,i)=>{
+                    const b=document.createElement('button');
+                    b.textContent=r;
+                    b.addEventListener('click',()=>{
+                        chatCont.innerHTML+=`<div class="message mine">${r}</div>`;
+                        const n=s+1;
+                        if(n<f.length){
+                            const typingMsg = document.createElement('div');
+                            typingMsg.className = 'message typing';
+                            typingMsg.textContent = 'Печатает...';
+                            chatCont.appendChild(typingMsg);
+                            chatCont.scrollTop=chatCont.scrollHeight;
+                            chatRep.style.pointerEvents = 'none';
+                            setTimeout(() => {
+                                if (typingMsg.parentNode) typingMsg.remove();
+                                chatCont.innerHTML+=`<div class="message theirs">${f[n].theirs}</div>`;
+                                renderChatReplies(n);
+                                chatRep.style.pointerEvents = 'auto';
+                                chatCont.scrollTop=chatCont.scrollHeight;
+                            }, 1500);
+                        } else {
+                            chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';
+                            document.getElementById('toLocations').disabled=false;
+                            state.chatDone=true;
+                            chatRep.innerHTML='';
+                        }
+                        chatCont.scrollTop=chatCont.scrollHeight;
+                    });
+                    chatRep.appendChild(b);
+                });
             }
             document.getElementById('toLocations').addEventListener('click',()=>{if(!state.chatDone)return;state.step=4;showScene('scene4');renderLocations();});
 
-            // ---------- СЦЕНА 4 ----------
+            // ---------- СЦЕНА 4 (исправленный скролл) ----------
             function renderLocations(){
                 const c=document.getElementById('locationCatalog'), l=getLocations(); if(!l?.length)return;
                 c.innerHTML='';
@@ -1350,11 +1421,10 @@
                 chat.appendChild(cd);chat.scrollTop=chat.scrollHeight;
             }
 
-            // ---------- СЦЕНА 6: КОМНАТА ----------
+            // ---------- СЦЕНА 6 ----------
             function goToRoom(){
                 state.step=6;state.roomDialogIndex=0;state.roomAffection=100;
                 showScene('scene6');
-                // Ставим фон room.png
                 document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')";
                 document.getElementById('roomAvatarSmall').src = state.currentPartner?.avatar || '';
                 document.getElementById('roomPartnerName').textContent = state.currentPartner?.name || '';
