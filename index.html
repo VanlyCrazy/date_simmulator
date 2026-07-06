@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Симулятор знакомств</title>
+    <title>Tantan — знакомства</title>
     <style>
         * {
             box-sizing: border-box;
@@ -233,7 +233,7 @@
             transform: scale(0.97);
         }
 
-        /* ----- СЦЕНА 2: ПОИСК (КАРТОЧКА НА ВЕСЬ ЭКРАН) ----- */
+        /* ----- СЦЕНА 2: ПОИСК ----- */
         #scene2 {
             flex: 1;
             display: flex;
@@ -280,11 +280,7 @@
             color: #ff4d8a;
             border: 1px solid rgba(255,77,138,0.3);
         }
-        .tinder-counter .heart {
-            margin-right: 2px;
-        }
 
-        /* Блок с информацией над кнопками */
         .tinder-info {
             position: relative;
             z-index: 3;
@@ -325,7 +321,6 @@
             color: #80e0a0;
         }
 
-        /* Блок с кнопками действий */
         .tinder-actions {
             position: relative;
             z-index: 5;
@@ -388,6 +383,113 @@
             background: rgba(255,255,255,0.15);
         }
 
+        /* ----- СЦЕНА 3: ПЕРЕПИСКА ----- */
+        .chat-container {
+            background: #0e0e22;
+            border-radius: 14px;
+            padding: 10px;
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border: 1px solid #2a2a4a;
+            scroll-behavior: smooth;
+            min-height: 0;
+        }
+        .chat-container::-webkit-scrollbar { width: 3px; }
+        .chat-container::-webkit-scrollbar-track { background: #0a0a1a; border-radius: 10px; }
+        .chat-container::-webkit-scrollbar-thumb { background: #4a4a7a; border-radius: 10px; }
+        .message {
+            max-width: 80%;
+            padding: 8px 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: msgAppear 0.2s ease;
+        }
+        .message.mine { background: #4a6a9a; align-self: flex-end; border-bottom-right-radius: 3px; }
+        .message.theirs { background: #222248; align-self: flex-start; border-bottom-left-radius: 3px; }
+
+        .chat-reply-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        .chat-reply-buttons button {
+            width: 100%;
+            text-align: left;
+            padding: 10px 16px;
+            background: #1a1a3e;
+            border: 1.5px solid #3a3a5e;
+            font-weight: 500;
+            font-size: 15px;
+            min-width: unset;
+            flex: none;
+            border-radius: 14px;
+            box-shadow: none;
+            color: #d0c8f0;
+            cursor: pointer;
+            transition: 0.15s ease;
+            line-height: 1.4;
+        }
+        .chat-reply-buttons button:hover { background: #222252; border-color: #4a4a7e; }
+        .chat-reply-buttons button:active { transform: scale(0.97); background: #2a2a52; border-color: #ff4d8a; }
+
+        /* ----- СЦЕНА 4: ЛОКАЦИИ ----- */
+        .catalog-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 8px 0;
+            flex: 1;
+            overflow-y: auto;
+            max-height: none;
+            padding: 0 2px;
+        }
+        .catalog-grid::-webkit-scrollbar { width: 3px; }
+        .catalog-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .catalog-grid::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
+        .catalog-item {
+            background: #16163a;
+            padding: 12px 14px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1.5px solid #2a2a4e;
+            cursor: pointer;
+            transition: 0.2s ease;
+            flex-shrink: 0;
+            min-height: 70px;
+        }
+        .catalog-item:hover { background: #1e1e48; border-color: #3a3a5e; }
+        .catalog-item:active { transform: scale(0.98); background: #222250; }
+        .catalog-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            object-fit: cover;
+            background: #2a2a4a;
+            border: 2px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .catalog-item .info { flex: 1; min-width: 0; }
+        .catalog-item .info h4 { font-size: 15px; color: #e0d8f0; font-weight: 700; margin-bottom: 4px; }
+        .catalog-item .info p { font-size: 12px; color: #9088b0; line-height: 1.3; }
+        .catalog-item .location-icon { font-size: 24px; margin-left: auto; opacity: 0.5; transition: 0.2s; }
+        .catalog-item:hover .location-icon { opacity: 0.8; }
+        .catalog-item.selected {
+            border: 2px solid #ff4d8a;
+            background: #1e1e4a;
+            box-shadow: 0 0 20px rgba(255,77,138,0.15);
+        }
+        .catalog-item.selected .location-icon { opacity: 1; color: #ff4d8a; }
+
         /* ----- СЦЕНА 5: СВИДАНИЕ ----- */
         #scene5 {
             flex: 1;
@@ -424,26 +526,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(180deg, rgba(13, 13, 32, 0.95) 50%, transparent);
+            background: linear-gradient(180deg, rgba(13,13,32,0.95) 50%, transparent);
         }
-        .date-top .partner-name {
-            font-weight: 700;
-            font-size: 24px;
-            color: #fff;
-            letter-spacing: 0.5px;
-        }
-        .date-top .affection-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .date-top .affection-wrap .bar {
-            width: 80px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
-            overflow: hidden;
-        }
+        .date-top .partner-name { font-weight: 700; font-size: 24px; color: #fff; letter-spacing: 0.5px; }
+        .date-top .affection-wrap { display: flex; align-items: center; gap: 8px; }
+        .date-top .affection-wrap .bar { width: 80px; height: 5px; background: rgba(255,255,255,0.12); border-radius: 20px; overflow: hidden; }
         .date-top .affection-wrap .bar .fill {
             height: 100%;
             width: 50%;
@@ -451,13 +538,7 @@
             border-radius: 20px;
             transition: width 0.4s ease;
         }
-        .date-top .affection-wrap .label {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ff4d8a;
-            min-width: 36px;
-            text-align: right;
-        }
+        .date-top .affection-wrap .label { font-size: 16px; font-weight: 700; color: #ff4d8a; min-width: 36px; text-align: right; }
 
         .date-chat {
             position: relative;
@@ -472,17 +553,9 @@
             min-height: 80px;
             scroll-behavior: smooth;
         }
-        .date-chat::-webkit-scrollbar {
-            width: 3px;
-        }
-        .date-chat::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-        }
-        .date-chat::-webkit-scrollbar-thumb {
-            background: rgba(255, 77, 138, 0.3);
-            border-radius: 10px;
-        }
+        .date-chat::-webkit-scrollbar { width: 3px; }
+        .date-chat::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .date-chat::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
 
         .date-msg {
             max-width: 88%;
@@ -498,10 +571,10 @@
             100% { opacity: 1; transform: translateY(0); }
         }
         .date-msg.theirs {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255,255,255,0.07);
             align-self: flex-start;
             border-bottom-left-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             color: #e8e4f0;
             backdrop-filter: blur(8px);
         }
@@ -512,8 +585,8 @@
             color: #fff;
         }
         .date-msg.system {
-            background: rgba(255, 77, 138, 0.1);
-            border: 1px solid rgba(255, 77, 138, 0.15);
+            background: rgba(255,77,138,0.1);
+            border: 1px solid rgba(255,77,138,0.15);
             align-self: center;
             color: #ff8aad;
             font-size: 12px;
@@ -534,8 +607,8 @@
             max-width: 88%;
         }
         .date-choices button {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.07);
             padding: 6px 12px;
             border-radius: 60px;
             color: #d0c8f0;
@@ -547,18 +620,9 @@
             width: 100%;
             backdrop-filter: blur(8px);
         }
-        .date-choices button:active {
-            transform: scale(0.97);
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .date-choices button.primary-choice {
-            background: #ff4d8a;
-            border-color: #ff4d8a;
-            color: #fff;
-        }
-        .date-choices button.primary-choice:active {
-            background: #e63a77;
-        }
+        .date-choices button:active { transform: scale(0.97); background: rgba(255,255,255,0.1); }
+        .date-choices button.primary-choice { background: #ff4d8a; border-color: #ff4d8a; color: #fff; }
+        .date-choices button.primary-choice:active { background: #e63a77; }
 
         .date-bottom-avatar {
             position: relative;
@@ -569,23 +633,17 @@
             justify-content: center;
             padding: 2px 4px 4px;
             margin-top: auto;
-            background: linear-gradient(0deg, rgba(13, 13, 32, 0.90) 10%, transparent);
+            background: linear-gradient(0deg, rgba(13,13,32,0.90) 10%, transparent);
             min-height: 280px;
             max-height: 460px;
         }
-        .date-bottom-avatar .avatar-wrap {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .date-bottom-avatar .avatar-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
         .date-bottom-avatar .avatar-wrap img {
             width: 100%;
             max-width: 300px;
             height: 100%;
             max-height: 440px;
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 9/16;
             object-fit: cover;
             border-radius: 14px;
             background: transparent;
@@ -596,8 +654,8 @@
         .btn-reset {
             position: relative;
             z-index: 3;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.06);
             padding: 5px 18px;
             border-radius: 60px;
             font-weight: 500;
@@ -609,13 +667,291 @@
             margin: 2px auto 6px;
             transition: 0.2s;
         }
-        .btn-reset:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.08);
+        .btn-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
+
+        /* ----- СЦЕНА 6: КОМНАТА (ПОЛНОСТЬЮ ПЕРЕДЕЛАНА) ----- */
+        #scene6 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+            border-radius: 0;
+            overflow: hidden;
+            background: #1a0a1a;
+            border: none;
+            margin: -10px -12px -12px;
+            padding: 0;
+            width: calc(100% + 24px);
         }
 
-        #scene5 .date-nav {
-            display: none !important;
+        /* Фон — картинка комнаты */
+        .room-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+        /* Затемнение для читаемости текста */
+        .room-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 5, 15, 0.6) 0%,
+                rgba(20, 10, 30, 0.4) 30%,
+                rgba(20, 10, 30, 0.4) 70%,
+                rgba(10, 5, 15, 0.85) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Контент поверх фона */
+        .room-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 12px 0;
+            min-height: 0;
+        }
+
+        /* Верхняя плашка с именем */
+        .room-top-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,77,138,0.15);
+            flex-shrink: 0;
+            margin-bottom: 8px;
+        }
+        .room-top-bar .room-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ff4d8a;
+            flex-shrink: 0;
+        }
+        .room-top-bar .room-info-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .room-top-bar .room-partner-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .room-top-bar .room-status {
+            font-size: 11px;
+            color: #ff8aad;
+            font-weight: 500;
+        }
+        .room-top-bar .room-hearts {
+            font-size: 18px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        /* Чат с диалогами — прокручиваемый */
+        .room-chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 4px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 0;
+            scroll-behavior: smooth;
+        }
+        .room-chat::-webkit-scrollbar {
+            width: 4px;
+        }
+        .room-chat::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            margin: 4px 0;
+        }
+        .room-chat::-webkit-scrollbar-thumb {
+            background: rgba(255, 77, 138, 0.4);
+            border-radius: 10px;
+        }
+        .room-chat::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 77, 138, 0.6);
+        }
+
+        /* Сообщения комнаты */
+        .room-msg {
+            max-width: 85%;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: msgAppear 0.3s ease;
+            word-break: break-word;
+        }
+        .room-msg.theirs {
+            background: rgba(255, 77, 138, 0.15);
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(255, 77, 138, 0.25);
+            color: #f0d0e0;
+            backdrop-filter: blur(8px);
+        }
+        .room-msg.mine {
+            background: linear-gradient(135deg, rgba(255, 77, 138, 0.55), rgba(255, 100, 150, 0.45));
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+            color: #fff;
+            border: 1px solid rgba(255, 77, 138, 0.35);
+        }
+        .room-msg.system {
+            background: rgba(255, 77, 138, 0.1);
+            border: 1px solid rgba(255, 77, 138, 0.15);
+            align-self: center;
+            color: #d090b0;
+            font-size: 12px;
+            border-radius: 40px;
+            padding: 6px 16px;
+            max-width: 90%;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Варианты ответов */
+        .room-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 4px;
+            align-self: flex-start;
+            width: 100%;
+            max-width: 85%;
+        }
+        .room-choices button {
+            background: rgba(255, 77, 138, 0.1);
+            border: 1.5px solid rgba(255, 77, 138, 0.25);
+            padding: 10px 16px;
+            border-radius: 16px;
+            color: #e0c0d8;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s ease;
+            width: 100%;
+            backdrop-filter: blur(8px);
+            line-height: 1.4;
+        }
+        .room-choices button:hover {
+            background: rgba(255, 77, 138, 0.2);
+            border-color: rgba(255, 77, 138, 0.5);
+        }
+        .room-choices button:active {
+            transform: scale(0.97);
+            background: rgba(255, 77, 138, 0.3);
+        }
+        .room-choices button.primary-choice {
+            background: rgba(255, 77, 138, 0.35);
+            border-color: #ff4d8a;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 0 12px rgba(255, 77, 138, 0.2);
+        }
+        .room-choices button.primary-choice:hover {
+            background: rgba(255, 77, 138, 0.5);
+        }
+
+        /* Ползунок симпатии в стиле комнаты */
+        .room-affection-bar-wrap {
+            position: relative;
+            z-index: 3;
+            flex-shrink: 0;
+            padding: 10px 16px 8px;
+            background: linear-gradient(0deg, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.7) 60%, transparent 100%);
+        }
+        .room-affection-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 77, 138, 0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .room-affection-inner .aff-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .room-affection-inner .aff-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .room-affection-inner .aff-bar .aff-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #ff2d6a, #ff4d8a, #ff9ec4);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(255, 77, 138, 0.5);
+        }
+        .room-affection-inner .aff-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ff4d8a;
+            min-width: 36px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Кнопка сброса */
+        .btn-room-reset {
+            position: relative;
+            z-index: 3;
+            flex-shrink: 0;
+            margin: 6px auto 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #b090a0;
+            font-size: 13px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: 0.2s;
+        }
+        .btn-room-reset:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #d0b0c0;
+        }
+        .btn-room-reset:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* Остальные сцены */
@@ -630,12 +966,7 @@
             min-height: 0;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
-        .simple-card .btn-group {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+        .simple-card .btn-group { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
         .simple-card .btn-group button {
             background: #2a2a4e;
             border: 1px solid #3a3a5e;
@@ -644,175 +975,25 @@
             font-weight: 500;
             color: #d0c8f0;
             font-size: 11px;
-            flex: 0 1 auto;
-            min-width: 44px;
-            box-shadow: none;
-            border-bottom: none;
             cursor: pointer;
             transition: 0.15s;
         }
-        .simple-card .btn-group button:active {
-            transform: scale(0.95);
-            background: #3a3a5e;
-        }
-        .simple-card .btn-group button.primary {
-            background: #ff4d8a;
-            border-color: #ff4d8a;
-            color: white;
-        }
-        .simple-card .btn-group button.next-btn {
-            background: #4a6aaa;
-            border-color: #4a6aaa;
-            color: white;
-        }
-        .simple-card .btn-group button:disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .catalog-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin: 3px 0;
-            flex: 1;
-            overflow-y: auto;
-            max-height: 160px;
-        }
-        .catalog-item {
-            background: #16163a;
-            padding: 3px 10px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid #2a2a4e;
-            cursor: pointer;
-            transition: 0.1s;
-            flex-shrink: 0;
-        }
-        .catalog-item:active {
-            transform: scale(0.98);
-        }
-        .catalog-item img {
-            width: 28px;
-            height: 28px;
-            border-radius: 30px;
-            object-fit: cover;
-            background: #2a2a4a;
-        }
-        .catalog-item .info {
-            flex: 1;
-        }
-        .catalog-item .info h4 {
-            font-size: 12px;
-            color: #e0d8f0;
-        }
-        .catalog-item .info p {
-            font-size: 9px;
-            color: #9088b0;
-        }
-        .catalog-item.selected {
-            border: 2px solid #ff4d8a;
-            background: #1e1e4a;
-        }
-
-        .chat-container {
-            background: #0e0e22;
-            border-radius: 14px;
-            padding: 6px;
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 3px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            border: 1px solid #2a2a4a;
-            scroll-behavior: smooth;
-            min-height: 0;
-        }
-        .chat-container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .chat-container::-webkit-scrollbar-track {
-            background: #0a0a1a;
-            border-radius: 10px;
-        }
-        .chat-container::-webkit-scrollbar-thumb {
-            background: #4a4a7a;
-            border-radius: 10px;
-        }
-        .message {
-            max-width: 80%;
-            padding: 4px 10px;
-            border-radius: 14px;
-            font-size: 12px;
-            line-height: 1.4;
-            word-break: break-word;
-            animation: msgAppear 0.2s ease;
-        }
-        .message.mine {
-            background: #4a6a9a;
-            align-self: flex-end;
-            border-bottom-right-radius: 3px;
-        }
-        .message.theirs {
-            background: #222248;
-            align-self: flex-start;
-            border-bottom-left-radius: 3px;
-        }
-        .chat-reply-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-        .chat-reply-buttons button {
-            width: 100%;
-            text-align: left;
-            padding: 3px 10px;
-            background: #1a1a3e;
-            border: 1px solid #3a3a5e;
-            font-weight: 400;
-            font-size: 11px;
-            min-width: unset;
-            flex: none;
-            border-radius: 60px;
-            box-shadow: none;
-            border-bottom: none;
-            color: #d0c8f0;
-            cursor: pointer;
-        }
-        .chat-reply-buttons button:active {
-            transform: scale(0.97);
-            background: #2a2a52;
-        }
-
-        .persona-preview img.avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
-            object-fit: cover;
-            border: 3px solid #ff4d8a;
-            background: #2a2a4a;
-        }
+        .simple-card .btn-group button:active { transform: scale(0.95); background: #3a3a5e; }
+        .simple-card .btn-group button.primary { background: #ff4d8a; border-color: #ff4d8a; color: white; }
+        .simple-card .btn-group button.next-btn { background: #4a6aaa; border-color: #4a6aaa; color: white; }
+        .simple-card .btn-group button:disabled { opacity: 0.3; pointer-events: none; }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Верхняя панель -->
         <div class="top-bar" id="mainTopBar">
             <span class="time">9:42</span>
             <span class="logo">TANTAN</span>
-            <div class="icons">
-                <span>🔔</span>
-                <span>⚙️</span>
-            </div>
+            <div class="icons"><span>🔔</span><span>⚙️</span></div>
         </div>
 
         <div id="sceneContainer" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-            <!-- СЦЕНА 1: ВЫБОР ПОЛА И СТИЛЯ -->
+            <!-- СЦЕНА 1 -->
             <div id="scene1" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="gender-selector">
                     <span class="label">👤 Выбери свой пол</span>
@@ -821,117 +1002,136 @@
                         <button id="genderFemale" data-gender="female">Женщина</button>
                     </div>
                 </div>
-
                 <div class="avatar-display" id="avatarDisplay">
                     <img id="mainAvatar" src="assets/boy1.png" alt="аватар" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                     <div class="avatar-placeholder" style="display:none;">👤</div>
                 </div>
-
                 <div class="style-selector">
-                    <button data-style="style1" class="active">
-                        <span class="icon">🕶️</span>
-                        <span class="label">Стиль 1</span>
-                    </button>
-                    <button data-style="style2">
-                        <span class="icon">🎸</span>
-                        <span class="label">Стиль 2</span>
-                    </button>
-                    <button data-style="style3">
-                        <span class="icon">🧢</span>
-                        <span class="label">Стиль 3</span>
-                    </button>
+                    <button data-style="style1" class="active"><span class="icon">🕶️</span><span class="label">Стиль 1</span></button>
+                    <button data-style="style2"><span class="icon">🎸</span><span class="label">Стиль 2</span></button>
+                    <button data-style="style3"><span class="icon">🧢</span><span class="label">Стиль 3</span></button>
                 </div>
-
-                <div class="next-btn-wrap">
-                    <button id="toScene2" disabled>Далее →</button>
-                </div>
+                <div class="next-btn-wrap"><button id="toScene2" disabled>Далее →</button></div>
             </div>
 
-            <!-- СЦЕНА 2: ПОИСК (НОВЫЙ ДИЗАЙН — ТЕКСТ НАД КНОПКАМИ) -->
+            <!-- СЦЕНА 2 -->
             <div id="scene2" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="tinder-card-wrapper" id="tinderCard">
                     <div class="tinder-photo">
-                        <img id="tinderAvatar" src="assets/girl1.png" alt="партнёр" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'600\' viewBox=\'0 0 400 600\'%3E%3Crect width=\'400\' height=\'600\' fill=\'%231a1a2e\'/%3E%3Ccircle cx=\'200\' cy=\'230\' r=\'90\' fill=\'%23b38b5a\'/%3E%3C/svg%3E'">
-                        <div class="tinder-counter" id="matchCounter">
-                            <span class="heart">❤️</span> <span id="matchCount">0</span>
-                        </div>
+                        <img id="tinderAvatar" src="assets/girl1.png" alt="партнёр">
+                        <div class="tinder-counter" id="matchCounter"><span class="heart">❤️</span> <span id="matchCount">0</span></div>
                     </div>
-                    
-                    <!-- ТЕКСТ НАД КНОПКАМИ -->
                     <div class="tinder-info">
                         <div class="name-age" id="tinderName">Анна, 24</div>
-                        <div class="desc" id="tinderDesc">
-                            <span class="job-badge">💼 Дизайнер</span>
-                            <span class="badge">♏ Скорпион</span>
-                            <span class="city-badge">📍 Москва</span>
-                        </div>
+                        <div class="desc" id="tinderDesc"><span class="job-badge">💼 Дизайнер</span><span class="badge">♏ Скорпион</span><span class="city-badge">📍 Москва</span></div>
                     </div>
-                    
-                    <!-- КНОПКИ В САМОМ НИЗУ -->
                     <div class="tinder-actions">
-                        <button class="btn-dislike" id="tinderDislike" title="Не нравится">✕</button>
-                        <button class="btn-chat" id="toChat" title="Написать">💬 Написать</button>
-                        <button class="btn-like" id="tinderLike" title="Нравится">❤️</button>
+                        <button class="btn-dislike" id="tinderDislike">✕</button>
+                        <button class="btn-chat" id="toChat">💬 Написать</button>
+                        <button class="btn-like" id="tinderLike">❤️</button>
                     </div>
                 </div>
             </div>
 
-            <!-- СЦЕНА 3: ПЕРЕПИСКА -->
+            <!-- СЦЕНА 3 -->
             <div id="scene3" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="simple-card" style="padding:8px;">
-                    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; padding:0 2px;">
-                        <img id="chatPartnerAvatar" src="assets/girl1.png" style="width:28px;height:28px;border-radius:50%;background:#2a2a4a;border:2px solid #ff4d8a;" onerror="this.style.display='none'">
-                        <span id="chatPartnerName" style="font-weight:600; font-size:14px; color:#f0ecff;">Анна</span>
-                        <span style="margin-left:auto; font-size:10px; color:#6a6290;">онлайн</span>
+                    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; padding:0 2px; margin-bottom:8px;">
+                        <img id="chatPartnerAvatar" src="assets/girl1.png" style="width:32px;height:32px;border-radius:50%;background:#2a2a4a;border:2px solid #ff4d8a;">
+                        <span id="chatPartnerName" style="font-weight:600;font-size:16px;color:#f0ecff;">Анна</span>
+                        <span style="margin-left:auto;font-size:11px;color:#6a6290;">онлайн</span>
                     </div>
-                    <div class="chat-container" id="chatMessages">
-                        <div class="message theirs">Привет! 😊 Как дела?</div>
-                    </div>
+                    <div class="chat-container" id="chatMessages"><div class="message theirs">Привет! 😊 Как дела?</div></div>
                     <div class="chat-reply-buttons" id="chatReplies"></div>
-                    <button id="toLocations" disabled style="margin-top:3px; flex-shrink:0; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Выбрать место</button>
+                    <button id="toLocations" disabled style="margin-top:8px;padding:8px 24px;font-size:14px;align-self:center;background:#4a6aaa;border:none;color:white;border-radius:60px;cursor:pointer;">Выбрать место</button>
                 </div>
             </div>
 
-            <!-- СЦЕНА 4: ЛОКАЦИИ -->
+            <!-- СЦЕНА 4 -->
             <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="simple-card">
-                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:0 2px;">
-                        <span style="font-size:13px; color:#b0a8d0;">📍 Выбери место</span>
+                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;">
+                        <span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span>
                     </div>
                     <div id="locationCatalog" class="catalog-grid"></div>
-                    <button id="toDate" style="flex-shrink:0; margin-top:3px; padding:4px 16px; font-size:11px; flex:0 1 auto; align-self:center; background:#4a6aaa; border:1px solid #4a6aaa; color:white; border-radius:60px; cursor:pointer;">Назначить встречу</button>
+                    <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;">Назначить встречу ❤️</button>
                 </div>
             </div>
 
-            <!-- СЦЕНА 5: СВИДАНИЕ -->
+            <!-- СЦЕНА 5 -->
             <div id="scene5" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="date-bg" id="dateBg"></div>
                 <div class="date-top">
                     <div class="partner-name" id="datePartnerName">Анна</div>
-                    <div class="affection-wrap">
-                        <div class="bar">
-                            <div class="fill" id="affectionFill" style="width:50%;"></div>
-                        </div>
-                        <span class="label" id="affectionLabel">50%</span>
-                    </div>
+                    <div class="affection-wrap"><div class="bar"><div class="fill" id="affectionFill" style="width:50%;"></div></div><span class="label" id="affectionLabel">50%</span></div>
                 </div>
                 <div class="date-chat" id="dateChat"></div>
-                <div class="date-bottom-avatar">
-                    <div class="avatar-wrap">
-                        <img id="dateAvatar" src="assets/girl1.png" alt="партнёр" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'533\' viewBox=\'0 0 300 533\'%3E%3Crect width=\'300\' height=\'533\' fill=\'%231a1a2a\'/%3E%3Ccircle cx=\'150\' cy=\'220\' r=\'80\' fill=\'%23b38b5a\'/%3E%3C/svg%3E'">
+                <div class="date-bottom-avatar"><div class="avatar-wrap"><img id="dateAvatar" src="assets/girl1.png"></div></div>
+                <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
+            </div>
+
+            <!-- СЦЕНА 6: КОМНАТА (НОВЫЙ ДИЗАЙН) -->
+            <div id="scene6" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+                <div class="room-bg" id="roomBg"></div>
+                <div class="room-overlay"></div>
+                <div class="room-content">
+                    <div class="room-top-bar">
+                        <img id="roomAvatarSmall" class="room-avatar-small" src="assets/girl1.png" alt="">
+                        <div class="room-info-text">
+                            <div class="room-partner-name" id="roomPartnerName">Анна</div>
+                            <div class="room-status">💕 Идеальное свидание</div>
+                        </div>
+                        <span class="room-hearts">💗</span>
+                    </div>
+                    <div class="room-chat" id="roomChat"></div>
+                </div>
+                <div class="room-affection-bar-wrap">
+                    <div class="room-affection-inner">
+                        <span class="aff-icon">🔥</span>
+                        <div class="aff-bar"><div class="aff-fill" id="roomAffectionFill" style="width:100%;"></div></div>
+                        <span class="aff-value" id="roomAffectionValue">100%</span>
                     </div>
                 </div>
-                <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
+                <button class="btn-room-reset" id="resetFromRoom">🔄 Начать заново</button>
             </div>
         </div>
     </div>
 
     <script>
         (function() {
-            console.log('[APP] Tantan — текст над кнопками');
+            console.log('[APP] Tantan — комната с room.png');
 
             let gameData = null;
-            let dataLoaded = false;
+
+            const defaultLocations = [
+                { name: '☕ Уютная кофейня', desc: 'Тихое место с атмосферой', bg: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop' },
+                { name: '🍽️ Итальянский ресторан', desc: 'Романтический ужин при свечах', bg: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop' },
+                { name: '🎬 Кинотеатр', desc: 'Новый блокбастер и попкорн', bg: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=300&fit=crop' },
+                { name: '🌳 Парк аттракционов', desc: 'Веселье и адреналин', bg: 'https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=400&h=300&fit=crop' },
+                { name: '🎨 Галерея искусств', desc: 'Культурный досуг и вдохновение', bg: 'https://images.unsplash.com/photo-1531913764164-f85c3e89fdc9?w=400&h=300&fit=crop' },
+                { name: '🎵 Джаз-клуб', desc: 'Живая музыка и коктейли', bg: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=400&h=300&fit=crop' },
+                { name: '🏖️ Набережная', desc: 'Прогулка у воды на закате', bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop' },
+                { name: '🍣 Суши-бар', desc: 'Японская кухня и уют', bg: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&h=300&fit=crop' },
+                { name: '🎳 Боулинг', desc: 'Активный отдых и соревнования', bg: 'https://images.unsplash.com/photo-1558730232-3b73b29f2a7f?w=400&h=300&fit=crop' },
+                { name: '🌿 Ботанический сад', desc: 'Красота природы и спокойствие', bg: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&h=300&fit=crop' }
+            ];
+
+            const roomDialogs = {
+                male: [
+                    { text: 'Девушка: Здесь так уютно... Я рада, что мы продолжили вечер 😊', choices: ['Мне тоже очень хорошо с тобой 🥰', 'Да, атмосфера супер! Что будем делать?', 'Я давно хотел побыть с тобой наедине...'], effects: [5, 3, 8] },
+                    { text: 'Девушка: Ты такой интересный собеседник... Расскажи о своих мечтах?', choices: ['Хочу путешествовать с тобой по всему миру ✈️', 'Мечтаю о семье и уютном доме 🏡', 'Моя главная мечта — чтобы ты была счастлива 💕'], effects: [7, 5, 10] },
+                    { text: 'Девушка: У тебя такие красивые глаза... В них можно утонуть 😍', choices: ['Твои тоже... особенно при этом свете ✨', 'Спасибо! Ты меня смущаешь 😊', 'Подойди ближе, я хочу получше тебя рассмотреть...'], effects: [6, 4, 9] },
+                    { text: 'Девушка: Я так давно не чувствовала себя такой особенной...', choices: ['Ты заслуживаешь всего самого лучшего ❤️', 'Я хочу, чтобы ты всегда так чувствовала себя со мной', 'Можно тебя обнять? 🤗'], effects: [8, 10, 7] },
+                    { text: 'Девушка: Знаешь... я очень хочу, чтобы этот вечер никогда не заканчивался...', choices: ['Он только начинается... 😉', 'У нас впереди ещё много таких вечеров 💫', 'Я тоже... давай просто наслаждаться моментом'], effects: [8, 6, 5] }
+                ],
+                female: [
+                    { text: 'Парень: Здесь так уютно... Я рад, что мы продолжили вечер 😊', choices: ['Мне тоже очень хорошо с тобой 🥰', 'Да, атмосфера супер! Что будем делать?', 'Я давно хотела побыть с тобой наедине...'], effects: [5, 3, 8] },
+                    { text: 'Парень: Ты такая интересная... Расскажи о своих мечтах?', choices: ['Хочу путешествовать с тобой по всему миру ✈️', 'Мечтаю о семье и уютном доме 🏡', 'Моя главная мечта — чтобы ты был счастлив 💕'], effects: [7, 5, 10] },
+                    { text: 'Парень: У тебя такие красивые глаза... В них можно утонуть 😍', choices: ['Твои тоже... особенно при этом свете ✨', 'Спасибо! Ты меня смущаешь 😊', 'Подойди ближе, я хочу получше тебя рассмотреть...'], effects: [6, 4, 9] },
+                    { text: 'Парень: Я так давно не чувствовал себя таким счастливым...', choices: ['Ты заслуживаешь всего самого лучшего ❤️', 'Я хочу, чтобы ты всегда так чувствовал себя со мной', 'Можно тебя обнять? 🤗'], effects: [8, 10, 7] },
+                    { text: 'Парень: Знаешь... я очень хочу, чтобы этот вечер никогда не заканчивался...', choices: ['Он только начинается... 😉', 'У нас впереди ещё много таких вечеров 💫', 'Я тоже... давай просто наслаждаться моментом'], effects: [8, 6, 5] }
+                ]
+            };
 
             async function loadGameData() {
                 try {
@@ -940,446 +1140,279 @@
                     const data = await response.json();
                     if (data.partners && data.locations && data.dialogs && data.chatFlow) {
                         gameData = data;
+                        if (!data.roomDialogs) data.roomDialogs = roomDialogs;
                         console.log('[DATA] Загружено из data.json');
-                    } else {
-                        throw new Error('Неверная структура');
-                    }
+                    } else throw new Error('Неверная структура');
                 } catch (e) {
-                    console.warn('[DATA] Ошибка загрузки data.json:', e);
-                    gameData = null;
-                }
-                dataLoaded = true;
-                if (state.gender) {
-                    renderTinder();
+                    console.warn('[DATA] Ошибка, используются встроенные данные:', e);
+                    gameData = {
+                        partners: {
+                            male: [
+                                { name: 'Алексей', avatar: 'assets/boy1.png', age: 25, job: 'Тренер', zodiac: '♌ Лев', city: 'Москва' },
+                                { name: 'Дмитрий', avatar: 'assets/boy2.png', age: 28, job: 'Гитарист', zodiac: '♓ Рыбы', city: 'СПб' },
+                                { name: 'Максим', avatar: 'assets/boy3.png', age: 23, job: 'Разработчик', zodiac: '♍ Дева', city: 'Казань' }
+                            ],
+                            female: [
+                                { name: 'Анна', avatar: 'assets/girl1.png', age: 24, job: 'Дизайнер', zodiac: '♏ Скорпион', city: 'Москва' },
+                                { name: 'Екатерина', avatar: 'assets/girl2.png', age: 26, job: 'Фотограф', zodiac: '♊ Близнецы', city: 'СПб' },
+                                { name: 'Мария', avatar: 'assets/girl3.png', age: 22, job: 'Художник', zodiac: '♋ Рак', city: 'Сочи' }
+                            ]
+                        },
+                        locations: defaultLocations,
+                        dialogs: {
+                            male: [
+                                { text: 'Девушка: Привет! Рада тебя видеть 😊', choices: ['Привет! Отлично выглядишь!', 'Привет... эээ... ну привет.'], effects: [10, -5] },
+                                { text: 'Девушка: Спасибо! Как настроение?', choices: ['Супер! А у тебя?', 'Нормально. Что будем делать?'], effects: [8, -3] },
+                                { text: 'Девушка: У меня отличное! Давай закажем что-нибудь?', choices: ['Конечно! Что ты любишь?', 'Я не голоден.'], effects: [10, -10] }
+                            ],
+                            female: [
+                                { text: 'Парень: Привет! Ты ещё красивее, чем на фото 😊', choices: ['Ой, спасибо! Ты тоже ничего 😉', 'Эм... спасибо, наверное.'], effects: [10, -5] },
+                                { text: 'Парень: Как прошёл твой день?', choices: ['Отлично! Рассказывай, как твой?', 'Нормально. Давай без лишних вопросов.'], effects: [8, -8] },
+                                { text: 'Парень: Здорово! Может по коктейлю?', choices: ['Давай! Я люблю мохито 🍹', 'Я не пью алкоголь.'], effects: [10, -5] }
+                            ]
+                        },
+                        chatFlow: {
+                            male: [
+                                { theirs: 'Привет! Как настроение? 😊', replies: ['Отличное! А твоё?', 'Нормально, а у тебя?', 'Супер! Давно хотел написать 😉'] },
+                                { theirs: 'У меня тоже хорошо! Чем занимаешься?', replies: ['Смотрю кино, скучно одному 😅', 'Работаю над проектом', 'Думаю о тебе 😊'] },
+                                { theirs: 'Ого! Может встретимся?', replies: ['Да, давай! Когда?', 'А куда пойдём?', 'Я только ЗА! ❤️'] }
+                            ],
+                            female: [
+                                { theirs: 'Привет! Как твои дела? 😊', replies: ['Привет! Всё супер! 😊', 'Нормально, а ты как?', 'Отлично! Ждала твоего сообщения 💕'] },
+                                { theirs: 'Я рад! Что делаешь?', replies: ['Смотрю сериал, скучаю 😅', 'Готовлю ужин', 'Думаю о нашей встрече 😉'] },
+                                { theirs: 'Круто! Может увидимся?', replies: ['С удовольствием! Где?', 'Давай! Когда тебе удобно?', 'Я только ЗА! ❤️'] }
+                            ]
+                        },
+                        roomDialogs: roomDialogs
+                    };
                 }
             }
 
             let state = {
-                step: 1,
-                gender: null,
-                style: 'style1',
-                likedIndex: 0,
-                likedList: [],
-                currentPartner: null,
-                selectedLocationIndex: 0,
-                affection: 50,
-                dialogIndex: 0,
-                chatStep: 0,
-                chatDone: false,
-                dateHistory: [],
+                step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
+                currentPartner: null, selectedLocationIndex: 0, affection: 50,
+                dialogIndex: 0, chatStep: 0, chatDone: false,
+                roomDialogIndex: 0, roomAffection: 100
             };
 
             const scenes = {
-                scene1: document.getElementById('scene1'),
-                scene2: document.getElementById('scene2'),
-                scene3: document.getElementById('scene3'),
-                scene4: document.getElementById('scene4'),
-                scene5: document.getElementById('scene5'),
+                scene1: document.getElementById('scene1'), scene2: document.getElementById('scene2'),
+                scene3: document.getElementById('scene3'), scene4: document.getElementById('scene4'),
+                scene5: document.getElementById('scene5'), scene6: document.getElementById('scene6')
             };
-
             const mainTopBar = document.getElementById('mainTopBar');
 
             function showScene(id) {
-                Object.keys(scenes).forEach(key => {
-                    scenes[key].classList.toggle('hidden', key !== id);
-                });
-                if (id === 'scene5') {
+                Object.keys(scenes).forEach(k => scenes[k].classList.toggle('hidden', k !== id));
+                if (id === 'scene5' || id === 'scene6') {
                     mainTopBar.style.display = 'none';
                     document.getElementById('app').style.borderRadius = '0';
                     document.getElementById('app').style.border = 'none';
                     document.getElementById('app').style.boxShadow = 'none';
                     document.getElementById('app').style.padding = '0';
-                    document.getElementById('app').style.background = '#0d0d20';
+                    document.getElementById('app').style.background = id === 'scene6' ? '#1a0a1a' : '#0d0d20';
                 } else {
                     mainTopBar.style.display = 'flex';
                     document.getElementById('app').style.borderRadius = '36px';
                     document.getElementById('app').style.border = '1px solid #222244';
-                    document.getElementById('app').style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.95)';
+                    document.getElementById('app').style.boxShadow = '0 20px 60px rgba(0,0,0,0.95)';
                     document.getElementById('app').style.padding = '10px 12px 12px';
                     document.getElementById('app').style.background = '#111122';
                 }
             }
 
-            function updateAffectionUI() {
-                const val = Math.min(100, Math.max(0, state.affection));
-                const fill = document.getElementById('affectionFill');
-                const label = document.getElementById('affectionLabel');
-                if (fill) fill.style.width = val + '%';
-                if (label) label.textContent = val + '%';
-            }
+            function getPartners() { return gameData?.partners[state.gender==='male'?'male':'female']; }
+            function getDialogs() { return gameData?.dialogs[state.gender==='male'?'male':'female']; }
+            function getChatFlow() { return gameData?.chatFlow[state.gender==='male'?'male':'female']; }
+            function getLocations() { return gameData?.locations || defaultLocations; }
+            function getRoomDialogs() { return gameData?.roomDialogs?.[state.gender==='male'?'male':'female'] || roomDialogs.male; }
 
-            function getPartners() {
-                if (!gameData) return null;
-                return gameData.partners[state.gender === 'male' ? 'male' : 'female'];
-            }
-
-            function getDialogs() {
-                if (!gameData) return null;
-                return gameData.dialogs[state.gender === 'male' ? 'male' : 'female'];
-            }
-
-            function getChatFlow() {
-                if (!gameData) return null;
-                return gameData.chatFlow[state.gender === 'male' ? 'male' : 'female'];
-            }
-
-            function getLocations() {
-                if (!gameData) return null;
-                return gameData.locations;
-            }
-
-            // ---------- СЦЕНА 1: ВЫБОР ПОЛА И СТИЛЯ ----------
-            const genderMale = document.getElementById('genderMale');
-            const genderFemale = document.getElementById('genderFemale');
+            // ---------- СЦЕНА 1 ----------
             const mainAvatar = document.getElementById('mainAvatar');
             const toScene2Btn = document.getElementById('toScene2');
-
-            const styleImages = {
-                male: {
-                    style1: 'assets/boy1.png',
-                    style2: 'assets/boy2.png',
-                    style3: 'assets/boy3.png'
-                },
-                female: {
-                    style1: 'assets/girl1.png',
-                    style2: 'assets/girl2.png',
-                    style3: 'assets/girl3.png'
-                }
+            const styleImgs = {
+                male:{style1:'assets/boy1.png',style2:'assets/boy2.png',style3:'assets/boy3.png'},
+                female:{style1:'assets/girl1.png',style2:'assets/girl2.png',style3:'assets/girl3.png'}
             };
-
             function updateAvatar() {
-                if (!state.gender || !state.style) return;
-                const genderKey = state.gender;
-                const styleKey = state.style;
-                const imgPath = styleImages[genderKey]?.[styleKey] || 'assets/default.png';
-                mainAvatar.src = imgPath;
-                mainAvatar.style.display = 'block';
-                const placeholder = mainAvatar.nextElementSibling;
-                if (placeholder) placeholder.style.display = 'none';
+                if(!state.gender||!state.style)return;
+                mainAvatar.src = styleImgs[state.gender]?.[state.style] || '';
+                mainAvatar.style.display='block';
+                mainAvatar.nextElementSibling.style.display='none';
             }
-
-            document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const gender = this.dataset.gender;
-                    state.gender = gender;
-                    document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(b => {
-                        b.classList.remove('active-male', 'active-female');
-                    });
-                    if (gender === 'male') {
-                        this.classList.add('active-male');
-                    } else {
-                        this.classList.add('active-female');
-                    }
-                    updateAvatar();
-                    checkEnabled();
-                });
-            });
-
-            document.querySelectorAll('#scene1 .style-selector button').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    state.style = this.dataset.style;
-                    updateAvatar();
-                    checkEnabled();
-                });
-            });
-
-            function checkEnabled() {
-                if (state.gender && state.style) {
-                    toScene2Btn.classList.add('enabled');
-                    toScene2Btn.disabled = false;
-                } else {
-                    toScene2Btn.classList.remove('enabled');
-                    toScene2Btn.disabled = true;
-                }
+            document.querySelectorAll('#scene1 .gender-selector button').forEach(b=>b.addEventListener('click',function(){
+                state.gender=this.dataset.gender;
+                document.querySelectorAll('#scene1 .gender-selector button').forEach(x=>x.classList.remove('active-male','active-female'));
+                this.classList.add(state.gender==='male'?'active-male':'active-female');
+                updateAvatar(); checkEnabled();
+            }));
+            document.querySelectorAll('#scene1 .style-selector button').forEach(b=>b.addEventListener('click',function(){
+                document.querySelectorAll('#scene1 .style-selector button').forEach(x=>x.classList.remove('active'));
+                this.classList.add('active'); state.style=this.dataset.style;
+                updateAvatar(); checkEnabled();
+            }));
+            function checkEnabled(){
+                if(state.gender&&state.style){toScene2Btn.classList.add('enabled');toScene2Btn.disabled=false;}
+                else{toScene2Btn.classList.remove('enabled');toScene2Btn.disabled=true;}
             }
-
-            toScene2Btn.addEventListener('click', () => {
-                if (!state.gender || !state.style) return;
-                state.step = 2;
-                showScene('scene2');
-                state.likedIndex = 0;
-                state.likedList = [];
-                document.getElementById('matchCount').textContent = '0';
-                renderTinder();
+            toScene2Btn.addEventListener('click',()=>{
+                if(!state.gender||!state.style)return;
+                state.step=2;state.likedIndex=0;state.likedList=[];
+                document.getElementById('matchCount').textContent='0';
+                showScene('scene2'); renderTinder();
             });
 
-            // ---------- СЦЕНА 2: ПОИСК (НОВЫЙ ДИЗАЙН) ----------
-            function renderTinder() {
-                const partners = getPartners();
-                if (!partners || partners.length === 0) {
-                    document.getElementById('tinderName').textContent = 'Ошибка загрузки';
-                    document.getElementById('tinderDesc').innerHTML = '<span>Проверь data.json</span>';
-                    return;
-                }
-                const idx = state.likedIndex % partners.length;
-                const p = partners[idx];
-                const avatarEl = document.getElementById('tinderAvatar');
-                avatarEl.src = p.avatar || 'assets/default.png';
-                
-                // Имя + возраст
-                const age = p.age || Math.floor(Math.random() * 10 + 20);
-                document.getElementById('tinderName').textContent = `${p.name || 'Неизвестный'}, ${age}`;
-                
-                // Описание с бейджами
-                const descEl = document.getElementById('tinderDesc');
-                let descHTML = '';
-                if (p.job) descHTML += `<span class="job-badge">💼 ${p.job}</span>`;
-                if (p.zodiac) descHTML += `<span class="badge">${p.zodiac}</span>`;
-                if (p.city) descHTML += `<span class="city-badge">📍 ${p.city}</span>`;
-                if (p.desc && !p.job && !p.zodiac && !p.city) {
-                    descHTML = `<span>${p.desc}</span>`;
-                }
-                descEl.innerHTML = descHTML || '<span>Без описания</span>';
-                
+            // ---------- СЦЕНА 2 ----------
+            function renderTinder(){
+                const p = getPartners(); if(!p?.length) return;
+                const partner = p[state.likedIndex % p.length];
+                document.getElementById('tinderAvatar').src = partner.avatar || '';
+                document.getElementById('tinderName').textContent = `${partner.name||'?'}, ${partner.age||'?'}`;
+                let d=''; if(partner.job)d+=`<span class="job-badge">💼 ${partner.job}</span>`;
+                if(partner.zodiac)d+=`<span class="badge">${partner.zodiac}</span>`;
+                if(partner.city)d+=`<span class="city-badge">📍 ${partner.city}</span>`;
+                document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc||''}</span>`;
                 document.getElementById('matchCount').textContent = state.likedList.length;
             }
-
-            document.getElementById('tinderLike').addEventListener('click', () => {
-                const partners = getPartners();
-                if (!partners || partners.length === 0) return;
-                const idx = state.likedIndex % partners.length;
-                const p = partners[idx];
-                if (!state.likedList.some(pp => pp.name === p.name)) {
-                    state.likedList.push(p);
-                }
-                state.likedIndex++;
-                renderTinder();
+            document.getElementById('tinderLike').addEventListener('click',()=>{
+                const p=getPartners(); if(!p?.length)return;
+                const partner=p[state.likedIndex%p.length];
+                if(!state.likedList.some(x=>x.name===partner.name)) state.likedList.push(partner);
+                state.likedIndex++; renderTinder();
+            });
+            document.getElementById('tinderDislike').addEventListener('click',()=>{state.likedIndex++;renderTinder();});
+            document.getElementById('toChat').addEventListener('click',()=>{
+                if(!state.likedList.length){alert('Выбери кого-нибудь ❤️');return;}
+                state.currentPartner=state.likedList[0]; state.step=3;
+                showScene('scene3'); initChat();
             });
 
-            document.getElementById('tinderDislike').addEventListener('click', () => {
-                state.likedIndex++;
-                renderTinder();
-            });
-
-            document.getElementById('toChat').addEventListener('click', () => {
-                if (state.likedList.length === 0) {
-                    alert('Выбери хотя бы одного человека ❤️');
-                    return;
-                }
-                state.currentPartner = state.likedList[0];
-                state.step = 3;
-                showScene('scene3');
-                initChat();
-            });
-
-            // ---------- СЦЕНА 3: ПЕРЕПИСКА ----------
-            const chatContainer = document.getElementById('chatMessages');
-            const chatReplies = document.getElementById('chatReplies');
-            const chatPartnerAvatar = document.getElementById('chatPartnerAvatar');
-            const chatPartnerName = document.getElementById('chatPartnerName');
-
-            function initChat() {
-                state.chatStep = 0;
-                state.chatDone = false;
-                document.getElementById('toLocations').disabled = true;
-                chatPartnerAvatar.src = state.currentPartner.avatar || 'assets/default.png';
-                chatPartnerName.textContent = state.currentPartner.name || 'Партнёр';
-                const flow = getChatFlow();
-                if (!flow) {
-                    chatContainer.innerHTML = '<div class="message theirs">Ошибка загрузки диалогов</div>';
-                    return;
-                }
-                chatContainer.innerHTML = `<div class="message theirs">${flow[0].theirs}</div>`;
-                renderChatReplies(0);
+            // ---------- СЦЕНА 3 ----------
+            const chatCont=document.getElementById('chatMessages'), chatRep=document.getElementById('chatReplies');
+            function initChat(){
+                state.chatStep=0;state.chatDone=false;
+                document.getElementById('toLocations').disabled=true;
+                document.getElementById('chatPartnerAvatar').src=state.currentPartner.avatar||'';
+                document.getElementById('chatPartnerName').textContent=state.currentPartner.name||'';
+                const f=getChatFlow(); if(!f){chatCont.innerHTML='<div class="message theirs">Нет диалогов</div>';return;}
+                chatCont.innerHTML=`<div class="message theirs">${f[0].theirs}</div>`; renderChatReplies(0);
             }
+            function renderChatReplies(s){
+                const f=getChatFlow(); if(!f)return;
+                if(s>=f.length){chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';document.getElementById('toLocations').disabled=false;state.chatDone=true;chatRep.innerHTML='';chatCont.scrollTop=chatCont.scrollHeight;return;}
+                chatRep.innerHTML='';
+                f[s].replies.forEach((r,i)=>{const b=document.createElement('button');b.textContent=r;b.addEventListener('click',()=>{chatCont.innerHTML+=`<div class="message mine">${r}</div>`;const n=s+1;if(n<f.length){chatCont.innerHTML+=`<div class="message theirs">${f[n].theirs}</div>`;renderChatReplies(n);}else{chatCont.innerHTML+='<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';document.getElementById('toLocations').disabled=false;state.chatDone=true;chatRep.innerHTML='';}chatCont.scrollTop=chatCont.scrollHeight;});chatRep.appendChild(b);});
+            }
+            document.getElementById('toLocations').addEventListener('click',()=>{if(!state.chatDone)return;state.step=4;showScene('scene4');renderLocations();});
 
-            function renderChatReplies(step) {
-                const flow = getChatFlow();
-                if (!flow) return;
-                if (step >= flow.length) {
-                    chatContainer.innerHTML += `<div class="message theirs">✨ Договорились! Выбирай место ✨</div>`;
-                    document.getElementById('toLocations').disabled = false;
-                    state.chatDone = true;
-                    chatReplies.innerHTML = '';
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                    return;
-                }
-                chatReplies.innerHTML = '';
-                flow[step].replies.forEach((reply, i) => {
-                    const btn = document.createElement('button');
-                    btn.dataset.reply = i;
-                    btn.textContent = reply;
-                    btn.addEventListener('click', () => {
-                        chatContainer.innerHTML += `<div class="message mine">${reply}</div>`;
-                        const nextStep = step + 1;
-                        if (nextStep < flow.length) {
-                            chatContainer.innerHTML += `<div class="message theirs">${flow[nextStep].theirs}</div>`;
-                            renderChatReplies(nextStep);
-                        } else {
-                            chatContainer.innerHTML += `<div class="message theirs">✨ Договорились! Выбирай место ✨</div>`;
-                            document.getElementById('toLocations').disabled = false;
-                            state.chatDone = true;
-                            chatReplies.innerHTML = '';
-                        }
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                    });
-                    chatReplies.appendChild(btn);
+            // ---------- СЦЕНА 4 ----------
+            function renderLocations(){
+                const c=document.getElementById('locationCatalog'), l=getLocations(); if(!l?.length)return;
+                c.innerHTML='';
+                l.forEach((loc,i)=>{
+                    const d=document.createElement('div');
+                    d.className='catalog-item'+(i===state.selectedLocationIndex?' selected':'');
+                    let icon='📍';
+                    if(loc.name.includes('☕'))icon='☕';else if(loc.name.includes('🍽️')||loc.name.includes('ресторан')||loc.name.includes('суши'))icon='🍽️';
+                    else if(loc.name.includes('🎬')||loc.name.includes('кино'))icon='🎬';else if(loc.name.includes('🌳')||loc.name.includes('парк'))icon='🎢';
+                    else if(loc.name.includes('🎨')||loc.name.includes('галерея'))icon='🎨';else if(loc.name.includes('🎵')||loc.name.includes('джаз'))icon='🎵';
+                    else if(loc.name.includes('🏖️')||loc.name.includes('набережная'))icon='🌊';else if(loc.name.includes('🎳'))icon='🎳';
+                    else if(loc.name.includes('🌿')||loc.name.includes('сад'))icon='🌿';
+                    d.innerHTML=`<img src="${loc.bg||''}" onerror="this.style.display='none'"><div class="info"><h4>${loc.name}</h4><p>${loc.desc||''}</p></div><span class="location-icon">${icon}</span>`;
+                    d.addEventListener('click',()=>{state.selectedLocationIndex=i;document.querySelectorAll('.catalog-item').forEach(el=>el.classList.remove('selected'));d.classList.add('selected');});
+                    c.appendChild(d);
                 });
             }
+            document.getElementById('toDate').addEventListener('click',()=>{state.step=5;state.dialogIndex=0;state.affection=50;showScene('scene5');updateAffectionUI();document.getElementById('dateChat').innerHTML='';renderDateScene();});
 
-            document.getElementById('toLocations').addEventListener('click', () => {
-                if (!state.chatDone) return;
-                state.step = 4;
-                showScene('scene4');
-                renderLocations();
-            });
-
-            // ---------- СЦЕНА 4: ЛОКАЦИИ ----------
-            function renderLocations() {
-                const container = document.getElementById('locationCatalog');
-                const locations = getLocations();
-                if (!locations) {
-                    container.innerHTML = '<div style="color:#9088b0;text-align:center;">Ошибка загрузки локаций</div>';
+            // ---------- СЦЕНА 5 ----------
+            function updateAffectionUI(){const v=Math.min(100,Math.max(0,state.affection));document.getElementById('affectionFill').style.width=v+'%';document.getElementById('affectionLabel').textContent=v+'%';}
+            function renderDateScene(){
+                const partner=state.currentPartner, locs=getLocations(), loc=locs?.[state.selectedLocationIndex]||locs?.[0]||{};
+                const dialogs=getDialogs(); if(!dialogs?.length){document.getElementById('dateChat').innerHTML='<div class="date-msg system">Нет диалогов</div>';return;}
+                document.getElementById('dateBg').style.backgroundImage=`url('${loc.bg||''}')`;
+                document.getElementById('dateAvatar').src=partner?.avatar||'';
+                document.getElementById('datePartnerName').textContent=partner?.name||'';
+                if(state.dialogIndex>=dialogs.length){
+                    let end=state.affection>=70?(state.gender==='male'?'💖 Ты её зацепил!':'💖 Ты его зацепила!'):state.affection>=45?'❤️ Неплохо!':'💔 Уходит...';
+                    const chat=document.getElementById('dateChat');
+                    chat.innerHTML+=`<div class="date-msg system">🏁 ${end}</div>`;
+                    chat.scrollTop=chat.scrollHeight;
+                    if(state.affection>=100){setTimeout(()=>goToRoom(),1500);}
                     return;
                 }
-                container.innerHTML = '';
-                locations.forEach((loc, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'catalog-item' + (i === state.selectedLocationIndex ? ' selected' : '');
-                    div.dataset.index = i;
-                    div.innerHTML = `
-                        <img src="${loc.bg || 'assets/default_bg.jpg'}" alt="${loc.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%233a3a52\'/%3E%3C/svg%3E'">
-                        <div class="info"><h4>${loc.name}</h4><p>${loc.desc || ''}</p></div>
-                    `;
-                    div.addEventListener('click', () => {
-                        state.selectedLocationIndex = i;
-                        document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
-                        div.classList.add('selected');
-                    });
-                    container.appendChild(div);
-                });
+                const d=dialogs[state.dialogIndex];
+                const react=state.affection>=65?'😍 Заинтересован(а)!':state.affection>=45?'😊 Улыбается.':state.affection>=25?'😐 В сторону.':'😒 Разочарован(а).';
+                const chat=document.getElementById('dateChat');
+                chat.innerHTML+=`<div class="date-msg theirs">${d.text} ${react}</div>`;
+                const cd=document.createElement('div');cd.className='date-choices';
+                d.choices.forEach((c,i)=>{const b=document.createElement('button');b.textContent=c;if(!i)b.classList.add('primary-choice');b.addEventListener('click',()=>{chat.innerHTML+=`<div class="date-msg mine">${c}</div>`;state.affection=Math.min(100,Math.max(0,state.affection+(d.effects[i]||0)));updateAffectionUI();state.dialogIndex++;cd.remove();chat.scrollTop=chat.scrollHeight;renderDateScene();});cd.appendChild(b);});
+                chat.appendChild(cd);chat.scrollTop=chat.scrollHeight;
             }
 
-            document.getElementById('toDate').addEventListener('click', () => {
-                state.step = 5;
-                showScene('scene5');
-                state.dialogIndex = 0;
-                state.affection = 50;
-                state.dateHistory = [];
-                updateAffectionUI();
-                document.getElementById('dateChat').innerHTML = '';
-                renderDateScene();
-            });
+            // ---------- СЦЕНА 6: КОМНАТА ----------
+            function goToRoom(){
+                state.step=6;state.roomDialogIndex=0;state.roomAffection=100;
+                showScene('scene6');
+                // Ставим фон room.png
+                document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')";
+                document.getElementById('roomAvatarSmall').src = state.currentPartner?.avatar || '';
+                document.getElementById('roomPartnerName').textContent = state.currentPartner?.name || '';
+                document.getElementById('roomAffectionFill').style.width = '100%';
+                document.getElementById('roomAffectionValue').textContent = '100%';
+                document.getElementById('roomChat').innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке... Атмосфера накаляется...</div>';
+                renderRoomScene();
+            }
 
-            // ---------- СЦЕНА 5: СВИДАНИЕ ----------
-            function renderDateScene() {
-                const partner = state.currentPartner;
-                const locations = getLocations();
-                const loc = (locations && locations[state.selectedLocationIndex]) || locations?.[0] || { bg: '', name: 'Локация' };
-                const dialogs = getDialogs();
-
-                if (!dialogs || dialogs.length === 0) {
-                    const chat = document.getElementById('dateChat');
-                    chat.innerHTML = `<div class="date-msg system">❌ Ошибка: нет диалогов в data.json</div>`;
-                    return;
+            function renderRoomScene(){
+                const dialogs = getRoomDialogs(); if(!dialogs?.length) return;
+                const chat = document.getElementById('roomChat');
+                if(state.roomDialogIndex >= dialogs.length){
+                    chat.innerHTML += `<div class="room-msg system">💫 Волшебный вечер... Это начало чего-то прекрасного ✨</div>`;
+                    chat.scrollTop = chat.scrollHeight; return;
                 }
-
-                const bgEl = document.getElementById('dateBg');
-                bgEl.style.backgroundImage = `url('${loc.bg || 'assets/default_bg.jpg'}')`;
-
-                const avatarEl = document.getElementById('dateAvatar');
-                avatarEl.src = partner?.avatar || 'assets/girl1.png';
-
-                document.getElementById('datePartnerName').textContent = partner?.name || 'Партнёр';
-
-                if (state.dialogIndex >= dialogs.length) {
-                    let endingText = '';
-                    if (state.affection >= 70) {
-                        endingText = state.gender === 'male' ?
-                            '💖 Отлично! Ты её зацепил! Она хочет продолжения.' :
-                            '💖 Отлично! Ты его зацепила! Он хочет продолжения.';
-                    } else if (state.affection >= 45) {
-                        endingText = state.gender === 'male' ?
-                            '❤️ Неплохо. Она улыбается и говорит "Напиши завтра".' :
-                            '❤️ Неплохо. Он улыбается и говорит "Напиши завтра".';
-                    } else {
-                        endingText = state.gender === 'male' ?
-                            '💔 Она извиняется и уходит. Ты облажался.' :
-                            '💔 Он извиняется и уходит. Ты облажалась.';
-                    }
-                    const chat = document.getElementById('dateChat');
-                    chat.innerHTML += `<div class="date-msg system">🏁 ${endingText}</div>`;
-                    chat.scrollTop = chat.scrollHeight;
-                    return;
-                }
-
-                const dialog = dialogs[state.dialogIndex];
-                const aff = state.affection;
-                let reactionText = '';
-                if (aff >= 65) reactionText = '😍 Явно заинтересован(а)!';
-                else if (aff >= 45) reactionText = '😊 Улыбается.';
-                else if (aff >= 25) reactionText = '😐 Смотрит в сторону.';
-                else reactionText = '😒 Выглядит разочарованным(ой).';
-
-                const chat = document.getElementById('dateChat');
-                const partnerMsg = dialog.text + ' ' + reactionText;
-                chat.innerHTML += `<div class="date-msg theirs">${partnerMsg}</div>`;
-
-                const choicesDiv = document.createElement('div');
-                choicesDiv.className = 'date-choices';
-                dialog.choices.forEach((choice, i) => {
-                    const btn = document.createElement('button');
-                    btn.textContent = choice;
-                    if (i === 0) btn.classList.add('primary-choice');
-                    btn.addEventListener('click', () => {
-                        chat.innerHTML += `<div class="date-msg mine">${choice}</div>`;
-                        const effectVal = dialog.effects[i] || 0;
-                        state.affection = Math.min(100, Math.max(0, state.affection + effectVal));
-                        updateAffectionUI();
-                        state.dialogIndex++;
-                        const oldChoices = chat.querySelector('.date-choices');
-                        if (oldChoices) oldChoices.remove();
-                        chat.scrollTop = chat.scrollHeight;
-                        renderDateScene();
+                const d = dialogs[state.roomDialogIndex];
+                const react = state.roomAffection>=90?'🔥 Искры повсюду!':'💕 Очень тепло...';
+                chat.innerHTML += `<div class="room-msg theirs">${d.text} ${react}</div>`;
+                const cd = document.createElement('div'); cd.className = 'room-choices';
+                d.choices.forEach((c,i)=>{
+                    const b = document.createElement('button'); b.textContent = c;
+                    if(!i) b.classList.add('primary-choice');
+                    b.addEventListener('click',()=>{
+                        chat.innerHTML += `<div class="room-msg mine">${c}</div>`;
+                        state.roomAffection = Math.min(100, Math.max(0, state.roomAffection + (d.effects[i]||0)));
+                        document.getElementById('roomAffectionFill').style.width = state.roomAffection + '%';
+                        document.getElementById('roomAffectionValue').textContent = state.roomAffection + '%';
+                        state.roomDialogIndex++; cd.remove(); chat.scrollTop = chat.scrollHeight;
+                        renderRoomScene();
                     });
-                    choicesDiv.appendChild(btn);
+                    cd.appendChild(b);
                 });
-                chat.appendChild(choicesDiv);
-                chat.scrollTop = chat.scrollHeight;
+                chat.appendChild(cd); chat.scrollTop = chat.scrollHeight;
             }
 
             // ---------- СБРОС ----------
-            document.getElementById('resetGame').addEventListener('click', resetGame);
-
-            function resetGame() {
-                state = {
-                    step: 1,
-                    gender: null,
-                    style: 'style1',
-                    likedIndex: 0,
-                    likedList: [],
-                    currentPartner: null,
-                    selectedLocationIndex: 0,
-                    affection: 50,
-                    dialogIndex: 0,
-                    chatStep: 0,
-                    chatDone: false,
-                    dateHistory: [],
-                };
+            function resetGame(){
+                state={step:1,gender:null,style:'style1',likedIndex:0,likedList:[],currentPartner:null,selectedLocationIndex:0,affection:50,dialogIndex:0,chatStep:0,chatDone:false,roomDialogIndex:0,roomAffection:100};
                 showScene('scene1');
-                updateAffectionUI();
-                document.getElementById('dateChat').innerHTML = '';
-                document.querySelectorAll('#scene1 .gender-selector .btn-group button').forEach(b => {
-                    b.classList.remove('active-male', 'active-female');
-                });
-                document.querySelectorAll('#scene1 .style-selector button').forEach(b => {
-                    b.classList.remove('active');
-                });
+                document.querySelectorAll('#scene1 .gender-selector button').forEach(b=>b.classList.remove('active-male','active-female'));
+                document.querySelectorAll('#scene1 .style-selector button').forEach(b=>b.classList.remove('active'));
                 document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
-                toScene2Btn.classList.remove('enabled');
-                toScene2Btn.disabled = true;
-                mainAvatar.src = 'assets/boy1.png';
-                console.log('[GAME] Перезапущена');
+                toScene2Btn.classList.remove('enabled');toScene2Btn.disabled=true;
+                mainAvatar.src='assets/boy1.png';
+                document.getElementById('affectionFill').style.width='50%';
+                document.getElementById('affectionLabel').textContent='50%';
+                document.getElementById('dateChat').innerHTML='';
+                document.getElementById('roomChat').innerHTML='';
             }
 
-            // ---------- ЗАГРУЗКА ----------
+            document.getElementById('resetGame').addEventListener('click',resetGame);
+            document.getElementById('resetFromRoom').addEventListener('click',resetGame);
+
             loadGameData();
             showScene('scene1');
-            updateAffectionUI();
             document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
-            state.style = 'style1';
+            state.style='style1';
         })();
     </script>
 </body>
