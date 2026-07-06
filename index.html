@@ -455,7 +455,7 @@
         .chat-reply-buttons button:hover { background: #222252; border-color: #4a4a7e; }
         .chat-reply-buttons button:active { transform: scale(0.97); background: #2a2a52; border-color: #ff4d8a; }
 
-        /* ----- СЦЕНА 4: ЛОКАЦИИ (исправленный скролл) ----- */
+        /* ----- СЦЕНА 4: ЛОКАЦИИ ----- */
         #scene4 {
             flex: 1;
             display: flex;
@@ -665,8 +665,6 @@
             backdrop-filter: blur(8px);
         }
         .date-choices button:active { transform: scale(0.97); background: rgba(255,255,255,0.1); }
-        .date-choices button.primary-choice { background: #ff4d8a; border-color: #ff4d8a; color: #fff; }
-        .date-choices button.primary-choice:active { background: #e63a77; }
 
         .date-bottom-avatar {
             position: relative;
@@ -906,16 +904,6 @@
             transform: scale(0.97);
             background: rgba(255, 77, 138, 0.3);
         }
-        .room-choices button.primary-choice {
-            background: rgba(255, 77, 138, 0.35);
-            border-color: #ff4d8a;
-            color: #fff;
-            font-weight: 600;
-            box-shadow: 0 0 12px rgba(255, 77, 138, 0.2);
-        }
-        .room-choices button.primary-choice:hover {
-            background: rgba(255, 77, 138, 0.5);
-        }
 
         .room-affection-bar-wrap {
             position: relative;
@@ -1082,7 +1070,7 @@
                 </div>
             </div>
 
-            <!-- СЦЕНА 4 (исправленный скролл) -->
+            <!-- СЦЕНА 4 -->
             <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
                     <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;">
@@ -1376,7 +1364,7 @@
             }
             document.getElementById('toLocations').addEventListener('click',()=>{if(!state.chatDone)return;state.step=4;showScene('scene4');renderLocations();});
 
-            // ---------- СЦЕНА 4 (исправленный скролл) ----------
+            // ---------- СЦЕНА 4 ----------
             function renderLocations(){
                 const c=document.getElementById('locationCatalog'), l=getLocations(); if(!l?.length)return;
                 c.innerHTML='';
@@ -1417,8 +1405,23 @@
                 const chat=document.getElementById('dateChat');
                 chat.innerHTML+=`<div class="date-msg theirs">${d.text} ${react}</div>`;
                 const cd=document.createElement('div');cd.className='date-choices';
-                d.choices.forEach((c,i)=>{const b=document.createElement('button');b.textContent=c;if(!i)b.classList.add('primary-choice');b.addEventListener('click',()=>{chat.innerHTML+=`<div class="date-msg mine">${c}</div>`;state.affection=Math.min(100,Math.max(0,state.affection+(d.effects[i]||0)));updateAffectionUI();state.dialogIndex++;cd.remove();chat.scrollTop=chat.scrollHeight;renderDateScene();});cd.appendChild(b);});
-                chat.appendChild(cd);chat.scrollTop=chat.scrollHeight;
+                d.choices.forEach((c,i)=>{
+                    const b=document.createElement('button');
+                    b.textContent=c;
+                    // Убрали подсветку первого варианта
+                    b.addEventListener('click',()=>{
+                        chat.innerHTML+=`<div class="date-msg mine">${c}</div>`;
+                        state.affection=Math.min(100,Math.max(0,state.affection+(d.effects[i]||0)));
+                        updateAffectionUI();
+                        state.dialogIndex++;
+                        cd.remove();
+                        chat.scrollTop=chat.scrollHeight;
+                        renderDateScene();
+                    });
+                    cd.appendChild(b);
+                });
+                chat.appendChild(cd);
+                chat.scrollTop=chat.scrollHeight;
             }
 
             // ---------- СЦЕНА 6 ----------
@@ -1446,19 +1449,23 @@
                 chat.innerHTML += `<div class="room-msg theirs">${d.text} ${react}</div>`;
                 const cd = document.createElement('div'); cd.className = 'room-choices';
                 d.choices.forEach((c,i)=>{
-                    const b = document.createElement('button'); b.textContent = c;
-                    if(!i) b.classList.add('primary-choice');
+                    const b = document.createElement('button');
+                    b.textContent = c;
+                    // Убрали подсветку первого варианта
                     b.addEventListener('click',()=>{
                         chat.innerHTML += `<div class="room-msg mine">${c}</div>`;
                         state.roomAffection = Math.min(100, Math.max(0, state.roomAffection + (d.effects[i]||0)));
                         document.getElementById('roomAffectionFill').style.width = state.roomAffection + '%';
                         document.getElementById('roomAffectionValue').textContent = state.roomAffection + '%';
-                        state.roomDialogIndex++; cd.remove(); chat.scrollTop = chat.scrollHeight;
+                        state.roomDialogIndex++;
+                        cd.remove();
+                        chat.scrollTop = chat.scrollHeight;
                         renderRoomScene();
                     });
                     cd.appendChild(b);
                 });
-                chat.appendChild(cd); chat.scrollTop = chat.scrollHeight;
+                chat.appendChild(cd);
+                chat.scrollTop = chat.scrollHeight;
             }
 
             // ---------- СБРОС ----------
