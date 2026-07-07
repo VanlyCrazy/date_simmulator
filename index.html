@@ -128,7 +128,6 @@
         .tinder-actions .btn-chat { width: auto; border-radius: 30px; padding: 0 28px; font-size: 15px; font-weight: 700; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1.5px solid rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; white-space: nowrap; }
         .tinder-actions .btn-chat:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
 
-        /* ----- СЦЕНА 3: ЧАТ ----- */
         #scene3 {
             flex: 1;
             display: flex;
@@ -283,7 +282,6 @@
             transform: scale(0.97);
         }
 
-        /* ----- СЦЕНА 4: ЛОКАЦИИ ----- */
         #scene4 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         #scene4 .simple-card { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 12px; }
         .catalog-grid { flex: 1; overflow-y: auto; padding: 4px 2px 8px; display: flex; flex-direction: column; gap: 8px; min-height: 0; max-height: none; }
@@ -310,7 +308,6 @@
         #toDate { margin-top: 8px; padding: 10px 32px; font-size: 15px; font-weight: 700; align-self: center; background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; border-radius: 60px; cursor: pointer; flex-shrink: 0; }
         #toDate:active { transform: scale(0.97); }
 
-        /* ----- СЦЕНА 5: СВИДАНИЕ ----- */
         #scene5 {
             flex: 1;
             display: flex;
@@ -326,7 +323,6 @@
             width: calc(100% + 24px);
         }
 
-        /* Фон с локацией */
         .date-bg {
             position: absolute;
             top: 0;
@@ -338,7 +334,6 @@
             z-index: 0;
         }
 
-        /* Персонаж — снизу, по высоте максимально, ширина сохраняет пропорции */
         .date-avatar-section {
             position: absolute;
             bottom: 0;
@@ -359,7 +354,6 @@
             object-position: bottom center;
         }
 
-        /* Затемнение только на персонаже (снизу) */
         .date-overlay-bottom {
             position: absolute;
             bottom: 0;
@@ -371,7 +365,6 @@
             pointer-events: none;
         }
 
-        /* Контент поверх всего */
         .date-content {
             position: relative;
             z-index: 3;
@@ -382,7 +375,6 @@
             min-height: 0;
         }
 
-        /* Верх: имя + шкала */
         .date-top {
             flex-shrink: 0;
             padding: 4px 4px 6px;
@@ -429,7 +421,6 @@
             text-align: right;
         }
 
-        /* Диалог — между именем и вариантами */
         .date-chat-wrapper {
             flex: 0 1 auto;
             overflow-y: auto;
@@ -484,7 +475,6 @@
             text-align: center;
         }
 
-        /* Варианты ответа — чуть меньше */
         .date-choices-wrapper {
             flex-shrink: 0;
             display: flex;
@@ -540,7 +530,6 @@
         }
         .btn-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
 
-        /* ----- СЦЕНА 6: КОМНАТА ----- */
         #scene6 {
             flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative; border-radius: 0;
             overflow: hidden; background: #1a0a1a; border: none; margin: -10px -12px -12px; padding: 0; width: calc(100% + 24px);
@@ -634,6 +623,12 @@
         .btn-room-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
 
         .simple-card { background: #1a1a36; border-radius: 20px; padding: 12px; border: 1px solid #2a2a4e; flex: 1; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+
+        /* ----- кнопка сброса на сцене свидания поднята чуть выше ----- */
+        .btn-reset {
+            margin-top: 0px;      /* убираем верхний отступ */
+            margin-bottom: 20px;   /* чуть меньше снизу */
+        }
     </style>
 </head>
 <body>
@@ -716,20 +711,12 @@
 
             <!-- СЦЕНА 5: СВИДАНИЕ -->
             <div id="scene5" class="hidden">
-                <!-- Фон локации -->
                 <div class="date-bg" id="dateBg"></div>
-                
-                <!-- Персонаж снизу, по высоте максимально, ширина с сохранением пропорций -->
                 <div class="date-avatar-section">
                     <img id="dateAvatarFull" src="assets/girl1.png" alt="">
                 </div>
-                
-                <!-- Затемнение на персонаже -->
                 <div class="date-overlay-bottom"></div>
-                
-                <!-- Контент поверх -->
                 <div class="date-content">
-                    <!-- Имя + шкала вверху -->
                     <div class="date-top">
                         <div class="partner-name" id="datePartnerName">Анна</div>
                         <div class="affection-wrap">
@@ -737,16 +724,11 @@
                             <span class="label" id="affectionLabel">50%</span>
                         </div>
                     </div>
-                    
-                    <!-- Диалог между именем и вариантами -->
                     <div class="date-chat-wrapper" id="dateChatWrapper">
                         <div class="date-chat" id="dateChat"></div>
                     </div>
-                    
-                    <!-- Варианты ответа НАД персонажем (чуть меньше) -->
                     <div class="date-choices-wrapper" id="dateChoicesWrapper"></div>
                 </div>
-                
                 <button class="btn-reset" id="resetGame">🔄 Начать заново</button>
             </div>
 
