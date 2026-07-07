@@ -46,10 +46,10 @@
             background-clip: text;
             letter-spacing: -0.5px;
         }
-        .top-bar .icons { display: flex; gap: 14px; font-size: 16px; color: #8880aa; cursor: pointer; align-items: center; }
-        .top-bar .progress-icon {
-            background: rgba(255,77,138,0.15);
-            border: 1.5px solid rgba(255,77,138,0.3);
+        .top-bar .icons { display: flex; gap: 10px; font-size: 16px; color: #8880aa; cursor: pointer; align-items: center; }
+        .top-bar .icon-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.08);
             border-radius: 50%;
             width: 32px;
             height: 32px;
@@ -58,24 +58,27 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
+            font-size: 15px;
         }
-        .top-bar .progress-icon:hover {
-            background: rgba(255,77,138,0.25);
+        .top-bar .icon-btn:hover {
+            background: rgba(255,255,255,0.1);
             transform: scale(1.05);
         }
-        .top-bar .progress-icon .progress-dot {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 10px;
-            height: 10px;
-            background: #ff4d8a;
-            border-radius: 50%;
-            border: 2px solid #111122;
+        .top-bar .shop-btn {
+            background: rgba(255,215,0,0.1);
+            border-color: rgba(255,215,0,0.3);
+            color: #ffd700;
+        }
+        .top-bar .settings-btn {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .top-bar .progress-btn {
+            background: rgba(255,77,138,0.15);
+            border-color: rgba(255,77,138,0.3);
         }
 
-        /* Модальное окно прогресса */
+        /* Модальные окна */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -91,10 +94,7 @@
             animation: fadeIn 0.2s ease;
         }
         .modal-overlay.hidden { display: none; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .modal-content {
             background: #1a1a36;
             border-radius: 24px;
@@ -104,11 +104,10 @@
             max-width: 340px;
             width: 90%;
             animation: slideUp 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
         }
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -136,10 +135,150 @@
             justify-content: center;
             transition: 0.2s;
         }
-        .modal-close:hover {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+        .modal-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+        /* Настройки */
+        .settings-section {
+            margin-bottom: 16px;
         }
+        .settings-section h4 {
+            font-size: 14px;
+            color: #9088b0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .settings-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .settings-row .s-label {
+            font-size: 14px;
+            color: #d0c8f0;
+        }
+        .settings-row input[type="range"] {
+            width: 120px;
+            accent-color: #ff4d8a;
+        }
+        .settings-row select {
+            background: #16163a;
+            border: 1px solid #2a2a4e;
+            color: #d0c8f0;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .settings-row .volume-value {
+            font-size: 12px;
+            color: #ff4d8a;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        /* Магазин */
+        .shop-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .shop-item {
+            background: #16163a;
+            border-radius: 14px;
+            padding: 14px;
+            border: 1.5px solid #2a2a4e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+        .shop-item:hover { background: #1e1e48; border-color: #3a3a5e; }
+        .shop-item .shop-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        .shop-item .shop-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .shop-item .shop-info .shop-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e0d8f0;
+            margin-bottom: 4px;
+        }
+        .shop-item .shop-info .shop-desc {
+            font-size: 11px;
+            color: #9088b0;
+            line-height: 1.3;
+        }
+        .shop-item .shop-cost {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: #ffd700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .shop-btn-watch {
+            background: linear-gradient(135deg, #ff4d8a, #ff6b9d);
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .shop-btn-watch:hover { transform: scale(1.05); }
+        .shop-btn-watch:active { transform: scale(0.95); }
+        .shop-btn-watch:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .ad-timer {
+            font-size: 11px;
+            color: #ffd700;
+            text-align: center;
+            margin-top: 4px;
+        }
+        .ad-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .ad-overlay.hidden { display: none; }
+        .ad-content {
+            text-align: center;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .ad-content .ad-icon { font-size: 60px; margin-bottom: 16px; }
+        .ad-content .ad-text { font-size: 18px; margin-bottom: 8px; }
+        .ad-content .ad-timer-big { font-size: 32px; font-weight: 700; color: #ff4d8a; }
+        .ad-skip {
+            margin-top: 24px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #9088b0;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
         .progress-grid {
             display: flex;
             flex-direction: column;
@@ -154,24 +293,10 @@
             align-items: center;
             gap: 12px;
         }
-        .progress-item .p-icon {
-            font-size: 28px;
-            flex-shrink: 0;
-        }
-        .progress-item .p-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .progress-item .p-info .p-title {
-            font-size: 13px;
-            color: #9088b0;
-            margin-bottom: 4px;
-        }
-        .progress-item .p-info .p-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #e0d8f0;
-        }
+        .progress-item .p-icon { font-size: 28px; flex-shrink: 0; }
+        .progress-item .p-info { flex: 1; min-width: 0; }
+        .progress-item .p-info .p-title { font-size: 13px; color: #9088b0; margin-bottom: 4px; }
+        .progress-item .p-info .p-value { font-size: 20px; font-weight: 700; color: #e0d8f0; }
         .progress-item .p-bar-wrap {
             flex-shrink: 0;
             width: 50px;
@@ -189,6 +314,7 @@
 
         .hidden { display: none !important; }
 
+        /* Остальные стили... */
         #scene1 { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 6px; }
         .gender-selector { flex-shrink: 0; text-align: center; padding: 2px 0; }
         .gender-selector .label { font-size: 16px; font-weight: 600; color: #b0a8d0; margin-bottom: 6px; display: block; }
@@ -267,7 +393,6 @@
         .tinder-actions .btn-chat { width: auto; border-radius: 30px; padding: 0 28px; font-size: 15px; font-weight: 700; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1.5px solid rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; white-space: nowrap; }
         .tinder-actions .btn-chat:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
 
-        /* ЧАТЫ (Сцена 3) */
         #scene3 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         #scene3 .simple-card { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 12px; background: #1a1a36; border-radius: 20px; border: 1px solid #2a2a4e; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .chat-list-header { font-size: 16px; font-weight: 700; color: #e0d8f0; margin-bottom: 8px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; }
@@ -290,7 +415,6 @@
             padding: 2px 6px; border-radius: 10px; margin-left: 4px; flex-shrink: 0;
         }
 
-        /* Окно переписки (Сцена 3.5) */
         #scene3_5 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         .chat-conversation { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 8px; background: #1a1a36; border-radius: 20px; border: 1px solid #2a2a4e; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .chat-convo-header { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 0 2px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 6px; }
@@ -316,10 +440,8 @@
         .chat-to-locations-btn.visible { display: block; }
         .chat-to-locations-btn:active { transform: scale(0.97); }
 
-        @keyframes msgAppear {
-            0% { opacity: 0; transform: translateY(6px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes msgAppear { 0% { opacity: 0; transform: translateY(6px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
 
         #scene4 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         #scene4 .simple-card { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 12px; }
@@ -384,7 +506,6 @@
         .room-top-bar .room-partner-name { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
         .room-top-bar .room-status { font-size: 11px; color: #ff8aad; font-weight: 500; }
         .room-top-bar .room-hearts { font-size: 18px; animation: pulse 1.5s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
         .room-chat-wrapper { flex: 1; overflow-y: auto; padding: 4px 4px 8px; min-height: 0; }
         .room-chat-wrapper::-webkit-scrollbar { width: 4px; }
         .room-chat-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; margin: 4px 0; }
@@ -394,19 +515,7 @@
         .room-msg.theirs { background: rgba(255,77,138,0.15); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(255,77,138,0.25); color: #f0d0e0; backdrop-filter: blur(8px); }
         .room-msg.mine { background: linear-gradient(135deg, rgba(255,77,138,0.55), rgba(255,100,150,0.45)); align-self: flex-end; border-bottom-right-radius: 6px; color: #fff; border: 1px solid rgba(255,77,138,0.35); }
         .room-msg.system { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #d090b0; font-size: 12px; border-radius: 40px; padding: 6px 16px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); }
-        .room-msg.countdown { 
-            background: rgba(255,215,0,0.15); 
-            border: 1px solid rgba(255,215,0,0.3); 
-            align-self: center; 
-            color: #ffd700; 
-            font-size: 13px; 
-            border-radius: 40px; 
-            padding: 8px 18px; 
-            max-width: 90%; 
-            text-align: center; 
-            backdrop-filter: blur(8px);
-            animation: pulse 1s ease-in-out infinite;
-        }
+        .room-msg.countdown { background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); align-self: center; color: #ffd700; font-size: 13px; border-radius: 40px; padding: 8px 18px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); animation: pulse 1s ease-in-out infinite; }
         .room-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 8px; max-height: 130px; overflow-y: auto; }
         .room-choices-wrapper::-webkit-scrollbar { width: 3px; }
         .room-choices-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
@@ -432,17 +541,100 @@
             <span class="time" id="clockDisplay">9:42</span>
             <span class="logo">TANTAN</span>
             <div class="icons">
-                <span id="progressIcon" class="progress-icon" title="Прогресс">📊<span class="progress-dot"></span></span>
-                <span>⚙️</span>
+                <span class="icon-btn shop-btn" id="shopBtn" title="Магазин">🛒</span>
+                <span class="icon-btn progress-btn" id="progressBtn" title="Прогресс">📊</span>
+                <span class="icon-btn settings-btn" id="settingsBtn" title="Настройки">⚙️</span>
             </div>
         </div>
 
-        <!-- Модальное окно прогресса -->
+        <!-- Модальное окно НАСТРОЕК -->
+        <div id="settingsModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>⚙️ Настройки</h3>
+                    <button class="modal-close" onclick="document.getElementById('settingsModal').classList.add('hidden')">✕</button>
+                </div>
+                <div class="settings-section">
+                    <h4>🔊 Звук</h4>
+                    <div class="settings-row">
+                        <span class="s-label">🎵 Музыка</span>
+                        <input type="range" id="musicVolume" min="0" max="100" value="50" oninput="updateVolumeLabel('music')">
+                        <span class="volume-value" id="musicVolumeLabel">50%</span>
+                    </div>
+                    <div class="settings-row">
+                        <span class="s-label">🔔 Звуки интерфейса</span>
+                        <input type="range" id="sfxVolume" min="0" max="100" value="70" oninput="updateVolumeLabel('sfx')">
+                        <span class="volume-value" id="sfxVolumeLabel">70%</span>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>🌐 Язык</h4>
+                    <div class="settings-row">
+                        <span class="s-label">Язык интерфейса</span>
+                        <select id="languageSelect" onchange="changeLanguage(this.value)">
+                            <option value="ru">🇷🇺 Русский</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно МАГАЗИНА -->
+        <div id="shopModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🛒 Магазин</h3>
+                    <button class="modal-close" onclick="document.getElementById('shopModal').classList.add('hidden')">✕</button>
+                </div>
+                <div class="shop-grid">
+                    <div class="shop-item">
+                        <div class="shop-icon">📍</div>
+                        <div class="shop-info">
+                            <div class="shop-title">Открыть следующую локацию</div>
+                            <div class="shop-desc">Просмотри рекламу и получи доступ к новой локации</div>
+                        </div>
+                        <button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd('location')">📺 Смотреть</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-icon">🔥</div>
+                        <div class="shop-info">
+                            <div class="shop-title">Hot концовка</div>
+                            <div class="shop-desc">Разблокируй особую сцену после свидания</div>
+                        </div>
+                        <button class="shop-btn-watch" id="shopHotEnding" onclick="watchAd('hot')">📺 Смотреть</button>
+                    </div>
+                    <div class="shop-item">
+                        <div class="shop-icon">💎</div>
+                        <div class="shop-info">
+                            <div class="shop-title">Premium статус</div>
+                            <div class="shop-desc">Нет рекламы + эксклюзивные стили</div>
+                        </div>
+                        <span class="shop-cost">💎 199</span>
+                    </div>
+                </div>
+                <div class="ad-timer" id="adCooldown" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Рекламный оверлей -->
+        <div id="adOverlay" class="ad-overlay hidden">
+            <div class="ad-content">
+                <div class="ad-icon">📺</div>
+                <div class="ad-text">Реклама...</div>
+                <div class="ad-timer-big" id="adTimerBig">5</div>
+                <button class="ad-skip" onclick="skipAd()">Пропустить ✕</button>
+            </div>
+        </div>
+
+        <!-- Модальное окно ПРОГРЕССА -->
         <div id="progressModal" class="modal-overlay hidden">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>📊 Твой прогресс</h3>
-                    <button class="modal-close" id="closeProgressModal">✕</button>
+                    <button class="modal-close" onclick="document.getElementById('progressModal').classList.add('hidden')">✕</button>
                 </div>
                 <div class="progress-grid">
                     <div class="progress-item">
@@ -451,9 +643,7 @@
                             <div class="p-title">Лайкнуто</div>
                             <div class="p-value" id="statLikes">0</div>
                         </div>
-                        <div class="p-bar-wrap">
-                            <div class="p-bar-fill" id="statLikesBar" style="width:0%"></div>
-                        </div>
+                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statLikesBar" style="width:0%"></div></div>
                     </div>
                     <div class="progress-item">
                         <div class="p-icon">💬</div>
@@ -461,9 +651,7 @@
                             <div class="p-title">Завершено чатов</div>
                             <div class="p-value" id="statChats">0</div>
                         </div>
-                        <div class="p-bar-wrap">
-                            <div class="p-bar-fill" id="statChatsBar" style="width:0%"></div>
-                        </div>
+                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statChatsBar" style="width:0%"></div></div>
                     </div>
                     <div class="progress-item">
                         <div class="p-icon">📍</div>
@@ -471,9 +659,7 @@
                             <div class="p-title">Локаций открыто</div>
                             <div class="p-value" id="statLocations">0 / 0</div>
                         </div>
-                        <div class="p-bar-wrap">
-                            <div class="p-bar-fill" id="statLocationsBar" style="width:0%"></div>
-                        </div>
+                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statLocationsBar" style="width:0%"></div></div>
                     </div>
                     <div class="progress-item">
                         <div class="p-icon">💕</div>
@@ -481,9 +667,7 @@
                             <div class="p-title">Пройдено свиданий</div>
                             <div class="p-value" id="statDates">0</div>
                         </div>
-                        <div class="p-bar-wrap">
-                            <div class="p-bar-fill" id="statDatesBar" style="width:0%"></div>
-                        </div>
+                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statDatesBar" style="width:0%"></div></div>
                     </div>
                 </div>
             </div>
@@ -628,21 +812,32 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v3.3');
+            console.log('[APP] Tantan v4.0 - Shop & Settings Edition');
 
             const STORAGE_KEY = 'tantan_game_save';
             const STATS_KEY = 'tantan_stats';
+            const SETTINGS_KEY = 'tantan_settings';
             let gameData = null;
             let roomTimer = null;
+            let adTimer = null;
+            let adRewardType = null;
 
-            // Статистика (сохраняется отдельно, не сбрасывается)
+            // Настройки
+            let settings = {
+                musicVolume: 50,
+                sfxVolume: 70,
+                language: 'ru',
+                hotEndingUnlocked: false
+            };
+
+            // Статистика
             let stats = {
                 totalLikes: 0,
                 completedChats: 0,
                 completedDates: 0
             };
 
-            // Структура сохранения
+            // Состояние игры
             let state = {
                 step: 1,
                 gender: null,
@@ -672,39 +867,140 @@
             const mainTopBar = document.getElementById('mainTopBar');
             const clockDisplay = document.getElementById('clockDisplay');
 
+            // ==================== НАСТРОЙКИ ====================
+            function loadSettings() {
+                try {
+                    const raw = localStorage.getItem(SETTINGS_KEY);
+                    if (raw) settings = { ...settings, ...JSON.parse(raw) };
+                } catch (e) {}
+                applySettings();
+            }
+
+            function saveSettings() {
+                try {
+                    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+                } catch (e) {}
+                applySettings();
+            }
+
+            function applySettings() {
+                document.getElementById('musicVolume').value = settings.musicVolume;
+                document.getElementById('sfxVolume').value = settings.sfxVolume;
+                document.getElementById('languageSelect').value = settings.language;
+                updateVolumeLabel('music');
+                updateVolumeLabel('sfx');
+                console.log(`[SETTINGS] Музыка: ${settings.musicVolume}%, SFX: ${settings.sfxVolume}%, Язык: ${settings.language}`);
+            }
+
+            window.updateVolumeLabel = function(type) {
+                const val = document.getElementById(type + 'Volume').value;
+                document.getElementById(type + 'VolumeLabel').textContent = val + '%';
+                if (type === 'music') settings.musicVolume = parseInt(val);
+                else settings.sfxVolume = parseInt(val);
+                saveSettings();
+            };
+
+            window.changeLanguage = function(lang) {
+                settings.language = lang;
+                saveSettings();
+                alert('Язык изменён! Изменения вступят в силу после перезагрузки.');
+            };
+
+            // ==================== МАГАЗИН И РЕКЛАМА ====================
+            window.watchAd = function(type) {
+                adRewardType = type;
+                let seconds = 5;
+                document.getElementById('adOverlay').classList.remove('hidden');
+                document.getElementById('adTimerBig').textContent = seconds;
+                
+                adTimer = setInterval(() => {
+                    seconds--;
+                    document.getElementById('adTimerBig').textContent = seconds;
+                    if (seconds <= 0) {
+                        clearInterval(adTimer);
+                        adTimer = null;
+                        completeAd();
+                    }
+                }, 1000);
+            };
+
+            window.skipAd = function() {
+                if (adTimer) {
+                    clearInterval(adTimer);
+                    adTimer = null;
+                }
+                document.getElementById('adOverlay').classList.add('hidden');
+                document.getElementById('adCooldown').style.display = 'block';
+                document.getElementById('adCooldown').textContent = '⏳ Реклама пропущена. Награда не получена.';
+                setTimeout(() => {
+                    document.getElementById('adCooldown').style.display = 'none';
+                }, 3000);
+            };
+
+            function completeAd() {
+                document.getElementById('adOverlay').classList.add('hidden');
+                
+                if (adRewardType === 'location') {
+                    const allLocations = getLocations();
+                    if (state.unlockedLocations < allLocations.length) {
+                        state.unlockedLocations++;
+                        saveGame();
+                        alert('🎉 Локация открыта! Теперь доступна новая локация.');
+                    } else {
+                        alert('✅ Все локации уже открыты!');
+                    }
+                } else if (adRewardType === 'hot') {
+                    settings.hotEndingUnlocked = true;
+                    saveSettings();
+                    alert('🔥 Hot концовка разблокирована! Увидишь её после следующего свидания.');
+                }
+                
+                adRewardType = null;
+                updateShopButtons();
+            }
+
+            function updateShopButtons() {
+                const allLocations = getLocations();
+                const locBtn = document.getElementById('shopUnlockLocation');
+                if (state.unlockedLocations >= allLocations.length) {
+                    locBtn.textContent = '✅ Всё открыто';
+                    locBtn.disabled = true;
+                } else {
+                    locBtn.textContent = '📺 Смотреть';
+                    locBtn.disabled = false;
+                }
+
+                const hotBtn = document.getElementById('shopHotEnding');
+                if (settings.hotEndingUnlocked) {
+                    hotBtn.textContent = '✅ Разблокировано';
+                    hotBtn.disabled = true;
+                } else {
+                    hotBtn.textContent = '📺 Смотреть';
+                    hotBtn.disabled = false;
+                }
+            }
+
             // ==================== СТАТИСТИКА ====================
             function loadStats() {
                 try {
                     const raw = localStorage.getItem(STATS_KEY);
-                    if (raw) {
-                        stats = { ...stats, ...JSON.parse(raw) };
-                    }
-                } catch (e) {
-                    console.warn('[STATS] Ошибка загрузки:', e);
-                }
+                    if (raw) stats = { ...stats, ...JSON.parse(raw) };
+                } catch (e) {}
             }
 
             function saveStats() {
-                try {
-                    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
-                } catch (e) {
-                    console.warn('[STATS] Ошибка сохранения:', e);
-                }
+                try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (e) {}
             }
 
             function updateProgressModal() {
                 const totalPartners = getPartners().length || 3;
                 const totalLocations = getLocations().length || 5;
-                
                 document.getElementById('statLikes').textContent = stats.totalLikes;
                 document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%';
-                
                 document.getElementById('statChats').textContent = stats.completedChats;
                 document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / totalPartners) * 100) + '%';
-                
                 document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${totalLocations}`;
                 document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / totalLocations) * 100 + '%';
-                
                 document.getElementById('statDates').textContent = stats.completedDates;
                 document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / totalLocations) * 100) + '%';
             }
@@ -714,22 +1010,14 @@
                 try {
                     const saveData = JSON.parse(JSON.stringify(state));
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
-                } catch (e) {
-                    console.warn('[SAVE] Ошибка сохранения:', e);
-                }
+                } catch (e) {}
             }
 
             function loadGame() {
                 try {
                     const raw = localStorage.getItem(STORAGE_KEY);
-                    if (raw) {
-                        const saved = JSON.parse(raw);
-                        state = { ...state, ...saved };
-                        return true;
-                    }
-                } catch (e) {
-                    console.warn('[LOAD] Ошибка загрузки:', e);
-                }
+                    if (raw) { state = { ...state, ...JSON.parse(raw) }; return true; }
+                } catch (e) {}
                 return false;
             }
 
@@ -744,63 +1032,41 @@
             }
 
             function getNpc(npcId) {
-                if (!gameData?.npcs) return null;
-                return gameData.npcs[npcId] || null;
+                return gameData?.npcs?.[npcId] || null;
             }
 
             function getLocationDialogs(npcId, locationId) {
                 const npc = getNpc(npcId);
                 if (!npc?.dialogs) return null;
-                if (npc.dialogs[locationId]) return npc.dialogs[locationId];
-                const keys = Object.keys(npc.dialogs);
-                return keys.length > 0 ? npc.dialogs[keys[0]] : null;
+                return npc.dialogs[locationId] || Object.values(npc.dialogs)[0] || null;
             }
 
             function getChatFlow() {
-                if (!gameData?.chatFlow) return [];
-                return gameData.chatFlow[state.gender === 'male' ? 'male' : 'female'] || [];
+                return gameData?.chatFlow?.[state.gender === 'male' ? 'male' : 'female'] || [];
             }
 
             function getRoomDialogs() {
-                if (!gameData?.roomDialogs) return [];
-                return gameData.roomDialogs[state.gender === 'male' ? 'male' : 'female'] || [];
+                return gameData?.roomDialogs?.[state.gender === 'male' ? 'male' : 'female'] || [];
             }
 
-            function getPersonalityLabel(personality) {
-                const map = {
-                    romantic: '💕 Романтик',
-                    creative: '🎨 Креативный',
-                    adventurous: '🔥 Авантюрист',
-                    calm: '😌 Спокойный',
-                    energetic: '⚡ Энергичный'
-                };
-                return map[personality] || '💕 Романтик';
+            function getPersonalityLabel(p) {
+                const map = { romantic: '💕 Романтик', creative: '🎨 Креативный', adventurous: '🔥 Авантюрист', calm: '😌 Спокойный', energetic: '⚡ Энергичный' };
+                return map[p] || '💕 Романтик';
             }
 
-            function getPartnerById(id) {
-                return getPartners().find(p => p.id === id) || null;
-            }
-
-            function getCurrentPartner() {
-                return getPartnerById(state.currentPartnerId);
-            }
+            function getPartnerById(id) { return getPartners().find(p => p.id === id) || null; }
+            function getCurrentPartner() { return getPartnerById(state.currentPartnerId); }
 
             function getChatHistory(partnerId) {
                 if (!state.chatHistories[partnerId]) {
-                    state.chatHistories[partnerId] = {
-                        step: 0,
-                        done: false,
-                        messages: []
-                    };
+                    state.chatHistories[partnerId] = { step: 0, done: false, messages: [] };
                 }
                 return state.chatHistories[partnerId];
             }
 
             function updateClock() {
                 const now = new Date();
-                const h = String(now.getHours()).padStart(2, '0');
-                const m = String(now.getMinutes()).padStart(2, '0');
-                clockDisplay.textContent = h + ':' + m;
+                clockDisplay.textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
             }
             setInterval(updateClock, 1000);
             updateClock();
@@ -826,26 +1092,26 @@
                 saveGame();
             }
 
-            function scrollToBottom(element) {
-                if (element) {
-                    element.scrollTop = element.scrollHeight;
-                }
-            }
+            function scrollToBottom(el) { if (el) el.scrollTop = el.scrollHeight; }
 
-            // ==================== МОДАЛЬНОЕ ОКНО ПРОГРЕССА ====================
-            document.getElementById('progressIcon').addEventListener('click', () => {
+            // ==================== МОДАЛЬНЫЕ ОКНА ====================
+            document.getElementById('settingsBtn').addEventListener('click', () => {
+                document.getElementById('settingsModal').classList.remove('hidden');
+            });
+            document.getElementById('shopBtn').addEventListener('click', () => {
+                updateShopButtons();
+                document.getElementById('shopModal').classList.remove('hidden');
+            });
+            document.getElementById('progressBtn').addEventListener('click', () => {
                 updateProgressModal();
                 document.getElementById('progressModal').classList.remove('hidden');
             });
 
-            document.getElementById('closeProgressModal').addEventListener('click', () => {
-                document.getElementById('progressModal').classList.add('hidden');
-            });
-
-            document.getElementById('progressModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('progressModal')) {
-                    document.getElementById('progressModal').classList.add('hidden');
-                }
+            // Закрытие модальных окон по клику вне
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) overlay.classList.add('hidden');
+                });
             });
 
             // ==================== СЦЕНА 1 ====================
@@ -863,19 +1129,14 @@
                 mainAvatar.nextElementSibling.style.display = 'none';
             }
 
-            function restoreScene1UI() {
-                document.querySelectorAll('#scene1 .gender-selector button').forEach(b => {
-                    b.classList.remove('active-male', 'active-female');
-                    if (b.dataset.gender === state.gender) {
-                        b.classList.add(state.gender === 'male' ? 'active-male' : 'active-female');
-                    }
-                });
-                document.querySelectorAll('#scene1 .style-selector button').forEach(b => {
-                    b.classList.remove('active');
-                    if (b.dataset.style === state.style) b.classList.add('active');
-                });
-                updateAvatar();
-                checkEnabled();
+            function checkEnabled() {
+                if (state.gender && state.style) {
+                    toScene2Btn.classList.add('enabled');
+                    toScene2Btn.disabled = false;
+                } else {
+                    toScene2Btn.classList.remove('enabled');
+                    toScene2Btn.disabled = true;
+                }
             }
 
             document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() {
@@ -895,16 +1156,6 @@
                 checkEnabled();
                 saveGame();
             }));
-
-            function checkEnabled() {
-                if (state.gender && state.style) {
-                    toScene2Btn.classList.add('enabled');
-                    toScene2Btn.disabled = false;
-                } else {
-                    toScene2Btn.classList.remove('enabled');
-                    toScene2Btn.disabled = true;
-                }
-            }
 
             toScene2Btn.addEventListener('click', () => {
                 if (!state.gender || !state.style) return;
@@ -942,8 +1193,7 @@
                     if (!state.chatHistories[partner.id]) {
                         const f = getChatFlow();
                         state.chatHistories[partner.id] = {
-                            step: 0,
-                            done: false,
+                            step: 0, done: false,
                             messages: f?.length ? [{ type: 'theirs', text: f[0].theirs }] : []
                         };
                     }
@@ -973,32 +1223,18 @@
             // ==================== СЦЕНА 3: СПИСОК ЧАТОВ ====================
             function renderChatList() {
                 const container = document.getElementById('chatListContainer');
-                const likeCount = document.getElementById('chatListLikeCount');
-                likeCount.textContent = state.likedList.length;
-
+                document.getElementById('chatListLikeCount').textContent = state.likedList.length;
                 if (!state.likedList.length) {
-                    container.innerHTML = '<div style="text-align:center; color:#9088b0; padding:40px 20px;">😔 Пока никого не лайкнули<br><span style="font-size:12px;">Вернитесь в ленту и поставьте ❤️</span></div>';
+                    container.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px 20px;">😔 Пока никого не лайкнули</div>';
                     return;
                 }
-
                 container.innerHTML = '';
                 state.likedList.forEach(partner => {
                     const history = getChatHistory(partner.id);
-                    const lastMsg = history.messages.length > 0 
-                        ? history.messages[history.messages.length - 1].text 
-                        : (history.done ? '✨ Переписка завершена' : '💬 Начать чат');
-                    
+                    const lastMsg = history.messages.length > 0 ? history.messages[history.messages.length - 1].text : '💬 Начать чат';
                     const div = document.createElement('div');
                     div.className = 'chat-list-item';
-                    div.innerHTML = `
-                        <img src="${partner.avatar || ''}" onerror="this.style.display='none'">
-                        <div class="info">
-                            <div class="name">${partner.name || '?'}, ${partner.age || '?'}</div>
-                            <div class="last-msg">${lastMsg.substring(0, 40)}${lastMsg.length > 40 ? '...' : ''}</div>
-                        </div>
-                        ${!history.done ? '<span class="unread-badge">новое</span>' : ''}
-                        <span style="color:#9088b0; font-size:18px;">→</span>
-                    `;
+                    div.innerHTML = `<img src="${partner.avatar || ''}" onerror="this.style.display='none'"><div class="info"><div class="name">${partner.name || '?'}, ${partner.age || '?'}</div><div class="last-msg">${lastMsg.substring(0, 40)}</div></div>${!history.done ? '<span class="unread-badge">новое</span>' : ''}<span style="color:#9088b0;font-size:18px;">→</span>`;
                     div.addEventListener('click', () => {
                         state.currentPartnerId = partner.id;
                         saveGame();
@@ -1021,7 +1257,6 @@
                 document.getElementById('convoPartnerAvatar').src = partner.avatar || '';
                 document.getElementById('convoPartnerName').textContent = partner.name || '';
                 const history = getChatHistory(partner.id);
-                
                 convoMessages.innerHTML = '';
                 history.messages.forEach(msg => {
                     const div = document.createElement('div');
@@ -1029,7 +1264,6 @@
                     div.textContent = msg.text;
                     convoMessages.appendChild(div);
                 });
-
                 if (history.messages.length === 0) {
                     const f = getChatFlow();
                     if (f?.length) {
@@ -1042,7 +1276,6 @@
                         saveGame();
                     }
                 }
-
                 renderConvoReplies(history.step);
                 convoToLocationsBtn.classList.toggle('visible', history.done);
                 scrollToBottom(convoMessagesWrapper);
@@ -1053,45 +1286,37 @@
                 if (!f) return;
                 const history = getChatHistory(state.currentPartnerId);
                 convoRepliesWrapper.innerHTML = '';
-
                 if (history.done || s >= f.length) {
                     convoToLocationsBtn.classList.add('visible');
                     history.done = true;
                     saveGame();
                     return;
                 }
-
-                f[s].replies.forEach((r, i) => {
+                f[s].replies.forEach((r) => {
                     const b = document.createElement('button');
                     b.className = 'chat-reply-btn';
                     b.textContent = r;
                     b.addEventListener('click', () => {
-                        const myMsg = { type: 'mine', text: r };
-                        history.messages.push(myMsg);
+                        history.messages.push({ type: 'mine', text: r });
                         const myDiv = document.createElement('div');
-                        myDiv.className = `message ${myMsg.type}`;
-                        myDiv.textContent = myMsg.text;
+                        myDiv.className = 'message mine';
+                        myDiv.textContent = r;
                         convoMessages.appendChild(myDiv);
-                        
                         convoRepliesWrapper.innerHTML = '';
                         const n = s + 1;
-                        
                         if (n < f.length) {
                             const typingMsg = document.createElement('div');
                             typingMsg.className = 'message typing';
                             typingMsg.textContent = 'Печатает...';
                             convoMessages.appendChild(typingMsg);
                             scrollToBottom(convoMessagesWrapper);
-                            
                             setTimeout(() => {
                                 if (typingMsg.parentNode) typingMsg.remove();
-                                const theirMsg = { type: 'theirs', text: f[n].theirs };
-                                history.messages.push(theirMsg);
+                                history.messages.push({ type: 'theirs', text: f[n].theirs });
                                 const theirDiv = document.createElement('div');
-                                theirDiv.className = `message ${theirMsg.type}`;
-                                theirDiv.textContent = theirMsg.text;
+                                theirDiv.className = 'message theirs';
+                                theirDiv.textContent = f[n].theirs;
                                 convoMessages.appendChild(theirDiv);
-                                
                                 history.step = n;
                                 saveGame();
                                 renderConvoReplies(n);
@@ -1102,11 +1327,10 @@
                             stats.completedChats++;
                             saveStats();
                             saveGame();
-                            const doneMsg = { type: 'theirs', text: '✨ Договорились! Выбирай место ✨' };
-                            history.messages.push(doneMsg);
+                            history.messages.push({ type: 'theirs', text: '✨ Договорились! Выбирай место ✨' });
                             const doneDiv = document.createElement('div');
-                            doneDiv.className = `message ${doneMsg.type}`;
-                            doneDiv.textContent = doneMsg.text;
+                            doneDiv.className = 'message theirs';
+                            doneDiv.textContent = '✨ Договорились! Выбирай место ✨';
                             convoMessages.appendChild(doneDiv);
                             convoToLocationsBtn.classList.add('visible');
                             scrollToBottom(convoMessagesWrapper);
@@ -1124,8 +1348,7 @@
             });
 
             convoToLocationsBtn.addEventListener('click', () => {
-                const history = getChatHistory(state.currentPartnerId);
-                if (!history.done) return;
+                if (!getChatHistory(state.currentPartnerId).done) return;
                 state.selectedLocationIndex = 0;
                 state.locationDialogIndex = 0;
                 state.affection = 50;
@@ -1139,35 +1362,15 @@
             function renderLocations() {
                 const c = document.getElementById('locationCatalog');
                 const allLocations = getLocations();
-                const unlockedInfo = document.getElementById('unlockedLocationsInfo');
                 if (!allLocations?.length) return;
-
-                unlockedInfo.textContent = `${state.unlockedLocations}/${allLocations.length}`;
-
+                document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${allLocations.length}`;
                 c.innerHTML = '';
                 allLocations.forEach((loc, i) => {
                     const isLocked = i >= state.unlockedLocations;
                     const d = document.createElement('div');
                     d.className = 'catalog-item' + (isLocked ? ' locked' : '') + (i === state.selectedLocationIndex && !isLocked ? ' selected' : '');
                     let icon = '📍';
-                    if (loc.name.includes('☕')) icon = '☕';
-                    else if (loc.name.includes('🍽️') || loc.name.includes('ресторан') || loc.name.includes('суши')) icon = '🍽️';
-                    else if (loc.name.includes('🎬') || loc.name.includes('кино')) icon = '🎬';
-                    else if (loc.name.includes('🌳') || loc.name.includes('парк')) icon = '🎢';
-                    else if (loc.name.includes('🎨') || loc.name.includes('галерея')) icon = '🎨';
-                    else if (loc.name.includes('🎵') || loc.name.includes('джаз')) icon = '🎵';
-                    else if (loc.name.includes('🏖️') || loc.name.includes('набережная')) icon = '🌊';
-                    else if (loc.name.includes('🎳')) icon = '🎳';
-                    else if (loc.name.includes('🌿') || loc.name.includes('сад')) icon = '🌿';
-
-                    d.innerHTML = `
-                        <img src="${loc.bg || ''}" onerror="this.style.display='none'">
-                        <div class="info">
-                            <h4>${loc.name} ${isLocked ? '🔒' : ''}</h4>
-                            <p>${isLocked ? 'Откроется позже...' : (loc.desc || '')}</p>
-                        </div>
-                        <span class="location-icon">${isLocked ? '🔒' : icon}</span>
-                    `;
+                    d.innerHTML = `<img src="${loc.bg || ''}" onerror="this.style.display='none'"><div class="info"><h4>${loc.name} ${isLocked ? '🔒' : ''}</h4><p>${isLocked ? 'Откроется позже...' : (loc.desc || '')}</p></div><span class="location-icon">${isLocked ? '🔒' : icon}</span>`;
                     if (!isLocked) {
                         d.addEventListener('click', () => {
                             state.selectedLocationIndex = i;
@@ -1181,8 +1384,7 @@
             }
 
             document.getElementById('toDate').addEventListener('click', () => {
-                const allLocations = getLocations();
-                const loc = allLocations?.[state.selectedLocationIndex] || allLocations?.[0];
+                const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0];
                 if (!loc) return;
                 state.currentLocationId = loc.id || 'cafe';
                 state.locationDialogIndex = 0;
@@ -1200,34 +1402,25 @@
             const dateChat = document.getElementById('dateChat');
             const dateChatWrapper = document.getElementById('dateChatWrapper');
             const dateChoicesWrapper = document.getElementById('dateChoicesWrapper');
-            const dateAvatarFull = document.getElementById('dateAvatarFull');
 
             function updateAffectionUI() {
                 const v = Math.min(100, Math.max(0, state.affection));
                 const fill = document.getElementById('affectionFill');
                 fill.style.width = v + '%';
                 document.getElementById('affectionLabel').textContent = v + '%';
-                if (v < 30) fill.style.background = '#ff4444';
-                else if (v < 60) fill.style.background = '#ffaa44';
-                else fill.style.background = 'linear-gradient(90deg, #ff4d8a, #ff6b9d)';
+                fill.style.background = v < 30 ? '#ff4444' : v < 60 ? '#ffaa44' : 'linear-gradient(90deg, #ff4d8a, #ff6b9d)';
             }
 
             function renderDateScene() {
                 const partner = getCurrentPartner();
-                const locs = getLocations();
-                const loc = locs?.find(l => l.id === state.currentLocationId) || locs?.[0] || {};
-
+                const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {};
                 document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg || ''}')`;
-                dateAvatarFull.src = partner?.avatar || '';
+                document.getElementById('dateAvatarFull').src = partner?.avatar || '';
                 document.getElementById('datePartnerName').textContent = partner?.name || '';
-
                 const dialogs = getLocationDialogs(partner?.id, state.currentLocationId);
                 dateChoicesWrapper.innerHTML = '';
-
                 if (!dialogs || state.locationDialogIndex >= dialogs.length) {
-                    let end = state.affection >= 70 ?
-                        (state.gender === 'male' ? '💖 Ты её зацепил!' : '💖 Ты его зацепила!') :
-                        state.affection >= 45 ? '❤️ Неплохо!' : '💔 Уходит...';
+                    let end = state.affection >= 70 ? '💖 Идеальное свидание!' : state.affection >= 45 ? '❤️ Неплохо!' : '💔 Уходит...';
                     dateChat.innerHTML += `<div class="date-msg system">🏁 ${end}</div>`;
                     scrollToBottom(dateChatWrapper);
                     stats.completedDates++;
@@ -1235,22 +1428,15 @@
                     setTimeout(() => goToRoom(), 1500);
                     return;
                 }
-
                 const d = dialogs[state.locationDialogIndex];
-                const react = state.affection >= 65 ? '😍 Заинтересован(а)!' :
-                    state.affection >= 45 ? '😊 Улыбается.' :
-                    state.affection >= 25 ? '😐 В сторону.' : '😒 Разочарован(а).';
-
-                dateChat.innerHTML += `<div class="date-msg theirs">${d.text} ${react}</div>`;
+                dateChat.innerHTML += `<div class="date-msg theirs">${d.text}</div>`;
                 scrollToBottom(dateChatWrapper);
-
-                d.choices.forEach((choice, i) => {
+                d.choices.forEach((choice) => {
                     const b = document.createElement('button');
                     b.className = 'date-choice-btn';
                     b.textContent = choice.text;
                     b.addEventListener('click', () => {
-                        const fullText = choice.full || choice.text;
-                        dateChat.innerHTML += `<div class="date-msg mine">${fullText}</div>`;
+                        dateChat.innerHTML += `<div class="date-msg mine">${choice.full || choice.text}</div>`;
                         state.affection = Math.min(100, Math.max(0, state.affection + (choice.effect || 0)));
                         updateAffectionUI();
                         state.locationDialogIndex++;
@@ -1270,11 +1456,7 @@
             const roomChoicesWrapper = document.getElementById('roomChoicesWrapper');
 
             function goToRoom() {
-                if (roomTimer) {
-                    clearTimeout(roomTimer);
-                    roomTimer = null;
-                }
-                
+                if (roomTimer) { clearTimeout(roomTimer); roomTimer = null; }
                 state.roomDialogIndex = 0;
                 state.roomAffection = 100;
                 showScene('scene6');
@@ -1284,8 +1466,14 @@
                 document.getElementById('roomPartnerName').textContent = partner?.name || '';
                 document.getElementById('roomAffectionFill').style.width = '100%';
                 document.getElementById('roomAffectionValue').textContent = '100%';
-                roomChat.innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке... Атмосфера накаляется...</div>';
+                roomChat.innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>';
                 roomChoicesWrapper.innerHTML = '';
+                
+                // Hot концовка если разблокирована
+                if (settings.hotEndingUnlocked) {
+                    roomChat.innerHTML += '<div class="room-msg system" style="background:rgba(255,0,0,0.2);border-color:rgba(255,0,0,0.4);color:#ff6666;">🔥 HOT КОНЦОВКА АКТИВИРОВАНА! 🔥</div>';
+                }
+                
                 renderRoomScene();
             }
 
@@ -1293,36 +1481,29 @@
                 const dialogs = getRoomDialogs();
                 if (!dialogs?.length) return;
                 roomChoicesWrapper.innerHTML = '';
-
                 if (state.roomDialogIndex >= dialogs.length) {
-                    roomChat.innerHTML += `<div class="room-msg system">💫 Волшебный вечер... Это начало чего-то прекрасного ✨</div>`;
+                    let endMsg = '💫 Волшебный вечер... Это начало чего-то прекрасного ✨';
+                    if (settings.hotEndingUnlocked) {
+                        endMsg = '🔥 Страстная ночь! Вы провели незабываемое время вместе... 💋';
+                        settings.hotEndingUnlocked = false;
+                        saveSettings();
+                    }
+                    roomChat.innerHTML += `<div class="room-msg system">${endMsg}</div>`;
                     scrollToBottom(roomChatWrapper);
                     unlockNextLocation();
                     saveGame();
                     startRoomCountdown();
                     return;
                 }
-
                 const d = dialogs[state.roomDialogIndex];
-                const react = state.roomAffection >= 90 ? '🔥 Искры повсюду!' : '💕 Очень тепло...';
-                roomChat.innerHTML += `<div class="room-msg theirs">${d.text} ${react}</div>`;
+                roomChat.innerHTML += `<div class="room-msg theirs">${d.text}</div>`;
                 scrollToBottom(roomChatWrapper);
-
-                const choiceTexts = d.choices || d;
-                const effects = d.effects || [];
-                choiceTexts.forEach((choice, i) => {
+                (d.choices || d).forEach((choice, i) => {
                     const b = document.createElement('button');
                     b.className = 'room-choice-btn';
-                    const shortText = typeof choice === 'string' ? choice : (choice.text || choice);
-                    b.textContent = shortText;
-                    const effect = effects[i] || 0;
-
+                    b.textContent = typeof choice === 'string' ? choice : (choice.text || choice);
                     b.addEventListener('click', () => {
-                        const fullText = typeof choice === 'string' ? choice : (choice.full || choice.text || choice);
-                        roomChat.innerHTML += `<div class="room-msg mine">${fullText}</div>`;
-                        state.roomAffection = Math.min(100, Math.max(0, state.roomAffection + effect));
-                        document.getElementById('roomAffectionFill').style.width = state.roomAffection + '%';
-                        document.getElementById('roomAffectionValue').textContent = state.roomAffection + '%';
+                        roomChat.innerHTML += `<div class="room-msg mine">${typeof choice === 'string' ? choice : (choice.full || choice.text)}</div>`;
                         state.roomDialogIndex++;
                         saveGame();
                         roomChoicesWrapper.innerHTML = '';
@@ -1336,35 +1517,23 @@
 
             function startRoomCountdown() {
                 let secondsLeft = 3;
-                
                 const countdownDiv = document.createElement('div');
                 countdownDiv.className = 'room-msg countdown';
-                countdownDiv.id = 'roomCountdownMsg';
                 countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
                 roomChat.appendChild(countdownDiv);
                 scrollToBottom(roomChatWrapper);
-                
                 roomChoicesWrapper.innerHTML = '';
-                
                 roomTimer = setInterval(() => {
                     secondsLeft--;
                     if (secondsLeft <= 0) {
                         clearInterval(roomTimer);
                         roomTimer = null;
                         countdownDiv.textContent = '✨ Переходим в чаты...';
-                        countdownDiv.style.background = 'rgba(255,77,138,0.2)';
-                        countdownDiv.style.borderColor = 'rgba(255,77,138,0.4)';
-                        countdownDiv.style.color = '#ff8aad';
-                        scrollToBottom(roomChatWrapper);
-                        
-                        setTimeout(() => {
-                            showScene('scene3');
-                            renderChatList();
-                        }, 500);
+                        setTimeout(() => { showScene('scene3'); renderChatList(); }, 500);
                     } else {
                         countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
-                        scrollToBottom(roomChatWrapper);
                     }
+                    scrollToBottom(roomChatWrapper);
                 }, 1000);
             }
 
@@ -1378,28 +1547,14 @@
 
             // ==================== СБРОС ====================
             function resetGame() {
-                if (roomTimer) {
-                    clearInterval(roomTimer);
-                    roomTimer = null;
-                }
-                
+                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
                 const savedUnlocked = state.unlockedLocations;
                 const savedChatHistories = state.chatHistories;
                 state = {
-                    step: 1,
-                    gender: null,
-                    style: 'style1',
-                    likedIndex: 0,
-                    likedList: [],
-                    currentPartnerId: null,
-                    currentLocationId: null,
-                    locationDialogIndex: 0,
-                    affection: 50,
-                    roomDialogIndex: 0,
-                    roomAffection: 100,
-                    selectedLocationIndex: 0,
-                    unlockedLocations: savedUnlocked,
-                    chatHistories: savedChatHistories,
+                    step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
+                    currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
+                    affection: 50, roomDialogIndex: 0, roomAffection: 100,
+                    selectedLocationIndex: 0, unlockedLocations: savedUnlocked, chatHistories: savedChatHistories,
                 };
                 saveGame();
                 showScene('scene1');
@@ -1409,21 +1564,13 @@
                 toScene2Btn.classList.remove('enabled');
                 toScene2Btn.disabled = true;
                 mainAvatar.src = 'assets/boy1.png';
-                document.getElementById('affectionFill').style.width = '50%';
-                document.getElementById('affectionLabel').textContent = '50%';
-                document.getElementById('dateChat').innerHTML = '';
-                document.getElementById('dateChoicesWrapper').innerHTML = '';
-                document.getElementById('roomChat').innerHTML = '';
-                document.getElementById('roomChoicesWrapper').innerHTML = '';
-                convoToLocationsBtn.classList.remove('visible');
-                document.getElementById('matchCount').textContent = '0';
             }
 
             document.getElementById('resetGame').addEventListener('click', () => {
-                if (confirm('Сбросить текущую игру? Прогресс локаций и история чатов сохранится.')) resetGame();
+                if (confirm('Сбросить игру?')) resetGame();
             });
             document.getElementById('resetFromRoom').addEventListener('click', () => {
-                if (confirm('Сбросить текущую игру? Прогресс локаций и история чатов сохранится.')) resetGame();
+                if (confirm('Сбросить игру?')) resetGame();
             });
 
             // ==================== ЗАГРУЗКА ДАННЫХ ====================
@@ -1431,60 +1578,30 @@
                 try {
                     const response = await fetch('data.json');
                     if (!response.ok) throw new Error('Файл не найден');
-                    const data = await response.json();
-                    if (data.partners && data.locations && data.npcs) {
-                        gameData = data;
-                    } else {
-                        throw new Error('Неверная структура');
-                    }
+                    gameData = await response.json();
                 } catch (e) {
-                    console.warn('[DATA] Ошибка загрузки:', e);
-                    alert('Не удалось загрузить data.json.');
+                    console.warn('[DATA] Ошибка:', e);
+                    alert('Не удалось загрузить data.json');
                 }
             }
 
-            // ==================== ВОССТАНОВЛЕНИЕ СОСТОЯНИЯ ====================
             function restoreGameState() {
                 if (!gameData) return;
                 const step = Math.floor(state.step);
-                switch (step) {
-                    case 1:
-                        showScene('scene1');
-                        restoreScene1UI();
-                        break;
-                    case 2:
-                        showScene('scene2');
-                        renderTinder();
-                        break;
-                    case 3:
-                        if (state.step === 3.5) {
-                            showScene('scene3_5');
-                            initConversation();
-                        } else {
-                            showScene('scene3');
-                            renderChatList();
-                        }
-                        break;
-                    case 4:
-                        showScene('scene4');
-                        renderLocations();
-                        break;
-                    case 5:
-                        showScene('scene5');
-                        updateAffectionUI();
-                        renderDateScene();
-                        break;
-                    case 6:
-                        goToRoom();
-                        break;
-                    default:
-                        showScene('scene1');
-                        restoreScene1UI();
+                if (step === 1) { showScene('scene1'); }
+                else if (step === 2) { showScene('scene2'); renderTinder(); }
+                else if (step === 3) {
+                    if (state.step === 3.5) { showScene('scene3_5'); initConversation(); }
+                    else { showScene('scene3'); renderChatList(); }
                 }
+                else if (step === 4) { showScene('scene4'); renderLocations(); }
+                else if (step === 5) { showScene('scene5'); updateAffectionUI(); renderDateScene(); }
+                else if (step === 6) { goToRoom(); }
             }
 
             // ==================== ИНИЦИАЛИЗАЦИЯ ====================
             loadGameData().then(() => {
+                loadSettings();
                 loadStats();
                 const loaded = loadGame();
                 if (loaded && state.gender) {
@@ -1498,6 +1615,7 @@
                     state.style = 'style1';
                     updateAvatar();
                 }
+                updateShopButtons();
             });
 
         })();
