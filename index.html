@@ -255,6 +255,19 @@
         .room-msg.theirs { background: rgba(255,77,138,0.15); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(255,77,138,0.25); color: #f0d0e0; backdrop-filter: blur(8px); }
         .room-msg.mine { background: linear-gradient(135deg, rgba(255,77,138,0.55), rgba(255,100,150,0.45)); align-self: flex-end; border-bottom-right-radius: 6px; color: #fff; border: 1px solid rgba(255,77,138,0.35); }
         .room-msg.system { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #d090b0; font-size: 12px; border-radius: 40px; padding: 6px 16px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); }
+        .room-msg.countdown { 
+            background: rgba(255,215,0,0.15); 
+            border: 1px solid rgba(255,215,0,0.3); 
+            align-self: center; 
+            color: #ffd700; 
+            font-size: 13px; 
+            border-radius: 40px; 
+            padding: 8px 18px; 
+            max-width: 90%; 
+            text-align: center; 
+            backdrop-filter: blur(8px);
+            animation: pulse 1s ease-in-out infinite;
+        }
         .room-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 8px; max-height: 130px; overflow-y: auto; }
         .room-choices-wrapper::-webkit-scrollbar { width: 3px; }
         .room-choices-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
@@ -421,10 +434,11 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v3.1');
+            console.log('[APP] Tantan v3.2');
 
             const STORAGE_KEY = 'tantan_game_save';
             let gameData = null;
+            let roomTimer = null;
 
             // Структура сохранения
             let state = {
@@ -537,7 +551,7 @@
                     state.chatHistories[partnerId] = {
                         step: 0,
                         done: false,
-                        messages: [] // [{type: 'theirs'|'mine', text: '...'}]
+                        messages: []
                     };
                 }
                 return state.chatHistories[partnerId];
@@ -668,7 +682,6 @@
                 const partner = p[state.likedIndex % p.length];
                 if (!state.likedList.some(x => x.id === partner.id)) {
                     state.likedList.push({ ...partner });
-                    // Инициализируем историю чата для новой девушки
                     if (!state.chatHistories[partner.id]) {
                         const f = getChatFlow();
                         state.chatHistories[partner.id] = {
@@ -714,7 +727,6 @@
                 container.innerHTML = '';
                 state.likedList.forEach(partner => {
                     const history = getChatHistory(partner.id);
-                    // Берём последнее сообщение из истории
                     const lastMsg = history.messages.length > 0 
                         ? history.messages[history.messages.length - 1].text 
                         : (history.done ? '✨ Переписка завершена' : '💬 Начать чат');
@@ -753,7 +765,6 @@
                 document.getElementById('convoPartnerName').textContent = partner.name || '';
                 const history = getChatHistory(partner.id);
                 
-                // Восстанавливаем ВСЕ сообщения из истории
                 convoMessages.innerHTML = '';
                 history.messages.forEach(msg => {
                     const div = document.createElement('div');
@@ -762,7 +773,6 @@
                     convoMessages.appendChild(div);
                 });
 
-                // Если история пустая, инициализируем первым сообщением
                 if (history.messages.length === 0) {
                     const f = getChatFlow();
                     if (f?.length) {
@@ -799,7 +809,6 @@
                     b.className = 'chat-reply-btn';
                     b.textContent = r;
                     b.addEventListener('click', () => {
-                        // Добавляем сообщение пользователя в историю и на экран
                         const myMsg = { type: 'mine', text: r };
                         history.messages.push(myMsg);
                         const myDiv = document.createElement('div');
@@ -819,7 +828,6 @@
                             
                             setTimeout(() => {
                                 if (typingMsg.parentNode) typingMsg.remove();
-                                // Добавляем ответ партнёра в историю и на экран
                                 const theirMsg = { type: 'theirs', text: f[n].theirs };
                                 history.messages.push(theirMsg);
                                 const theirDiv = document.createElement('div');
@@ -1001,6 +1009,12 @@
             const roomChoicesWrapper = document.getElementById('roomChoicesWrapper');
 
             function goToRoom() {
+                // Очищаем предыдущий таймер если есть
+                if (roomTimer) {
+                    clearTimeout(roomTimer);
+                    roomTimer = null;
+                }
+                
                 state.roomDialogIndex = 0;
                 state.roomAffection = 100;
                 showScene('scene6');
@@ -1025,6 +1039,9 @@
                     scrollToBottom(roomChatWrapper);
                     unlockNextLocation();
                     saveGame();
+                    
+                    // Запускаем таймер на возврат в чаты
+                    startRoomCountdown();
                     return;
                 }
 
@@ -1059,6 +1076,43 @@
                 scrollToBottom(roomChoicesWrapper);
             }
 
+            function startRoomCountdown() {
+                let secondsLeft = 3;
+                
+                // Добавляем сообщение с обратным отсчётом
+                const countdownDiv = document.createElement('div');
+                countdownDiv.className = 'room-msg countdown';
+                countdownDiv.id = 'roomCountdownMsg';
+                countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
+                roomChat.appendChild(countdownDiv);
+                scrollToBottom(roomChatWrapper);
+                
+                // Блокируем кнопки выбора
+                roomChoicesWrapper.innerHTML = '';
+                
+                roomTimer = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft <= 0) {
+                        clearInterval(roomTimer);
+                        roomTimer = null;
+                        // Плавный переход в чаты
+                        countdownDiv.textContent = '✨ Переходим в чаты...';
+                        countdownDiv.style.background = 'rgba(255,77,138,0.2)';
+                        countdownDiv.style.borderColor = 'rgba(255,77,138,0.4)';
+                        countdownDiv.style.color = '#ff8aad';
+                        scrollToBottom(roomChatWrapper);
+                        
+                        setTimeout(() => {
+                            showScene('scene3');
+                            renderChatList();
+                        }, 500);
+                    } else {
+                        countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
+                        scrollToBottom(roomChatWrapper);
+                    }
+                }, 1000);
+            }
+
             function unlockNextLocation() {
                 const allLocations = getLocations();
                 if (state.unlockedLocations < allLocations.length) {
@@ -1069,8 +1123,14 @@
 
             // ==================== СБРОС ====================
             function resetGame() {
+                // Очищаем таймер если есть
+                if (roomTimer) {
+                    clearInterval(roomTimer);
+                    roomTimer = null;
+                }
+                
                 const savedUnlocked = state.unlockedLocations;
-                const savedChatHistories = state.chatHistories; // Сохраняем истории чатов
+                const savedChatHistories = state.chatHistories;
                 state = {
                     step: 1,
                     gender: null,
@@ -1085,7 +1145,7 @@
                     roomAffection: 100,
                     selectedLocationIndex: 0,
                     unlockedLocations: savedUnlocked,
-                    chatHistories: savedChatHistories, // Восстанавливаем истории
+                    chatHistories: savedChatHistories,
                 };
                 saveGame();
                 showScene('scene1');
