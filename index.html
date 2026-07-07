@@ -128,163 +128,63 @@
         .tinder-actions .btn-chat { width: auto; border-radius: 30px; padding: 0 28px; font-size: 15px; font-weight: 700; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1.5px solid rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; white-space: nowrap; }
         .tinder-actions .btn-chat:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
 
-        #scene3 {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
+        /* ЧАТЫ (Сцена 3) */
+        #scene3 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+        #scene3 .simple-card { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 12px; background: #1a1a36; border-radius: 20px; border: 1px solid #2a2a4e; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .chat-list-header { font-size: 16px; font-weight: 700; color: #e0d8f0; margin-bottom: 8px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; }
+        .chat-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; min-height: 0; padding: 4px 2px 8px; }
+        .chat-list::-webkit-scrollbar { width: 3px; }
+        .chat-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .chat-list::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
+        .chat-list-item {
+            display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 16px;
+            background: #16163a; border: 1.5px solid #2a2a4e; cursor: pointer; transition: 0.2s ease; flex-shrink: 0;
         }
-        #scene3 .simple-card {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            padding: 8px;
-            background: #1a1a36;
-            border-radius: 20px;
-            border: 1px solid #2a2a4e;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
-            padding: 0 2px;
-            margin-bottom: 6px;
-        }
-        .chat-header img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #2a2a4a;
-            border: 2px solid #ff4d8a;
-        }
-        .chat-header .name {
-            font-weight: 600;
-            font-size: 16px;
-            color: #f0ecff;
-        }
-        .chat-header .status {
-            margin-left: auto;
-            font-size: 11px;
-            color: #6a6290;
+        .chat-list-item:hover { background: #1e1e48; border-color: #3a3a5e; }
+        .chat-list-item:active { transform: scale(0.98); }
+        .chat-list-item img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: #2a2a4a; border: 2px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+        .chat-list-item .info { flex: 1; min-width: 0; }
+        .chat-list-item .info .name { font-size: 15px; color: #e0d8f0; font-weight: 700; }
+        .chat-list-item .info .last-msg { font-size: 12px; color: #9088b0; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chat-list-item .unread-badge {
+            background: #ff4d8a; color: white; font-size: 10px; font-weight: 700;
+            padding: 2px 6px; border-radius: 10px; margin-left: 4px; flex-shrink: 0;
         }
 
-        .chat-messages-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 4px;
-            padding-right: 2px;
-            min-height: 0;
-        }
+        /* Окно переписки (Сцена 3.5) */
+        #scene3_5 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+        .chat-conversation { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 8px; background: #1a1a36; border-radius: 20px; border: 1px solid #2a2a4e; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .chat-convo-header { display: flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 0 2px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 6px; }
+        .chat-convo-header img { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #ff4d8a; }
+        .chat-convo-header .name { font-weight: 600; font-size: 16px; color: #f0ecff; }
+        .chat-convo-header .back-btn { margin-right: 4px; background: none; border: none; color: #9088b0; font-size: 20px; cursor: pointer; padding: 2px 6px; border-radius: 8px; }
+        .chat-convo-header .back-btn:hover { background: rgba(255,255,255,0.05); }
+        .chat-messages-wrapper { flex: 1; overflow-y: auto; padding-right: 2px; min-height: 0; margin-bottom: 4px; }
         .chat-messages-wrapper::-webkit-scrollbar { width: 3px; }
         .chat-messages-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
         .chat-messages-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
+        .chat-messages { display: flex; flex-direction: column; gap: 6px; }
+        .message { max-width: 85%; padding: 8px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; word-break: break-word; animation: msgAppear 0.2s ease; }
+        .message.mine { background: #4a6a9a; align-self: flex-end; border-bottom-right-radius: 3px; }
+        .message.theirs { background: #222248; align-self: flex-start; border-bottom-left-radius: 3px; }
+        .message.system { background: rgba(255,77,138,0.1); align-self: center; color: #ff8aad; font-size: 12px; border-radius: 20px; padding: 4px 12px; max-width: 90%; text-align: center; }
+        .message.typing { background: transparent; align-self: flex-start; color: #8880aa; font-style: italic; font-size: 14px; padding: 4px 0; }
+        .chat-replies-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .chat-reply-btn { width: 100%; text-align: left; padding: 8px 14px; background: #1a1a3e; border: 1px solid #3a3a5e; border-radius: 12px; font-weight: 400; font-size: 13px; color: #d0c8f0; cursor: pointer; transition: 0.15s ease; line-height: 1.3; flex-shrink: 0; }
+        .chat-reply-btn:hover { background: #222252; border-color: #4a4a7e; }
+        .chat-reply-btn:active { transform: scale(0.97); background: #2a2a52; }
+        .chat-to-locations-btn { margin-top: 4px; padding: 8px 24px; font-size: 14px; align-self: center; background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; border-radius: 60px; cursor: pointer; flex-shrink: 0; transition: 0.2s; display: none; }
+        .chat-to-locations-btn.visible { display: block; }
+        .chat-to-locations-btn:active { transform: scale(0.97); }
 
-        .chat-messages {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .message {
-            max-width: 85%;
-            padding: 8px 14px;
-            border-radius: 14px;
-            font-size: 14px;
-            line-height: 1.5;
-            word-break: break-word;
-            animation: msgAppear 0.2s ease;
-        }
-        .message.mine {
-            background: #4a6a9a;
-            align-self: flex-end;
-            border-bottom-right-radius: 3px;
-        }
-        .message.theirs {
-            background: #222248;
-            align-self: flex-start;
-            border-bottom-left-radius: 3px;
-        }
-        .message.typing {
-            background: transparent;
-            align-self: flex-start;
-            color: #8880aa;
-            font-style: italic;
-            font-size: 14px;
-            animation: dots 1s steps(4) infinite;
-            padding: 4px 0;
-        }
         @keyframes msgAppear {
             0% { opacity: 0; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        @keyframes dots {
-            0% { content: "Печатает"; }
-            25% { content: "Печатает."; }
-            50% { content: "Печатает.."; }
-            75% { content: "Печатает..."; }
-        }
-
-        .chat-replies-wrapper {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding-top: 4px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .chat-reply-btn {
-            width: 100%;
-            text-align: left;
-            padding: 8px 14px;
-            background: #1a1a3e;
-            border: 1px solid #3a3a5e;
-            border-radius: 12px;
-            font-weight: 400;
-            font-size: 13px;
-            color: #d0c8f0;
-            cursor: pointer;
-            transition: 0.15s ease;
-            line-height: 1.3;
-            flex-shrink: 0;
-        }
-        .chat-reply-btn:hover {
-            background: #222252;
-            border-color: #4a4a7e;
-        }
-        .chat-reply-btn:active {
-            transform: scale(0.97);
-            background: #2a2a52;
-        }
-
-        .chat-next-btn {
-            margin-top: 4px;
-            padding: 8px 24px;
-            font-size: 14px;
-            align-self: center;
-            background: linear-gradient(135deg, #ff4d8a, #ff6b9d);
-            border: none;
-            color: white;
-            border-radius: 60px;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: 0.2s;
-            display: none;
-        }
-        .chat-next-btn.visible {
-            display: block;
-        }
-        .chat-next-btn:active {
-            transform: scale(0.97);
-        }
 
         #scene4 { flex: 1; display: flex; flex-direction: column; min-height: 0; }
         #scene4 .simple-card { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding: 12px; }
-        .catalog-grid { flex: 1; overflow-y: auto; padding: 4px 2px 8px; display: flex; flex-direction: column; gap: 8px; min-height: 0; max-height: none; }
+        .catalog-grid { flex: 1; overflow-y: auto; padding: 4px 2px 8px; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
         .catalog-grid::-webkit-scrollbar { width: 3px; }
         .catalog-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
         .catalog-grid::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
@@ -292,14 +192,13 @@
             background: #16163a; padding: 12px 14px; border-radius: 16px; display: flex; align-items: center;
             gap: 12px; border: 1.5px solid #2a2a4e; cursor: pointer; transition: 0.2s ease; flex-shrink: 0; min-height: 70px;
         }
+        .catalog-item.locked { opacity: 0.4; pointer-events: none; filter: grayscale(0.5); }
         .catalog-item:hover { background: #1e1e48; border-color: #3a3a5e; }
         .catalog-item:active { transform: scale(0.98); background: #222250; }
         .catalog-item img { width: 50px; height: 50px; border-radius: 14px; object-fit: cover; background: #2a2a4a; border: 2px solid rgba(255,255,255,0.08); flex-shrink: 0; }
         .catalog-item .info { flex: 1; min-width: 0; }
         .catalog-item .info h4 { font-size: 15px; color: #e0d8f0; font-weight: 700; margin-bottom: 4px; }
         .catalog-item .info p { font-size: 12px; color: #9088b0; line-height: 1.3; }
-        .catalog-item .info .tags { display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap; }
-        .catalog-item .info .tags span { background: rgba(255,77,138,0.1); padding: 2px 8px; border-radius: 10px; font-size: 9px; color: #ff8aad; border: 1px solid rgba(255,77,138,0.15); }
         .catalog-item .location-icon { font-size: 24px; margin-left: auto; opacity: 0.5; transition: 0.2s; }
         .catalog-item:hover .location-icon { opacity: 0.8; }
         .catalog-item.selected { border: 2px solid #ff4d8a; background: #1e1e4a; box-shadow: 0 0 20px rgba(255,77,138,0.15); }
@@ -308,327 +207,71 @@
         #toDate { margin-top: 8px; padding: 10px 32px; font-size: 15px; font-weight: 700; align-self: center; background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; border-radius: 60px; cursor: pointer; flex-shrink: 0; }
         #toDate:active { transform: scale(0.97); }
 
-        #scene5 {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            position: relative;
-            border-radius: 0;
-            overflow: hidden;
-            background: #0d0d20;
-            border: none;
-            margin: -10px -12px -12px;
-            padding: 0;
-            width: calc(100% + 24px);
-        }
-
-        .date-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-        }
-
-        .date-avatar-section {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            z-index: 1;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .date-avatar-section img {
-            height: 100%;
-            width: auto;
-            max-width: 100%;
-            object-fit: contain;
-            object-position: bottom center;
-        }
-
-        .date-overlay-bottom {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .date-content {
-            position: relative;
-            z-index: 3;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 8px 12px 4px;
-            min-height: 0;
-        }
-
-        .date-top {
-            flex-shrink: 0;
-            padding: 4px 4px 6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .date-top .partner-name {
-            font-weight: 700;
-            font-size: 24px;
-            color: #fff;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.8);
-        }
-        .date-top .affection-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(8px);
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .date-top .affection-wrap .bar {
-            width: 60px;
-            height: 4px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .date-top .affection-wrap .bar .fill {
-            height: 100%;
-            width: 50%;
-            background: linear-gradient(90deg, #ff4d8a, #ff6b9d);
-            border-radius: 20px;
-            transition: width 0.4s ease;
-        }
-        .date-top .affection-wrap .label {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ff4d8a;
-            min-width: 32px;
-            text-align: right;
-        }
-
-        .date-chat-wrapper {
-            flex: 0 1 auto;
-            overflow-y: auto;
-            padding: 4px 2px 4px;
-            max-height: 160px;
-            min-height: 40px;
-            margin-bottom: 4px;
-        }
+        #scene5 { flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative; border-radius: 0; overflow: hidden; background: #0d0d20; border: none; margin: -10px -12px -12px; padding: 0; width: calc(100% + 24px); }
+        .date-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; z-index: 0; }
+        .date-avatar-section { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; z-index: 1; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+        .date-avatar-section img { height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: bottom center; }
+        .date-overlay-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); z-index: 2; pointer-events: none; }
+        .date-content { position: relative; z-index: 3; flex: 1; display: flex; flex-direction: column; padding: 8px 12px 4px; min-height: 0; }
+        .date-top { flex-shrink: 0; padding: 4px 4px 6px; display: flex; align-items: center; justify-content: space-between; }
+        .date-top .partner-name { font-weight: 700; font-size: 24px; color: #fff; letter-spacing: 0.5px; text-shadow: 0 2px 20px rgba(0,0,0,0.8); }
+        .date-top .affection-wrap { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); }
+        .date-top .affection-wrap .bar { width: 60px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 20px; overflow: hidden; }
+        .date-top .affection-wrap .bar .fill { height: 100%; width: 50%; background: linear-gradient(90deg, #ff4d8a, #ff6b9d); border-radius: 20px; transition: width 0.4s ease; }
+        .date-top .affection-wrap .label { font-size: 14px; font-weight: 700; color: #ff4d8a; min-width: 32px; text-align: right; }
+        .date-chat-wrapper { flex: 0 1 auto; overflow-y: auto; padding: 4px 2px 4px; max-height: 160px; min-height: 40px; margin-bottom: 4px; }
         .date-chat-wrapper::-webkit-scrollbar { width: 3px; }
         .date-chat-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
         .date-chat-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
-
-        .date-chat {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .date-msg {
-            max-width: 90%;
-            padding: 6px 12px;
-            border-radius: 14px;
-            font-size: 13px;
-            line-height: 1.4;
-            animation: msgAppear 0.3s ease;
-            word-break: break-word;
-        }
-        .date-msg.theirs {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.06);
-            color: #e8e4f0;
-        }
-        .date-msg.mine {
-            background: #ff4d8a;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-            color: #fff;
-        }
-        .date-msg.system {
-            background: rgba(255,77,138,0.15);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,77,138,0.15);
-            align-self: center;
-            color: #ff8aad;
-            font-size: 12px;
-            border-radius: 40px;
-            padding: 4px 14px;
-            max-width: 92%;
-            text-align: center;
-        }
-
-        .date-choices-wrapper {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 4px 0 6px;
-            position: relative;
-            z-index: 4;
-        }
-
-        .date-choice-btn {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 7px 14px;
-            border-radius: 60px;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 500;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.15s ease;
-            width: 100%;
-            line-height: 1.3;
-            flex-shrink: 0;
-            letter-spacing: 0.2px;
-        }
-        .date-choice-btn:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.15);
-        }
-        .date-choice-btn:active {
-            transform: scale(0.97);
-            background: rgba(255,255,255,0.12);
-        }
-
-        .btn-reset {
-            position: relative;
-            z-index: 4;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.06);
-            padding: 5px 18px;
-            border-radius: 60px;
-            font-weight: 500;
-            color: #9088b0;
-            font-size: 12px;
-            cursor: pointer;
-            flex: 0 0 auto;
-            backdrop-filter: blur(8px);
-            margin: 2px auto 6px;
-            transition: 0.2s;
-            align-self: center;
-        }
+        .date-chat { display: flex; flex-direction: column; gap: 4px; }
+        .date-msg { max-width: 90%; padding: 6px 12px; border-radius: 14px; font-size: 13px; line-height: 1.4; animation: msgAppear 0.3s ease; word-break: break-word; }
+        .date-msg.theirs { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.06); color: #e8e4f0; }
+        .date-msg.mine { background: #ff4d8a; align-self: flex-end; border-bottom-right-radius: 4px; color: #fff; }
+        .date-msg.system { background: rgba(255,77,138,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #ff8aad; font-size: 12px; border-radius: 40px; padding: 4px 14px; max-width: 92%; text-align: center; }
+        .date-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 6px; position: relative; z-index: 4; }
+        .date-choice-btn { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); padding: 7px 14px; border-radius: 60px; color: #fff; font-size: 12px; font-weight: 500; text-align: left; cursor: pointer; transition: 0.15s ease; width: 100%; line-height: 1.3; flex-shrink: 0; letter-spacing: 0.2px; }
+        .date-choice-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+        .date-choice-btn:active { transform: scale(0.97); background: rgba(255,255,255,0.12); }
+        .btn-reset { position: relative; z-index: 4; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); padding: 5px 18px; border-radius: 60px; font-weight: 500; color: #9088b0; font-size: 12px; cursor: pointer; flex: 0 0 auto; backdrop-filter: blur(8px); margin: 2px auto 20px; transition: 0.2s; align-self: center; }
         .btn-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
 
-        #scene6 {
-            flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative; border-radius: 0;
-            overflow: hidden; background: #1a0a1a; border: none; margin: -10px -12px -12px; padding: 0; width: calc(100% + 24px);
-        }
+        #scene6 { flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative; border-radius: 0; overflow: hidden; background: #1a0a1a; border: none; margin: -10px -12px -12px; padding: 0; width: calc(100% + 24px); }
         .room-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
         .room-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(10,5,15,0.6) 0%, rgba(20,10,30,0.4) 30%, rgba(20,10,30,0.4) 70%, rgba(10,5,15,0.85) 100%); z-index: 1; pointer-events: none; }
         .room-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; padding: 16px 12px 0; min-height: 0; }
-
-        .room-top-bar {
-            display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255,77,138,0.15);
-            flex-shrink: 0; margin-bottom: 8px;
-        }
+        .room-top-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255,77,138,0.15); flex-shrink: 0; margin-bottom: 8px; }
         .room-top-bar .room-avatar-small { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ff4d8a; flex-shrink: 0; }
         .room-top-bar .room-info-text { flex: 1; min-width: 0; }
         .room-top-bar .room-partner-name { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
         .room-top-bar .room-status { font-size: 11px; color: #ff8aad; font-weight: 500; }
         .room-top-bar .room-hearts { font-size: 18px; animation: pulse 1.5s ease-in-out infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
-
-        .room-chat-wrapper {
-            flex: 1;
-            overflow-y: auto;
-            padding: 4px 4px 8px;
-            min-height: 0;
-        }
+        .room-chat-wrapper { flex: 1; overflow-y: auto; padding: 4px 4px 8px; min-height: 0; }
         .room-chat-wrapper::-webkit-scrollbar { width: 4px; }
         .room-chat-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; margin: 4px 0; }
         .room-chat-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.4); border-radius: 10px; }
-
-        .room-chat {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .room-msg {
-            max-width: 85%; padding: 10px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5;
-            animation: msgAppear 0.3s ease; word-break: break-word;
-        }
+        .room-chat { display: flex; flex-direction: column; gap: 6px; }
+        .room-msg { max-width: 85%; padding: 10px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; animation: msgAppear 0.3s ease; word-break: break-word; }
         .room-msg.theirs { background: rgba(255,77,138,0.15); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(255,77,138,0.25); color: #f0d0e0; backdrop-filter: blur(8px); }
         .room-msg.mine { background: linear-gradient(135deg, rgba(255,77,138,0.55), rgba(255,100,150,0.45)); align-self: flex-end; border-bottom-right-radius: 6px; color: #fff; border: 1px solid rgba(255,77,138,0.35); }
         .room-msg.system { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #d090b0; font-size: 12px; border-radius: 40px; padding: 6px 16px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); }
-
-        .room-choices-wrapper {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 4px 0 8px;
-            max-height: 130px;
-            overflow-y: auto;
-        }
+        .room-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 8px; max-height: 130px; overflow-y: auto; }
         .room-choices-wrapper::-webkit-scrollbar { width: 3px; }
         .room-choices-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
         .room-choices-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.2); border-radius: 10px; }
-
-        .room-choice-btn {
-            background: rgba(255,77,138,0.1);
-            border: 1px solid rgba(255,77,138,0.2);
-            padding: 8px 14px;
-            border-radius: 14px;
-            color: #e0c0d8;
-            font-size: 13px;
-            font-weight: 400;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.2s ease;
-            width: 100%;
-            backdrop-filter: blur(8px);
-            line-height: 1.3;
-            flex-shrink: 0;
-        }
+        .room-choice-btn { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.2); padding: 8px 14px; border-radius: 14px; color: #e0c0d8; font-size: 13px; font-weight: 400; text-align: left; cursor: pointer; transition: 0.2s ease; width: 100%; backdrop-filter: blur(8px); line-height: 1.3; flex-shrink: 0; }
         .room-choice-btn:hover { background: rgba(255,77,138,0.2); border-color: rgba(255,77,138,0.4); }
         .room-choice-btn:active { transform: scale(0.97); background: rgba(255,77,138,0.3); }
-
-        .room-affection-bar-wrap {
-            position: relative; z-index: 3; flex-shrink: 0; padding: 10px 16px 8px;
-            background: linear-gradient(0deg, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.7) 60%, transparent 100%);
-        }
-        .room-affection-inner {
-            display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px);
-            padding: 8px 14px; border-radius: 30px; border: 1px solid rgba(255,77,138,0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
+        .room-affection-bar-wrap { position: relative; z-index: 3; flex-shrink: 0; padding: 10px 16px 8px; background: linear-gradient(0deg, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.7) 60%, transparent 100%); }
+        .room-affection-inner { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); padding: 8px 14px; border-radius: 30px; border: 1px solid rgba(255,77,138,0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
         .room-affection-inner .aff-icon { font-size: 18px; flex-shrink: 0; }
         .room-affection-inner .aff-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
         .room-affection-inner .aff-bar .aff-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #ff2d6a, #ff4d8a, #ff9ec4); border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 10px rgba(255,77,138,0.5); }
         .room-affection-inner .aff-value { font-size: 13px; font-weight: 700; color: #ff4d8a; min-width: 36px; text-align: right; flex-shrink: 0; }
-
         .btn-room-reset { position: relative; z-index: 3; flex-shrink: 0; margin: 6px auto 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 8px 24px; border-radius: 60px; font-weight: 600; color: #b090a0; font-size: 13px; cursor: pointer; backdrop-filter: blur(8px); transition: 0.2s; }
         .btn-room-reset:hover { background: rgba(255,255,255,0.1); color: #d0b0c0; }
         .btn-room-reset:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
-
         .simple-card { background: #1a1a36; border-radius: 20px; padding: 12px; border: 1px solid #2a2a4e; flex: 1; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-
-        /* ----- кнопка сброса на сцене свидания поднята чуть выше ----- */
-        .btn-reset {
-            margin-top: 0px;      /* убираем верхний отступ */
-            margin-bottom: 20px;   /* чуть меньше снизу */
-        }
     </style>
 </head>
 <body>
@@ -680,21 +323,32 @@
                 </div>
             </div>
 
-            <!-- СЦЕНА 3: ЧАТ -->
+            <!-- СЦЕНА 3: СПИСОК ЧАТОВ -->
             <div id="scene3" class="hidden" style="flex:1; display:flex; flex-direction:column;">
-                <div class="simple-card" style="padding:8px;">
-                    <div class="chat-header">
-                        <img id="chatPartnerAvatar" src="assets/girl1.png" alt="">
-                        <span class="name" id="chatPartnerName">Анна</span>
-                        <span class="status">онлайн</span>
+                <div class="simple-card">
+                    <div class="chat-list-header">
+                        <span>💬 Чаты</span>
+                        <span style="font-size:12px; color:#9088b0;">Лайков: <span id="chatListLikeCount">0</span></span>
                     </div>
-                    <div class="chat-messages-wrapper" id="chatMessagesWrapper">
-                        <div class="chat-messages" id="chatMessages">
-                            <div class="message theirs">Привет! 😊 Как дела?</div>
-                        </div>
+                    <div class="chat-list" id="chatListContainer"></div>
+                    <button id="backToTinderFromChats" style="margin-top:8px; padding:8px 20px; font-size:13px; align-self:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#9088b0; border-radius:60px; cursor:pointer; flex-shrink:0;">← Назад к ленте</button>
+                </div>
+            </div>
+
+            <!-- СЦЕНА 3.5: ОКНО ПЕРЕПИСКИ -->
+            <div id="scene3_5" class="hidden" style="flex:1; display:flex; flex-direction:column;">
+                <div class="chat-conversation">
+                    <div class="chat-convo-header">
+                        <button class="back-btn" id="backToChatListBtn">←</button>
+                        <img id="convoPartnerAvatar" src="assets/girl1.png" alt="">
+                        <span class="name" id="convoPartnerName">Анна</span>
+                        <span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span>
                     </div>
-                    <div class="chat-replies-wrapper" id="chatRepliesWrapper"></div>
-                    <button class="chat-next-btn" id="toLocations">Выбрать место →</button>
+                    <div class="chat-messages-wrapper" id="convoMessagesWrapper">
+                        <div class="chat-messages" id="convoMessages"></div>
+                    </div>
+                    <div class="chat-replies-wrapper" id="convoRepliesWrapper"></div>
+                    <button class="chat-to-locations-btn" id="convoToLocationsBtn">Выбрать место →</button>
                 </div>
             </div>
 
@@ -703,6 +357,7 @@
                 <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
                     <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;">
                         <span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span>
+                        <span style="margin-left:auto; font-size:11px; color:#9088b0;" id="unlockedLocationsInfo">1/5</span>
                     </div>
                     <div id="locationCatalog" class="catalog-grid" style="flex:1; overflow-y:auto; padding:4px 2px 8px; display:flex; flex-direction:column; gap:8px; min-height:0;"></div>
                     <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;flex-shrink:0;">Назначить встречу ❤️</button>
@@ -747,7 +402,7 @@
                     </div>
                     <div class="room-chat-wrapper" id="roomChatWrapper">
                         <div class="room-chat" id="roomChat">
-                            <div class="room-msg system">🕯️ Вы в уединённой обстановке... Атмосфера накаляется...</div>
+                            <div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>
                         </div>
                     </div>
                     <div class="room-choices-wrapper" id="roomChoicesWrapper"></div>
@@ -766,31 +421,34 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v2.0');
+            console.log('[APP] Tantan v3.1');
 
+            const STORAGE_KEY = 'tantan_game_save';
             let gameData = null;
 
+            // Структура сохранения
             let state = {
                 step: 1,
                 gender: null,
                 style: 'style1',
                 likedIndex: 0,
                 likedList: [],
-                currentPartner: null,
+                currentPartnerId: null,
                 currentLocationId: null,
                 locationDialogIndex: 0,
                 affection: 50,
-                chatStep: 0,
-                chatDone: false,
                 roomDialogIndex: 0,
                 roomAffection: 100,
-                selectedLocationIndex: 0
+                selectedLocationIndex: 0,
+                unlockedLocations: 1,
+                chatHistories: {},
             };
 
             const scenes = {
                 scene1: document.getElementById('scene1'),
                 scene2: document.getElementById('scene2'),
                 scene3: document.getElementById('scene3'),
+                scene3_5: document.getElementById('scene3_5'),
                 scene4: document.getElementById('scene4'),
                 scene5: document.getElementById('scene5'),
                 scene6: document.getElementById('scene6')
@@ -798,6 +456,31 @@
             const mainTopBar = document.getElementById('mainTopBar');
             const clockDisplay = document.getElementById('clockDisplay');
 
+            // ==================== СОХРАНЕНИЕ / ЗАГРУЗКА ====================
+            function saveGame() {
+                try {
+                    const saveData = JSON.parse(JSON.stringify(state));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+                } catch (e) {
+                    console.warn('[SAVE] Ошибка сохранения:', e);
+                }
+            }
+
+            function loadGame() {
+                try {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (raw) {
+                        const saved = JSON.parse(raw);
+                        state = { ...state, ...saved };
+                        return true;
+                    }
+                } catch (e) {
+                    console.warn('[LOAD] Ошибка загрузки:', e);
+                }
+                return false;
+            }
+
+            // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
             function getPartners() {
                 if (!gameData?.partners) return [];
                 return gameData.partners[state.gender === 'male' ? 'male' : 'female'] || [];
@@ -841,6 +524,25 @@
                 return map[personality] || '💕 Романтик';
             }
 
+            function getPartnerById(id) {
+                return getPartners().find(p => p.id === id) || null;
+            }
+
+            function getCurrentPartner() {
+                return getPartnerById(state.currentPartnerId);
+            }
+
+            function getChatHistory(partnerId) {
+                if (!state.chatHistories[partnerId]) {
+                    state.chatHistories[partnerId] = {
+                        step: 0,
+                        done: false,
+                        messages: [] // [{type: 'theirs'|'mine', text: '...'}]
+                    };
+                }
+                return state.chatHistories[partnerId];
+            }
+
             function updateClock() {
                 const now = new Date();
                 const h = String(now.getHours()).padStart(2, '0');
@@ -867,7 +569,8 @@
                     document.getElementById('app').style.padding = '10px 12px 12px';
                     document.getElementById('app').style.background = '#111122';
                 }
-                state.step = parseInt(id.replace('scene', ''));
+                state.step = parseInt(id.replace('scene', '').replace('_', '.'));
+                saveGame();
             }
 
             function scrollToBottom(element) {
@@ -876,7 +579,7 @@
                 }
             }
 
-            // ----- СЦЕНА 1 -----
+            // ==================== СЦЕНА 1 ====================
             const mainAvatar = document.getElementById('mainAvatar');
             const toScene2Btn = document.getElementById('toScene2');
             const styleImgs = {
@@ -891,12 +594,28 @@
                 mainAvatar.nextElementSibling.style.display = 'none';
             }
 
+            function restoreScene1UI() {
+                document.querySelectorAll('#scene1 .gender-selector button').forEach(b => {
+                    b.classList.remove('active-male', 'active-female');
+                    if (b.dataset.gender === state.gender) {
+                        b.classList.add(state.gender === 'male' ? 'active-male' : 'active-female');
+                    }
+                });
+                document.querySelectorAll('#scene1 .style-selector button').forEach(b => {
+                    b.classList.remove('active');
+                    if (b.dataset.style === state.style) b.classList.add('active');
+                });
+                updateAvatar();
+                checkEnabled();
+            }
+
             document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() {
                 state.gender = this.dataset.gender;
                 document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male', 'active-female'));
                 this.classList.add(state.gender === 'male' ? 'active-male' : 'active-female');
                 updateAvatar();
                 checkEnabled();
+                saveGame();
             }));
 
             document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.addEventListener('click', function() {
@@ -905,6 +624,7 @@
                 state.style = this.dataset.style;
                 updateAvatar();
                 checkEnabled();
+                saveGame();
             }));
 
             function checkEnabled() {
@@ -919,7 +639,6 @@
 
             toScene2Btn.addEventListener('click', () => {
                 if (!state.gender || !state.style) return;
-                state.step = 2;
                 state.likedIndex = 0;
                 state.likedList = [];
                 document.getElementById('matchCount').textContent = '0';
@@ -927,7 +646,7 @@
                 renderTinder();
             });
 
-            // ----- СЦЕНА 2 -----
+            // ==================== СЦЕНА 2 ====================
             function renderTinder() {
                 const p = getPartners();
                 if (!p?.length) return;
@@ -947,57 +666,131 @@
                 const p = getPartners();
                 if (!p?.length) return;
                 const partner = p[state.likedIndex % p.length];
-                if (!state.likedList.some(x => x.id === partner.id)) state.likedList.push(partner);
+                if (!state.likedList.some(x => x.id === partner.id)) {
+                    state.likedList.push({ ...partner });
+                    // Инициализируем историю чата для новой девушки
+                    if (!state.chatHistories[partner.id]) {
+                        const f = getChatFlow();
+                        state.chatHistories[partner.id] = {
+                            step: 0,
+                            done: false,
+                            messages: f?.length ? [{ type: 'theirs', text: f[0].theirs }] : []
+                        };
+                    }
+                }
                 state.likedIndex++;
+                saveGame();
                 renderTinder();
             });
 
             document.getElementById('tinderDislike').addEventListener('click', () => {
                 state.likedIndex++;
+                saveGame();
                 renderTinder();
             });
 
             document.getElementById('toChat').addEventListener('click', () => {
                 if (!state.likedList.length) { alert('Выбери кого-нибудь ❤️'); return; }
-                state.currentPartner = state.likedList[0];
-                state.step = 3;
                 showScene('scene3');
-                initChat();
+                renderChatList();
             });
 
-            // ----- СЦЕНА 3: ЧАТ -----
-            const chatMessages = document.getElementById('chatMessages');
-            const chatMessagesWrapper = document.getElementById('chatMessagesWrapper');
-            const chatRepliesWrapper = document.getElementById('chatRepliesWrapper');
-            const toLocationsBtn = document.getElementById('toLocations');
+            document.getElementById('backToTinderFromChats').addEventListener('click', () => {
+                showScene('scene2');
+                renderTinder();
+            });
 
-            function initChat() {
-                state.chatStep = 0;
-                state.chatDone = false;
-                toLocationsBtn.classList.remove('visible');
-                document.getElementById('chatPartnerAvatar').src = state.currentPartner.avatar || '';
-                document.getElementById('chatPartnerName').textContent = state.currentPartner.name || '';
-                const f = getChatFlow();
-                if (!f || !f.length) {
-                    chatMessages.innerHTML = '<div class="message theirs">Нет диалогов</div>';
+            // ==================== СЦЕНА 3: СПИСОК ЧАТОВ ====================
+            function renderChatList() {
+                const container = document.getElementById('chatListContainer');
+                const likeCount = document.getElementById('chatListLikeCount');
+                likeCount.textContent = state.likedList.length;
+
+                if (!state.likedList.length) {
+                    container.innerHTML = '<div style="text-align:center; color:#9088b0; padding:40px 20px;">😔 Пока никого не лайкнули<br><span style="font-size:12px;">Вернитесь в ленту и поставьте ❤️</span></div>';
                     return;
                 }
-                chatMessages.innerHTML = `<div class="message theirs">${f[0].theirs}</div>`;
-                renderChatReplies(0);
-                scrollToBottom(chatMessagesWrapper);
+
+                container.innerHTML = '';
+                state.likedList.forEach(partner => {
+                    const history = getChatHistory(partner.id);
+                    // Берём последнее сообщение из истории
+                    const lastMsg = history.messages.length > 0 
+                        ? history.messages[history.messages.length - 1].text 
+                        : (history.done ? '✨ Переписка завершена' : '💬 Начать чат');
+                    
+                    const div = document.createElement('div');
+                    div.className = 'chat-list-item';
+                    div.innerHTML = `
+                        <img src="${partner.avatar || ''}" onerror="this.style.display='none'">
+                        <div class="info">
+                            <div class="name">${partner.name || '?'}, ${partner.age || '?'}</div>
+                            <div class="last-msg">${lastMsg.substring(0, 40)}${lastMsg.length > 40 ? '...' : ''}</div>
+                        </div>
+                        ${!history.done ? '<span class="unread-badge">новое</span>' : ''}
+                        <span style="color:#9088b0; font-size:18px;">→</span>
+                    `;
+                    div.addEventListener('click', () => {
+                        state.currentPartnerId = partner.id;
+                        saveGame();
+                        showScene('scene3_5');
+                        initConversation();
+                    });
+                    container.appendChild(div);
+                });
             }
 
-            function renderChatReplies(s) {
+            // ==================== СЦЕНА 3.5: ОКНО ПЕРЕПИСКИ ====================
+            const convoMessages = document.getElementById('convoMessages');
+            const convoMessagesWrapper = document.getElementById('convoMessagesWrapper');
+            const convoRepliesWrapper = document.getElementById('convoRepliesWrapper');
+            const convoToLocationsBtn = document.getElementById('convoToLocationsBtn');
+
+            function initConversation() {
+                const partner = getCurrentPartner();
+                if (!partner) return;
+                document.getElementById('convoPartnerAvatar').src = partner.avatar || '';
+                document.getElementById('convoPartnerName').textContent = partner.name || '';
+                const history = getChatHistory(partner.id);
+                
+                // Восстанавливаем ВСЕ сообщения из истории
+                convoMessages.innerHTML = '';
+                history.messages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `message ${msg.type}`;
+                    div.textContent = msg.text;
+                    convoMessages.appendChild(div);
+                });
+
+                // Если история пустая, инициализируем первым сообщением
+                if (history.messages.length === 0) {
+                    const f = getChatFlow();
+                    if (f?.length) {
+                        const firstMsg = { type: 'theirs', text: f[0].theirs };
+                        history.messages.push(firstMsg);
+                        const div = document.createElement('div');
+                        div.className = `message ${firstMsg.type}`;
+                        div.textContent = firstMsg.text;
+                        convoMessages.appendChild(div);
+                        saveGame();
+                    }
+                }
+
+                renderConvoReplies(history.step);
+                convoToLocationsBtn.classList.toggle('visible', history.done);
+                scrollToBottom(convoMessagesWrapper);
+            }
+
+            function renderConvoReplies(s) {
                 const f = getChatFlow();
                 if (!f) return;
+                const history = getChatHistory(state.currentPartnerId);
+                convoRepliesWrapper.innerHTML = '';
 
-                chatRepliesWrapper.innerHTML = '';
-
-                if (s >= f.length) {
-                    chatMessages.innerHTML += '<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';
-                    toLocationsBtn.classList.add('visible');
-                    state.chatDone = true;
-                    scrollToBottom(chatMessagesWrapper);
+                if (history.done || s >= f.length) {
+                    convoToLocationsBtn.classList.add('visible');
+                    history.done = true;
+                    saveGame();
                     return;
                 }
 
@@ -1006,50 +799,89 @@
                     b.className = 'chat-reply-btn';
                     b.textContent = r;
                     b.addEventListener('click', () => {
-                        chatMessages.innerHTML += `<div class="message mine">${r}</div>`;
-                        chatRepliesWrapper.innerHTML = '';
+                        // Добавляем сообщение пользователя в историю и на экран
+                        const myMsg = { type: 'mine', text: r };
+                        history.messages.push(myMsg);
+                        const myDiv = document.createElement('div');
+                        myDiv.className = `message ${myMsg.type}`;
+                        myDiv.textContent = myMsg.text;
+                        convoMessages.appendChild(myDiv);
+                        
+                        convoRepliesWrapper.innerHTML = '';
                         const n = s + 1;
+                        
                         if (n < f.length) {
                             const typingMsg = document.createElement('div');
                             typingMsg.className = 'message typing';
                             typingMsg.textContent = 'Печатает...';
-                            chatMessages.appendChild(typingMsg);
-                            scrollToBottom(chatMessagesWrapper);
+                            convoMessages.appendChild(typingMsg);
+                            scrollToBottom(convoMessagesWrapper);
+                            
                             setTimeout(() => {
                                 if (typingMsg.parentNode) typingMsg.remove();
-                                chatMessages.innerHTML += `<div class="message theirs">${f[n].theirs}</div>`;
-                                renderChatReplies(n);
-                                scrollToBottom(chatMessagesWrapper);
+                                // Добавляем ответ партнёра в историю и на экран
+                                const theirMsg = { type: 'theirs', text: f[n].theirs };
+                                history.messages.push(theirMsg);
+                                const theirDiv = document.createElement('div');
+                                theirDiv.className = `message ${theirMsg.type}`;
+                                theirDiv.textContent = theirMsg.text;
+                                convoMessages.appendChild(theirDiv);
+                                
+                                history.step = n;
+                                saveGame();
+                                renderConvoReplies(n);
+                                scrollToBottom(convoMessagesWrapper);
                             }, 1500);
                         } else {
-                            chatMessages.innerHTML += '<div class="message theirs">✨ Договорились! Выбирай место ✨</div>';
-                            toLocationsBtn.classList.add('visible');
-                            state.chatDone = true;
-                            scrollToBottom(chatMessagesWrapper);
+                            history.done = true;
+                            saveGame();
+                            const doneMsg = { type: 'theirs', text: '✨ Договорились! Выбирай место ✨' };
+                            history.messages.push(doneMsg);
+                            const doneDiv = document.createElement('div');
+                            doneDiv.className = `message ${doneMsg.type}`;
+                            doneDiv.textContent = doneMsg.text;
+                            convoMessages.appendChild(doneDiv);
+                            convoToLocationsBtn.classList.add('visible');
+                            scrollToBottom(convoMessagesWrapper);
                         }
-                        scrollToBottom(chatMessagesWrapper);
+                        scrollToBottom(convoMessagesWrapper);
                     });
-                    chatRepliesWrapper.appendChild(b);
+                    convoRepliesWrapper.appendChild(b);
                 });
-                scrollToBottom(chatMessagesWrapper);
+                scrollToBottom(convoMessagesWrapper);
             }
 
-            toLocationsBtn.addEventListener('click', () => {
-                if (!state.chatDone) return;
-                state.step = 4;
+            document.getElementById('backToChatListBtn').addEventListener('click', () => {
+                showScene('scene3');
+                renderChatList();
+            });
+
+            convoToLocationsBtn.addEventListener('click', () => {
+                const history = getChatHistory(state.currentPartnerId);
+                if (!history.done) return;
+                state.selectedLocationIndex = 0;
+                state.locationDialogIndex = 0;
+                state.affection = 50;
+                state.roomDialogIndex = 0;
+                state.roomAffection = 100;
                 showScene('scene4');
                 renderLocations();
             });
 
-            // ----- СЦЕНА 4: ЛОКАЦИИ -----
+            // ==================== СЦЕНА 4: ЛОКАЦИИ ====================
             function renderLocations() {
                 const c = document.getElementById('locationCatalog');
-                const l = getLocations();
-                if (!l?.length) return;
+                const allLocations = getLocations();
+                const unlockedInfo = document.getElementById('unlockedLocationsInfo');
+                if (!allLocations?.length) return;
+
+                unlockedInfo.textContent = `${state.unlockedLocations}/${allLocations.length}`;
+
                 c.innerHTML = '';
-                l.forEach((loc, i) => {
+                allLocations.forEach((loc, i) => {
+                    const isLocked = i >= state.unlockedLocations;
                     const d = document.createElement('div');
-                    d.className = 'catalog-item' + (i === state.selectedLocationIndex ? ' selected' : '');
+                    d.className = 'catalog-item' + (isLocked ? ' locked' : '') + (i === state.selectedLocationIndex && !isLocked ? ' selected' : '');
                     let icon = '📍';
                     if (loc.name.includes('☕')) icon = '☕';
                     else if (loc.name.includes('🍽️') || loc.name.includes('ресторан') || loc.name.includes('суши')) icon = '🍽️';
@@ -1061,36 +893,35 @@
                     else if (loc.name.includes('🎳')) icon = '🎳';
                     else if (loc.name.includes('🌿') || loc.name.includes('сад')) icon = '🌿';
 
-                    let tagsHtml = '';
-                    if (loc.tags && loc.tags.length) {
-                        tagsHtml = `<div class="tags">${loc.tags.map(t => `<span>#${t}</span>`).join('')}</div>`;
-                    }
-
                     d.innerHTML = `
                         <img src="${loc.bg || ''}" onerror="this.style.display='none'">
                         <div class="info">
-                            <h4>${loc.name}</h4>
-                            <p>${loc.desc || ''}</p>
-                            ${tagsHtml}
+                            <h4>${loc.name} ${isLocked ? '🔒' : ''}</h4>
+                            <p>${isLocked ? 'Откроется позже...' : (loc.desc || '')}</p>
                         </div>
-                        <span class="location-icon">${icon}</span>
+                        <span class="location-icon">${isLocked ? '🔒' : icon}</span>
                     `;
-                    d.addEventListener('click', () => {
-                        state.selectedLocationIndex = i;
-                        document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
-                        d.classList.add('selected');
-                    });
+                    if (!isLocked) {
+                        d.addEventListener('click', () => {
+                            state.selectedLocationIndex = i;
+                            document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
+                            d.classList.add('selected');
+                            saveGame();
+                        });
+                    }
                     c.appendChild(d);
                 });
             }
 
             document.getElementById('toDate').addEventListener('click', () => {
-                const locs = getLocations();
-                const loc = locs?.[state.selectedLocationIndex] || locs?.[0];
-                state.currentLocationId = loc?.id || 'cafe';
+                const allLocations = getLocations();
+                const loc = allLocations?.[state.selectedLocationIndex] || allLocations?.[0];
+                if (!loc) return;
+                state.currentLocationId = loc.id || 'cafe';
                 state.locationDialogIndex = 0;
                 state.affection = 50;
-                state.step = 5;
+                state.roomDialogIndex = 0;
+                state.roomAffection = 100;
                 showScene('scene5');
                 updateAffectionUI();
                 document.getElementById('dateChat').innerHTML = '';
@@ -1098,7 +929,7 @@
                 renderDateScene();
             });
 
-            // ----- СЦЕНА 5: СВИДАНИЕ -----
+            // ==================== СЦЕНА 5: СВИДАНИЕ ====================
             const dateChat = document.getElementById('dateChat');
             const dateChatWrapper = document.getElementById('dateChatWrapper');
             const dateChoicesWrapper = document.getElementById('dateChoicesWrapper');
@@ -1115,7 +946,7 @@
             }
 
             function renderDateScene() {
-                const partner = state.currentPartner;
+                const partner = getCurrentPartner();
                 const locs = getLocations();
                 const loc = locs?.find(l => l.id === state.currentLocationId) || locs?.[0] || {};
 
@@ -1141,24 +972,20 @@
                     state.affection >= 45 ? '😊 Улыбается.' :
                     state.affection >= 25 ? '😐 В сторону.' : '😒 Разочарован(а).';
 
-                const contextEmoji = loc.name.includes('🎬') ? '🎥' : 
-                                    loc.name.includes('☕') ? '☕' :
-                                    loc.name.includes('🍽️') ? '🍷' :
-                                    loc.name.includes('🌳') ? '🎢' : '💫';
-                dateChat.innerHTML += `<div class="date-msg theirs">${d.text} ${contextEmoji} ${react}</div>`;
+                dateChat.innerHTML += `<div class="date-msg theirs">${d.text} ${react}</div>`;
                 scrollToBottom(dateChatWrapper);
 
                 d.choices.forEach((choice, i) => {
                     const b = document.createElement('button');
                     b.className = 'date-choice-btn';
                     b.textContent = choice.text;
-
                     b.addEventListener('click', () => {
                         const fullText = choice.full || choice.text;
                         dateChat.innerHTML += `<div class="date-msg mine">${fullText}</div>`;
                         state.affection = Math.min(100, Math.max(0, state.affection + (choice.effect || 0)));
                         updateAffectionUI();
                         state.locationDialogIndex++;
+                        saveGame();
                         dateChoicesWrapper.innerHTML = '';
                         renderDateScene();
                         scrollToBottom(dateChatWrapper);
@@ -1168,19 +995,19 @@
                 scrollToBottom(dateChoicesWrapper);
             }
 
-            // ----- СЦЕНА 6: КОМНАТА -----
+            // ==================== СЦЕНА 6: КОМНАТА ====================
             const roomChat = document.getElementById('roomChat');
             const roomChatWrapper = document.getElementById('roomChatWrapper');
             const roomChoicesWrapper = document.getElementById('roomChoicesWrapper');
 
             function goToRoom() {
-                state.step = 6;
                 state.roomDialogIndex = 0;
                 state.roomAffection = 100;
                 showScene('scene6');
                 document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')";
-                document.getElementById('roomAvatarSmall').src = state.currentPartner?.avatar || '';
-                document.getElementById('roomPartnerName').textContent = state.currentPartner?.name || '';
+                const partner = getCurrentPartner();
+                document.getElementById('roomAvatarSmall').src = partner?.avatar || '';
+                document.getElementById('roomPartnerName').textContent = partner?.name || '';
                 document.getElementById('roomAffectionFill').style.width = '100%';
                 document.getElementById('roomAffectionValue').textContent = '100%';
                 roomChat.innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке... Атмосфера накаляется...</div>';
@@ -1196,6 +1023,8 @@
                 if (state.roomDialogIndex >= dialogs.length) {
                     roomChat.innerHTML += `<div class="room-msg system">💫 Волшебный вечер... Это начало чего-то прекрасного ✨</div>`;
                     scrollToBottom(roomChatWrapper);
+                    unlockNextLocation();
+                    saveGame();
                     return;
                 }
 
@@ -1220,6 +1049,7 @@
                         document.getElementById('roomAffectionFill').style.width = state.roomAffection + '%';
                         document.getElementById('roomAffectionValue').textContent = state.roomAffection + '%';
                         state.roomDialogIndex++;
+                        saveGame();
                         roomChoicesWrapper.innerHTML = '';
                         renderRoomScene();
                         scrollToBottom(roomChatWrapper);
@@ -1229,24 +1059,35 @@
                 scrollToBottom(roomChoicesWrapper);
             }
 
-            // ----- СБРОС -----
+            function unlockNextLocation() {
+                const allLocations = getLocations();
+                if (state.unlockedLocations < allLocations.length) {
+                    state.unlockedLocations++;
+                    saveGame();
+                }
+            }
+
+            // ==================== СБРОС ====================
             function resetGame() {
+                const savedUnlocked = state.unlockedLocations;
+                const savedChatHistories = state.chatHistories; // Сохраняем истории чатов
                 state = {
                     step: 1,
                     gender: null,
                     style: 'style1',
                     likedIndex: 0,
                     likedList: [],
-                    currentPartner: null,
+                    currentPartnerId: null,
                     currentLocationId: null,
                     locationDialogIndex: 0,
                     affection: 50,
-                    chatStep: 0,
-                    chatDone: false,
                     roomDialogIndex: 0,
                     roomAffection: 100,
-                    selectedLocationIndex: 0
+                    selectedLocationIndex: 0,
+                    unlockedLocations: savedUnlocked,
+                    chatHistories: savedChatHistories, // Восстанавливаем истории
                 };
+                saveGame();
                 showScene('scene1');
                 document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.classList.remove('active-male', 'active-female'));
                 document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.classList.remove('active'));
@@ -1260,13 +1101,18 @@
                 document.getElementById('dateChoicesWrapper').innerHTML = '';
                 document.getElementById('roomChat').innerHTML = '';
                 document.getElementById('roomChoicesWrapper').innerHTML = '';
-                document.getElementById('toLocations').classList.remove('visible');
+                convoToLocationsBtn.classList.remove('visible');
+                document.getElementById('matchCount').textContent = '0';
             }
 
-            document.getElementById('resetGame').addEventListener('click', resetGame);
-            document.getElementById('resetFromRoom').addEventListener('click', resetGame);
+            document.getElementById('resetGame').addEventListener('click', () => {
+                if (confirm('Сбросить текущую игру? Прогресс локаций и история чатов сохранится.')) resetGame();
+            });
+            document.getElementById('resetFromRoom').addEventListener('click', () => {
+                if (confirm('Сбросить текущую игру? Прогресс локаций и история чатов сохранится.')) resetGame();
+            });
 
-            // ----- ЗАГРУЗКА ДАННЫХ -----
+            // ==================== ЗАГРУЗКА ДАННЫХ ====================
             async function loadGameData() {
                 try {
                     const response = await fetch('data.json');
@@ -1274,24 +1120,69 @@
                     const data = await response.json();
                     if (data.partners && data.locations && data.npcs) {
                         gameData = data;
-                        console.log('[DATA] Загружено из data.json');
-                        console.log('[DATA] NPC:', Object.keys(data.npcs).length);
-                        console.log('[DATA] Локаций:', data.locations.length);
                     } else {
                         throw new Error('Неверная структура');
                     }
                 } catch (e) {
                     console.warn('[DATA] Ошибка загрузки:', e);
-                    alert('Не удалось загрузить data.json. Проверь, что файл находится в той же папке, что и index.html');
+                    alert('Не удалось загрузить data.json.');
                 }
             }
 
-            // ----- ИНИЦИАЛИЗАЦИЯ -----
+            // ==================== ВОССТАНОВЛЕНИЕ СОСТОЯНИЯ ====================
+            function restoreGameState() {
+                if (!gameData) return;
+                const step = Math.floor(state.step);
+                switch (step) {
+                    case 1:
+                        showScene('scene1');
+                        restoreScene1UI();
+                        break;
+                    case 2:
+                        showScene('scene2');
+                        renderTinder();
+                        break;
+                    case 3:
+                        if (state.step === 3.5) {
+                            showScene('scene3_5');
+                            initConversation();
+                        } else {
+                            showScene('scene3');
+                            renderChatList();
+                        }
+                        break;
+                    case 4:
+                        showScene('scene4');
+                        renderLocations();
+                        break;
+                    case 5:
+                        showScene('scene5');
+                        updateAffectionUI();
+                        renderDateScene();
+                        break;
+                    case 6:
+                        goToRoom();
+                        break;
+                    default:
+                        showScene('scene1');
+                        restoreScene1UI();
+                }
+            }
+
+            // ==================== ИНИЦИАЛИЗАЦИЯ ====================
             loadGameData().then(() => {
-                showScene('scene1');
-                document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
-                state.style = 'style1';
-                updateAvatar();
+                const loaded = loadGame();
+                if (loaded && state.gender) {
+                    restoreGameState();
+                } else {
+                    state.unlockedLocations = 1;
+                    state.chatHistories = {};
+                    saveGame();
+                    showScene('scene1');
+                    document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
+                    state.style = 'style1';
+                    updateAvatar();
+                }
             });
 
         })();
