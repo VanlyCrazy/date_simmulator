@@ -46,7 +46,146 @@
             background-clip: text;
             letter-spacing: -0.5px;
         }
-        .top-bar .icons { display: flex; gap: 14px; font-size: 16px; color: #8880aa; cursor: pointer; }
+        .top-bar .icons { display: flex; gap: 14px; font-size: 16px; color: #8880aa; cursor: pointer; align-items: center; }
+        .top-bar .progress-icon {
+            background: rgba(255,77,138,0.15);
+            border: 1.5px solid rgba(255,77,138,0.3);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .top-bar .progress-icon:hover {
+            background: rgba(255,77,138,0.25);
+            transform: scale(1.05);
+        }
+        .top-bar .progress-icon .progress-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 10px;
+            height: 10px;
+            background: #ff4d8a;
+            border-radius: 50%;
+            border: 2px solid #111122;
+        }
+
+        /* Модальное окно прогресса */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+        .modal-overlay.hidden { display: none; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: #1a1a36;
+            border-radius: 24px;
+            padding: 20px;
+            border: 2px solid #2a2a4e;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            max-width: 340px;
+            width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .modal-header h3 {
+            font-size: 18px;
+            color: #e0d8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-close {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #9088b0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .progress-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .progress-item {
+            background: #16163a;
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1.5px solid #2a2a4e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .progress-item .p-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        .progress-item .p-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .progress-item .p-info .p-title {
+            font-size: 13px;
+            color: #9088b0;
+            margin-bottom: 4px;
+        }
+        .progress-item .p-info .p-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e0d8f0;
+        }
+        .progress-item .p-bar-wrap {
+            flex-shrink: 0;
+            width: 50px;
+            height: 4px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-item .p-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff4d8a, #ff6b9d);
+            transition: width 0.4s ease;
+        }
 
         .hidden { display: none !important; }
 
@@ -292,7 +431,62 @@
         <div class="top-bar" id="mainTopBar">
             <span class="time" id="clockDisplay">9:42</span>
             <span class="logo">TANTAN</span>
-            <div class="icons"><span>🔔</span><span>⚙️</span></div>
+            <div class="icons">
+                <span id="progressIcon" class="progress-icon" title="Прогресс">📊<span class="progress-dot"></span></span>
+                <span>⚙️</span>
+            </div>
+        </div>
+
+        <!-- Модальное окно прогресса -->
+        <div id="progressModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>📊 Твой прогресс</h3>
+                    <button class="modal-close" id="closeProgressModal">✕</button>
+                </div>
+                <div class="progress-grid">
+                    <div class="progress-item">
+                        <div class="p-icon">❤️</div>
+                        <div class="p-info">
+                            <div class="p-title">Лайкнуто</div>
+                            <div class="p-value" id="statLikes">0</div>
+                        </div>
+                        <div class="p-bar-wrap">
+                            <div class="p-bar-fill" id="statLikesBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="p-icon">💬</div>
+                        <div class="p-info">
+                            <div class="p-title">Завершено чатов</div>
+                            <div class="p-value" id="statChats">0</div>
+                        </div>
+                        <div class="p-bar-wrap">
+                            <div class="p-bar-fill" id="statChatsBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="p-icon">📍</div>
+                        <div class="p-info">
+                            <div class="p-title">Локаций открыто</div>
+                            <div class="p-value" id="statLocations">0 / 0</div>
+                        </div>
+                        <div class="p-bar-wrap">
+                            <div class="p-bar-fill" id="statLocationsBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="p-icon">💕</div>
+                        <div class="p-info">
+                            <div class="p-title">Пройдено свиданий</div>
+                            <div class="p-value" id="statDates">0</div>
+                        </div>
+                        <div class="p-bar-wrap">
+                            <div class="p-bar-fill" id="statDatesBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="sceneContainer" style="flex:1; display:flex; flex-direction:column; min-height:0;">
@@ -434,11 +628,19 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v3.2');
+            console.log('[APP] Tantan v3.3');
 
             const STORAGE_KEY = 'tantan_game_save';
+            const STATS_KEY = 'tantan_stats';
             let gameData = null;
             let roomTimer = null;
+
+            // Статистика (сохраняется отдельно, не сбрасывается)
+            let stats = {
+                totalLikes: 0,
+                completedChats: 0,
+                completedDates: 0
+            };
 
             // Структура сохранения
             let state = {
@@ -469,6 +671,43 @@
             };
             const mainTopBar = document.getElementById('mainTopBar');
             const clockDisplay = document.getElementById('clockDisplay');
+
+            // ==================== СТАТИСТИКА ====================
+            function loadStats() {
+                try {
+                    const raw = localStorage.getItem(STATS_KEY);
+                    if (raw) {
+                        stats = { ...stats, ...JSON.parse(raw) };
+                    }
+                } catch (e) {
+                    console.warn('[STATS] Ошибка загрузки:', e);
+                }
+            }
+
+            function saveStats() {
+                try {
+                    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+                } catch (e) {
+                    console.warn('[STATS] Ошибка сохранения:', e);
+                }
+            }
+
+            function updateProgressModal() {
+                const totalPartners = getPartners().length || 3;
+                const totalLocations = getLocations().length || 5;
+                
+                document.getElementById('statLikes').textContent = stats.totalLikes;
+                document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%';
+                
+                document.getElementById('statChats').textContent = stats.completedChats;
+                document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / totalPartners) * 100) + '%';
+                
+                document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${totalLocations}`;
+                document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / totalLocations) * 100 + '%';
+                
+                document.getElementById('statDates').textContent = stats.completedDates;
+                document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / totalLocations) * 100) + '%';
+            }
 
             // ==================== СОХРАНЕНИЕ / ЗАГРУЗКА ====================
             function saveGame() {
@@ -593,6 +832,22 @@
                 }
             }
 
+            // ==================== МОДАЛЬНОЕ ОКНО ПРОГРЕССА ====================
+            document.getElementById('progressIcon').addEventListener('click', () => {
+                updateProgressModal();
+                document.getElementById('progressModal').classList.remove('hidden');
+            });
+
+            document.getElementById('closeProgressModal').addEventListener('click', () => {
+                document.getElementById('progressModal').classList.add('hidden');
+            });
+
+            document.getElementById('progressModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('progressModal')) {
+                    document.getElementById('progressModal').classList.add('hidden');
+                }
+            });
+
             // ==================== СЦЕНА 1 ====================
             const mainAvatar = document.getElementById('mainAvatar');
             const toScene2Btn = document.getElementById('toScene2');
@@ -682,6 +937,8 @@
                 const partner = p[state.likedIndex % p.length];
                 if (!state.likedList.some(x => x.id === partner.id)) {
                     state.likedList.push({ ...partner });
+                    stats.totalLikes++;
+                    saveStats();
                     if (!state.chatHistories[partner.id]) {
                         const f = getChatFlow();
                         state.chatHistories[partner.id] = {
@@ -842,6 +1099,8 @@
                             }, 1500);
                         } else {
                             history.done = true;
+                            stats.completedChats++;
+                            saveStats();
                             saveGame();
                             const doneMsg = { type: 'theirs', text: '✨ Договорились! Выбирай место ✨' };
                             history.messages.push(doneMsg);
@@ -971,6 +1230,8 @@
                         state.affection >= 45 ? '❤️ Неплохо!' : '💔 Уходит...';
                     dateChat.innerHTML += `<div class="date-msg system">🏁 ${end}</div>`;
                     scrollToBottom(dateChatWrapper);
+                    stats.completedDates++;
+                    saveStats();
                     setTimeout(() => goToRoom(), 1500);
                     return;
                 }
@@ -1009,7 +1270,6 @@
             const roomChoicesWrapper = document.getElementById('roomChoicesWrapper');
 
             function goToRoom() {
-                // Очищаем предыдущий таймер если есть
                 if (roomTimer) {
                     clearTimeout(roomTimer);
                     roomTimer = null;
@@ -1039,8 +1299,6 @@
                     scrollToBottom(roomChatWrapper);
                     unlockNextLocation();
                     saveGame();
-                    
-                    // Запускаем таймер на возврат в чаты
                     startRoomCountdown();
                     return;
                 }
@@ -1079,7 +1337,6 @@
             function startRoomCountdown() {
                 let secondsLeft = 3;
                 
-                // Добавляем сообщение с обратным отсчётом
                 const countdownDiv = document.createElement('div');
                 countdownDiv.className = 'room-msg countdown';
                 countdownDiv.id = 'roomCountdownMsg';
@@ -1087,7 +1344,6 @@
                 roomChat.appendChild(countdownDiv);
                 scrollToBottom(roomChatWrapper);
                 
-                // Блокируем кнопки выбора
                 roomChoicesWrapper.innerHTML = '';
                 
                 roomTimer = setInterval(() => {
@@ -1095,7 +1351,6 @@
                     if (secondsLeft <= 0) {
                         clearInterval(roomTimer);
                         roomTimer = null;
-                        // Плавный переход в чаты
                         countdownDiv.textContent = '✨ Переходим в чаты...';
                         countdownDiv.style.background = 'rgba(255,77,138,0.2)';
                         countdownDiv.style.borderColor = 'rgba(255,77,138,0.4)';
@@ -1123,7 +1378,6 @@
 
             // ==================== СБРОС ====================
             function resetGame() {
-                // Очищаем таймер если есть
                 if (roomTimer) {
                     clearInterval(roomTimer);
                     roomTimer = null;
@@ -1231,6 +1485,7 @@
 
             // ==================== ИНИЦИАЛИЗАЦИЯ ====================
             loadGameData().then(() => {
+                loadStats();
                 const loaded = loadGame();
                 if (loaded && state.gender) {
                     restoreGameState();
