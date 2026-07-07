@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Симулятор свиданий</title>
+    
+    <!-- ✅ Яндекс Игры SDK — относительный путь -->
+    <script src="/sdk.js"></script>
+    
     <style>
+        /* ... весь CSS без изменений (слишком длинный, оставляем как есть) ... */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -61,7 +66,6 @@
             font-size: 15px;
         }
         .top-bar .icon-btn:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
-        .top-bar .shop-btn { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.3); color: #ffd700; }
         .top-bar .settings-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
         .top-bar .progress-btn { background: rgba(255,77,138,0.15); border-color: rgba(255,77,138,0.3); }
 
@@ -235,17 +239,6 @@
         .btn-reset-full:hover { background: rgba(255,50,50,0.25); border-color: rgba(255,50,50,0.5); }
         .btn-reset-full:active { transform: scale(0.97); background: rgba(255,50,50,0.3); }
 
-        .shop-grid { display: flex; flex-direction: column; gap: 10px; }
-        .shop-item { background: #16163a; border-radius: 14px; padding: 14px; border: 1.5px solid #2a2a4e; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
-        .shop-item:hover { background: #1e1e48; border-color: #3a3a5e; }
-        .shop-item .shop-icon { font-size: 32px; flex-shrink: 0; }
-        .shop-item .shop-info { flex: 1; min-width: 0; }
-        .shop-item .shop-info .shop-title { font-size: 14px; font-weight: 600; color: #e0d8f0; margin-bottom: 4px; }
-        .shop-item .shop-info .shop-desc { font-size: 11px; color: #9088b0; line-height: 1.3; }
-        .shop-btn-watch { background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .shop-btn-watch:hover { transform: scale(1.05); }
-        .shop-btn-watch:active { transform: scale(0.95); }
-        .shop-btn-watch:disabled { opacity: 0.5; pointer-events: none; }
         .ad-timer { font-size: 11px; color: #ffd700; text-align: center; margin-top: 4px; }
         .ad-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
         .ad-overlay.hidden { display: none; }
@@ -356,8 +349,8 @@
         .catalog-grid::-webkit-scrollbar { width: 3px; }
         .catalog-grid::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
         .catalog-grid::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
+        
         .catalog-item { background: #16163a; padding: 12px 14px; border-radius: 16px; display: flex; align-items: center; gap: 12px; border: 1.5px solid #2a2a4e; cursor: pointer; transition: 0.2s ease; flex-shrink: 0; min-height: 70px; }
-        .catalog-item.locked { opacity: 0.4; pointer-events: none; filter: grayscale(0.5); }
         .catalog-item:hover { background: #1e1e48; border-color: #3a3a5e; }
         .catalog-item:active { transform: scale(0.98); background: #222250; }
         .catalog-item img { width: 50px; height: 50px; border-radius: 14px; object-fit: cover; background: #2a2a4a; border: 2px solid rgba(255,255,255,0.08); flex-shrink: 0; }
@@ -368,6 +361,46 @@
         .catalog-item:hover .location-icon { opacity: 0.8; }
         .catalog-item.selected { border: 2px solid #ff4d8a; background: #1e1e4a; box-shadow: 0 0 20px rgba(255,77,138,0.15); }
         .catalog-item.selected .location-icon { opacity: 1; color: #ff4d8a; }
+        
+        /* Стили для заблокированных локаций с кнопкой разблокировки */
+        .catalog-item.locked {
+            opacity: 0.7;
+            filter: none;
+            border-color: rgba(255,255,255,0.05);
+        }
+        .catalog-item.locked .info h4 {
+            color: #6a6290;
+        }
+        .catalog-item.locked .info p {
+            font-size: 11px;
+            color: #ff8aad;
+        }
+        .unlock-btn {
+            background: linear-gradient(135deg, #fc3f5c, #ff6b9d);
+            border: none;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 4px;
+            box-shadow: 0 2px 8px rgba(255,77,138,0.3);
+            width: 100%;
+        }
+        .unlock-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(255,77,138,0.5);
+        }
+        .unlock-btn:active {
+            transform: scale(0.95);
+        }
+        .unlock-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
         #toDate { margin-top: 8px; padding: 10px 32px; font-size: 15px; font-weight: 700; align-self: center; background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; border-radius: 60px; cursor: pointer; flex-shrink: 0; }
         #toDate:active { transform: scale(0.97); }
@@ -445,7 +478,6 @@
             <span class="time" id="clockDisplay">9:42</span>
             <span class="logo">СИМУЛЯТОР СВИДАНИЙ</span>
             <div class="icons">
-                <span class="icon-btn shop-btn" id="shopBtn" title="Магазин">🛒</span>
                 <span class="icon-btn progress-btn" id="progressBtn" title="Прогресс">📊</span>
                 <span class="icon-btn settings-btn" id="settingsBtn" title="Настройки">⚙️</span>
             </div>
@@ -478,14 +510,7 @@
             </div>
         </div>
 
-        <div id="shopModal" class="modal-overlay hidden">
-            <div class="modal-content">
-                <div class="modal-header"><h3>🛒 Магазин</h3><button class="modal-close" onclick="document.getElementById('shopModal').classList.add('hidden')">✕</button></div>
-                <div class="shop-grid"><div class="shop-item"><div class="shop-icon">📍</div><div class="shop-info"><div class="shop-title">Открыть следующую локацию</div><div class="shop-desc">Просмотри рекламу и получи доступ к новой локации</div></div><button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd()">📺 Смотреть</button></div></div>
-                <div class="ad-timer" id="adCooldown" style="display:none;"></div>
-            </div>
-        </div>
-
+        <!-- Рекламный оверлей (только для fallback) -->
         <div id="adOverlay" class="ad-overlay hidden">
             <div class="ad-content"><div class="ad-icon">📺</div><div class="ad-text">Реклама...</div><div class="ad-timer-big" id="adTimerBig">5</div><button class="ad-skip" onclick="skipAd()">Пропустить ✕</button></div>
         </div>
@@ -517,7 +542,11 @@
                 <div class="chat-conversation"><div class="chat-convo-header"><button class="back-btn" id="backToChatListBtn">←</button><img id="convoPartnerAvatar" src="assets/girl1.png" alt=""><span class="name" id="convoPartnerName">Анна</span><span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span></div><div class="chat-messages-wrapper" id="convoMessagesWrapper"><div class="chat-messages" id="convoMessages"></div></div><div class="chat-replies-wrapper" id="convoRepliesWrapper"></div><button class="chat-to-locations-btn" id="convoToLocationsBtn">Выбрать место →</button></div>
             </div>
             <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-                <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;"><div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;"><span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span><span style="margin-left:auto; font-size:11px; color:#9088b0;" id="unlockedLocationsInfo">1/5</span></div><div id="locationCatalog" class="catalog-grid" style="flex:1; overflow-y:auto; padding:4px 2px 8px; display:flex; flex-direction:column; gap:8px; min-height:0;"></div><button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;flex-shrink:0;">Назначить встречу ❤️</button></div>
+                <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
+                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;"><span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span><span style="margin-left:auto; font-size:11px; color:#9088b0;" id="unlockedLocationsInfo">1/5</span></div>
+                    <div id="locationCatalog" class="catalog-grid" style="flex:1; overflow-y:auto; padding:4px 2px 8px; display:flex; flex-direction:column; gap:8px; min-height:0;"></div>
+                    <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;flex-shrink:0;">Назначить встречу ❤️</button>
+                </div>
             </div>
             <div id="scene5" class="hidden">
                 <div class="date-bg" id="dateBg"></div><div class="date-avatar-section"><img id="dateAvatarFull" src="assets/girl1.png" alt=""></div><div class="date-overlay-bottom"></div>
@@ -535,37 +564,116 @@
 
     <script>
         (function() {
-            const STORAGE_KEY = 'tantan_game_save';
-            const STATS_KEY = 'tantan_stats';
-            const SETTINGS_KEY = 'tantan_settings';
-            let gameData = null;
-            let roomTimer = null;
-            let adTimer = null;
+            'use strict';
+            
+            console.log('[APP] Симулятор свиданий — разблокировка локаций в каталоге');
 
-            const bgMusic = document.getElementById('bgMusic');
-            let settings = { musicVolume: 50, language: 'ru' };
-            let stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
+            // ============================================================
+            // 1. ЯНДЕКС ИГРЫ SDK — ИНИЦИАЛИЗАЦИЯ
+            // ============================================================
+            
+            let ysdk = null;
+            let isSDKReady = false;
 
-            let state = {
-                step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
-                currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
-                affection: 50, roomDialogIndex: 0, roomAffection: 100,
-                selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
+            async function initYandexSDK() {
+                try {
+                    console.log('[YANDEX] Проверка YaGames...');
+                    
+                    if (typeof YaGames === 'undefined') {
+                        console.warn('[YANDEX] YaGames не определён, повтор через 500ms');
+                        setTimeout(initYandexSDK, 500);
+                        return;
+                    }
+                    
+                    console.log('[YANDEX] Инициализация SDK...');
+                    ysdk = await YaGames.init();
+                    isSDKReady = true;
+                    
+                    console.log('[YANDEX] ✅ SDK инициализирован!');
+                    
+                    if (ysdk.features?.LoadingAPI?.ready) {
+                        await ysdk.features.LoadingAPI.ready();
+                        console.log('[YANDEX] ✅ Game Ready');
+                    }
+                    
+                    if (ysdk.features?.GameplayAPI?.start) {
+                        ysdk.features.GameplayAPI.start();
+                        console.log('[YANDEX] ▶️ Gameplay START');
+                    }
+                    
+                } catch (error) {
+                    console.error('[YANDEX] ❌ Ошибка:', error);
+                }
+            }
+
+            // ============================================================
+            // 2. РАЗБЛОКИРОВКА ЛОКАЦИИ ЧЕРЕЗ ВИДЕОРЕКЛАМУ
+            // ============================================================
+            
+            window.unlockLocationWithAd = async function(index) {
+                console.log('[APP] Разблокировка локации #' + index);
+                
+                const allLocations = getLocations();
+                if (index >= allLocations.length) return;
+                if (index < state.unlockedLocations) {
+                    showWarning('📍 Эта локация уже открыта!');
+                    return;
+                }
+                
+                if (!ysdk || !isSDKReady) {
+                    console.warn('[YANDEX] ⚠️ SDK не готов');
+                    await initYandexSDK();
+                    if (!ysdk || !isSDKReady) {
+                        showError('❌ SDK Яндекс Игр не инициализирован.');
+                        return;
+                    }
+                }
+                
+                try {
+                    console.log('[YANDEX] 🎬 Показ видеорекламы для разблокировки...');
+                    
+                    ysdk.adv.showRewardedVideo({
+                        callbacks: {
+                            onOpen: () => {
+                                console.log('[YANDEX] 🎬 Видеореклама открыта');
+                            },
+                            onRewarded: () => {
+                                console.log('[YANDEX] 🎁 Награда засчитана! Разблокируем локацию!');
+                                state.unlockedLocations = index + 1;
+                                saveGame();
+                                showSuccess(`🎉 Локация "${allLocations[index].name}" разблокирована!`);
+                                renderLocations();
+                                updateProgressModal();
+                            },
+                            onClose: (wasShown) => {
+                                console.log('[YANDEX] 🎬 Видеореклама закрыта, показана:', wasShown);
+                                if (!wasShown) {
+                                    showWarning('Досмотрите видео до конца, чтобы разблокировать локацию.');
+                                }
+                            },
+                            onError: (error) => {
+                                console.error('[YANDEX] ❌ Ошибка видеорекламы:', error);
+                                showError('Ошибка показа рекламы. Попробуйте позже.');
+                            }
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.error('[YANDEX] ❌ Ошибка:', error);
+                    showError('Ошибка: ' + error.message);
+                }
             };
 
-            let navigationHistory = [];
-            let dialogCallback = null;
+            // ============================================================
+            // 3. СТАРТ ИНИЦИАЛИЗАЦИИ
+            // ============================================================
+            
+            setTimeout(initYandexSDK, 300);
 
-            const scenes = {
-                scene1: document.getElementById('scene1'), scene2: document.getElementById('scene2'),
-                scene3: document.getElementById('scene3'), scene3_5: document.getElementById('scene3_5'),
-                scene4: document.getElementById('scene4'), scene5: document.getElementById('scene5'),
-                scene6: document.getElementById('scene6')
-            };
-            const mainTopBar = document.getElementById('mainTopBar');
-            const clockDisplay = document.getElementById('clockDisplay');
-
-            // ==================== КАСТОМНЫЕ УВЕДОМЛЕНИЯ ====================
+            // ============================================================
+            // 4. КАСТОМНЫЕ УВЕДОМЛЕНИЯ
+            // ============================================================
+            
             function showToast(message, type = 'info') {
                 const toast = document.createElement('div');
                 toast.className = `custom-toast ${type}`;
@@ -581,7 +689,12 @@
             function showWarning(message) { showToast(message, 'warning'); }
             function showInfo(message) { showToast(message, 'info'); }
 
-            // ==================== КАСТОМНЫЙ ДИАЛОГ ====================
+            // ============================================================
+            // 5. КАСТОМНЫЙ ДИАЛОГ
+            // ============================================================
+            
+            let dialogCallback = null;
+
             function showDialog(title, message, icon, confirmText, cancelText, onConfirm, type = 'confirm') {
                 const overlay = document.getElementById('customDialog');
                 document.getElementById('dialogIcon').textContent = icon || '⚠️';
@@ -612,6 +725,161 @@
                 };
             }
 
+            // ============================================================
+            // 6. ОСТАЛЬНАЯ ЛОГИКА ИГРЫ
+            // ============================================================
+            
+            const STORAGE_KEY = 'tantan_game_save';
+            const STATS_KEY = 'tantan_stats';
+            const SETTINGS_KEY = 'tantan_settings';
+            let gameData = null;
+            let roomTimer = null;
+
+            const bgMusic = document.getElementById('bgMusic');
+            let settings = { musicVolume: 50, language: 'ru' };
+            let stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
+
+            let state = {
+                step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
+                currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
+                affection: 50, roomDialogIndex: 0, roomAffection: 100,
+                selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
+            };
+
+            let navigationHistory = [];
+
+            const scenes = {
+                scene1: document.getElementById('scene1'), scene2: document.getElementById('scene2'),
+                scene3: document.getElementById('scene3'), scene3_5: document.getElementById('scene3_5'),
+                scene4: document.getElementById('scene4'), scene5: document.getElementById('scene5'),
+                scene6: document.getElementById('scene6')
+            };
+            const mainTopBar = document.getElementById('mainTopBar');
+            const clockDisplay = document.getElementById('clockDisplay');
+
+// ============================================================
+// 7. ПОЛНЫЙ СБРОС (ПЕРЕЗАГРУЗКА СТРАНИЦЫ)
+// ============================================================
+            
+// ============================================================
+// 7. ПОЛНЫЙ СБРОС (РАБОТАЕТ 100%)
+// ============================================================
+            
+window.fullReset = function() {
+    // Первый диалог
+    const overlay1 = document.getElementById('customDialog');
+    document.getElementById('dialogIcon').textContent = '🗑️';
+    document.getElementById('dialogTitle').textContent = '⚠️ Полный сброс';
+    document.getElementById('dialogMessage').textContent = 'Это удалит ВЕСЬ прогресс, статистику и историю чатов. Восстановить будет невозможно!';
+    document.getElementById('dialogConfirm').textContent = 'Сбросить всё';
+    document.getElementById('dialogCancel').textContent = 'Отмена';
+    document.getElementById('dialogConfirm').className = 'dialog-btn danger';
+    overlay1.classList.remove('hidden');
+    
+    document.getElementById('dialogConfirm').onclick = function() {
+        overlay1.classList.add('hidden');
+        
+        // Второй диалог
+        const overlay2 = document.getElementById('customDialog');
+        document.getElementById('dialogIcon').textContent = '💀';
+        document.getElementById('dialogTitle').textContent = '⚠️ Подтверждение';
+        document.getElementById('dialogMessage').textContent = 'Ты точно хочешь удалить всё? Последний шанс передумать!';
+        document.getElementById('dialogConfirm').textContent = 'Да, сбросить';
+        document.getElementById('dialogCancel').textContent = 'Нет, оставить';
+        document.getElementById('dialogConfirm').className = 'dialog-btn danger';
+        overlay2.classList.remove('hidden');
+        
+        document.getElementById('dialogConfirm').onclick = function() {
+            overlay2.classList.add('hidden');
+            
+            // ===== ВЫПОЛНЯЕМ СБРОС =====
+            
+            // 1. Очищаем таймеры
+            if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
+            
+            // 2. Очищаем localStorage
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(STATS_KEY);
+            
+            // 3. Сбрасываем состояние
+            stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
+            state = { 
+                step: 1, 
+                gender: null, 
+                style: 'style1', 
+                likedIndex: 0, 
+                likedList: [],
+                currentPartnerId: null, 
+                currentLocationId: null, 
+                locationDialogIndex: 0,
+                affection: 50, 
+                roomDialogIndex: 0, 
+                roomAffection: 100,
+                selectedLocationIndex: 0, 
+                unlockedLocations: 1, 
+                chatHistories: {} 
+            };
+            navigationHistory = [];
+            
+            // 4. Сохраняем
+            saveGame();
+            saveStats();
+            
+            // 5. Закрываем настройки
+            document.getElementById('settingsModal').classList.add('hidden');
+            
+            // 6. ПОКАЗЫВАЕМ ПЕРВУЮ СЦЕНУ
+            showScene('scene1');
+            
+            // 7. Сбрасываем UI
+            document.querySelectorAll('#scene1 .gender-selector button').forEach(b => {
+                b.classList.remove('active-male', 'active-female');
+            });
+            document.getElementById('toScene2').classList.remove('enabled');
+            document.getElementById('toScene2').disabled = true;
+            
+            // 8. Обновляем все счетчики
+            const locCount = getLocations().length || 5;
+            document.getElementById('statLikes').textContent = '0';
+            document.getElementById('statLikesBar').style.width = '0%';
+            document.getElementById('statChats').textContent = '0';
+            document.getElementById('statChatsBar').style.width = '0%';
+            document.getElementById('statLocations').textContent = '1 / ' + locCount;
+            document.getElementById('statLocationsBar').style.width = (1 / locCount * 100) + '%';
+            document.getElementById('statDates').textContent = '0';
+            document.getElementById('statDatesBar').style.width = '0%';
+            document.getElementById('chatListLikeCount').textContent = '0';
+            document.getElementById('matchCount').textContent = '0';
+            document.getElementById('unlockedLocationsInfo').textContent = '1/' + locCount;
+            
+            // 9. Перерисовываем локации
+            renderLocations();
+            
+            // 10. Очищаем чаты
+            const chatContainer = document.getElementById('chatListContainer');
+            if (chatContainer) {
+                chatContainer.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px">😔 Никого нет</div>';
+            }
+            
+            // 11. Показываем уведомление
+            showSuccess('✅ Прогресс полностью сброшен!');
+            
+            console.log('[RESET] Сброс выполнен!');
+        };
+        
+        document.getElementById('dialogCancel').onclick = function() {
+            overlay2.classList.add('hidden');
+        };
+    };
+    
+    document.getElementById('dialogCancel').onclick = function() {
+        overlay1.classList.add('hidden');
+    };
+};
+            // ============================================================
+            // 8. МУЗЫКА И НАСТРОЙКИ
+            // ============================================================
+            
             function initMusic() { bgMusic.volume = settings.musicVolume / 100; const s = () => { bgMusic.play().catch(()=>{}); document.removeEventListener('click', s); }; document.addEventListener('click', s, { once: true }); }
             function updateMusicVolume() { bgMusic.volume = settings.musicVolume / 100; if (settings.musicVolume === 0) bgMusic.pause(); else if (bgMusic.paused) bgMusic.play().catch(()=>{}); }
             function loadSettings() { try { const r = localStorage.getItem(SETTINGS_KEY); if (r) settings = { ...settings, ...JSON.parse(r) }; } catch (e) {} applySettings(); }
@@ -620,18 +888,41 @@
             window.updateVolumeLabel = function() { settings.musicVolume = parseInt(document.getElementById('musicVolume').value); document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%'; saveSettings(); updateMusicVolume(); };
             window.changeLanguage = function(lang) { settings.language = lang; saveSettings(); showSuccess('🌐 Язык изменён!'); };
 
-            window.watchAd = function() { const o = bgMusic.volume; bgMusic.volume = o * 0.3; let s = 5; document.getElementById('adOverlay').classList.remove('hidden'); document.getElementById('adTimerBig').textContent = s; adTimer = setInterval(() => { s--; document.getElementById('adTimerBig').textContent = s; if (s <= 0) { clearInterval(adTimer); adTimer = null; bgMusic.volume = o; completeAd(); } }, 1000); };
-            window.skipAd = function() { if (adTimer) { clearInterval(adTimer); adTimer = null; } updateMusicVolume(); document.getElementById('adOverlay').classList.add('hidden'); showWarning('⏳ Реклама пропущена. Награда не получена.'); };
-            function completeAd() { document.getElementById('adOverlay').classList.add('hidden'); const a = getLocations(); if (state.unlockedLocations < a.length) { state.unlockedLocations++; saveGame(); showSuccess('🎉 Новая локация открыта!'); } else showInfo('✅ Все локации уже открыты!'); updateShopButton(); }
-            function updateShopButton() { const b = document.getElementById('shopUnlockLocation'); if (state.unlockedLocations >= getLocations().length) { b.textContent = '✅ Всё открыто'; b.disabled = true; } else { b.textContent = '📺 Смотреть'; b.disabled = false; } }
-
+            // ============================================================
+            // 9. СТАТИСТИКА
+            // ============================================================
+            
             function loadStats() { try { const r = localStorage.getItem(STATS_KEY); if (r) stats = { ...stats, ...JSON.parse(r) }; } catch (e) {} }
             function saveStats() { try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (e) {} }
-            function updateProgressModal() { const tp = getPartners().length || 3; const tl = getLocations().length || 5; document.getElementById('statLikes').textContent = stats.totalLikes; document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%'; document.getElementById('statChats').textContent = stats.completedChats; document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / tp) * 100) + '%'; document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${tl}`; document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / tl) * 100 + '%'; document.getElementById('statDates').textContent = stats.completedDates; document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / tl) * 100) + '%'; }
+            
+            function updateProgressModal() { 
+                const tp = getPartners().length || 3; 
+                const tl = getLocations().length || 5; 
+                
+                document.getElementById('statLikes').textContent = stats.totalLikes; 
+                document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%'; 
+                
+                document.getElementById('statChats').textContent = stats.completedChats; 
+                document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / tp) * 100) + '%'; 
+                
+                document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${tl}`; 
+                document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / tl) * 100 + '%'; 
+                
+                document.getElementById('statDates').textContent = stats.completedDates; 
+                document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / tl) * 100) + '%'; 
+            }
 
+            // ============================================================
+            // 10. СОХРАНЕНИЕ
+            // ============================================================
+            
             function saveGame() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(JSON.parse(JSON.stringify(state)))); } catch (e) {} }
             function loadGame() { try { const r = localStorage.getItem(STORAGE_KEY); if (r) { state = { ...state, ...JSON.parse(r) }; return true; } } catch (e) {} return false; }
 
+            // ============================================================
+            // 11. ВСПОМОГАТЕЛЬНЫЕ
+            // ============================================================
+            
             function getPartners() { return gameData?.partners?.[state.gender === 'male' ? 'male' : 'female'] || []; }
             function getLocations() { return gameData?.locations || []; }
             function getNpc(id) { return gameData?.npcs?.[id] || null; }
@@ -645,6 +936,10 @@
             function updateClock() { const n = new Date(); clockDisplay.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0'); }
             setInterval(updateClock, 1000); updateClock();
 
+            // ============================================================
+            // 12. НАВИГАЦИЯ
+            // ============================================================
+            
             function goToScene(id) {
                 const currentSceneId = Object.keys(scenes).find(k => !scenes[k].classList.contains('hidden'));
                 if (currentSceneId && currentSceneId !== id && currentSceneId !== 'scene5' && currentSceneId !== 'scene6') {
@@ -678,90 +973,152 @@
             }
             function scrollToBottom(el) { if (el) el.scrollTop = el.scrollHeight; }
 
+            // ============================================================
+            // 13. МОДАЛКИ
+            // ============================================================
+            
             document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsModal').classList.remove('hidden'));
-            document.getElementById('shopBtn').addEventListener('click', () => { updateShopButton(); document.getElementById('shopModal').classList.remove('hidden'); });
             document.getElementById('progressBtn').addEventListener('click', () => { updateProgressModal(); document.getElementById('progressModal').classList.remove('hidden'); });
             document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', (e) => { if (e.target === o) o.classList.add('hidden'); }));
 
             document.getElementById('backFromDate').addEventListener('click', () => { if (roomTimer) { clearInterval(roomTimer); roomTimer = null; } navigationHistory = ['scene4']; goBack(); });
             document.getElementById('backFromRoom').addEventListener('click', () => { if (roomTimer) { clearInterval(roomTimer); roomTimer = null; } navigationHistory = ['scene3']; goBack(); });
 
-            // Полный сброс с кастомным диалогом
-            window.fullReset = function() {
-                showDialog(
-                    '⚠️ Полный сброс',
-                    'Это удалит ВЕСЬ прогресс, статистику и историю чатов. Восстановить будет невозможно!',
-                    '🗑️',
-                    'Сбросить всё',
-                    'Отмена',
-                    () => {
-                        showDialog(
-                            '⚠️ Подтверждение',
-                            'Ты точно хочешь удалить всё? Последний шанс передумать!',
-                            '💀',
-                            'Да, сбросить',
-                            'Нет, оставить',
-                            () => {
-                                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
-                                if (adTimer) { clearInterval(adTimer); adTimer = null; }
-                                localStorage.removeItem(STORAGE_KEY);
-                                localStorage.removeItem(STATS_KEY);
-                                stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
-                                state = { step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [], currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0, affection: 50, roomDialogIndex: 0, roomAffection: 100, selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {} };
-                                navigationHistory = [];
-                                saveGame(); saveStats();
-                                document.getElementById('settingsModal').classList.add('hidden');
-                                showScene('scene1');
-                                document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.classList.remove('active-male','active-female'));
-                                document.getElementById('toScene2').classList.remove('enabled');
-                                document.getElementById('toScene2').disabled = true;
-                                updateShopButton();
-                                showSuccess('✅ Прогресс полностью сброшен!');
-                            },
-                            'danger'
-                        );
-                    },
-                    'danger'
-                );
-            };
-
+            // ============================================================
+            // 14. СЦЕНА 1
+            // ============================================================
+            
             const toScene2Btn = document.getElementById('toScene2');
             function checkEnabled() { if (state.gender) { toScene2Btn.classList.add('enabled'); toScene2Btn.disabled = false; } else { toScene2Btn.classList.remove('enabled'); toScene2Btn.disabled = true; } }
             document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() { state.gender = this.dataset.gender; document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male','active-female')); this.classList.add(state.gender === 'male' ? 'active-male' : 'active-female'); checkEnabled(); saveGame(); }));
             toScene2Btn.addEventListener('click', () => { if (!state.gender) { showError('❌ Сначала выбери пол!'); return; } state.likedIndex = 0; state.likedList = []; document.getElementById('matchCount').textContent = '0'; navigationHistory = []; goToScene('scene2'); renderTinder(); });
 
+            // ============================================================
+            // 15. СЦЕНА 2
+            // ============================================================
+            
             function renderTinder() { const p = getPartners(); if (!p?.length) { showError('❌ Нет доступных партнёров!'); return; } const partner = p[state.likedIndex % p.length]; document.getElementById('tinderAvatar').src = partner.avatar || ''; document.getElementById('tinderName').textContent = `${partner.name||'?'}, ${partner.age||'?'}`; let d = ''; if (partner.job) d += `<span class="job-badge">💼 ${partner.job}</span>`; if (partner.zodiac) d += `<span class="badge">${partner.zodiac}</span>`; if (partner.city) d += `<span class="city-badge">📍 ${partner.city}</span>`; if (partner.personality) d += `<span class="personality-badge">${getPersonalityLabel(partner.personality)}</span>`; document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc||''}</span>`; document.getElementById('matchCount').textContent = state.likedList.length; }
             document.getElementById('tinderLike').addEventListener('click', () => { const p = getPartners(); if (!p?.length) return; const partner = p[state.likedIndex % p.length]; if (!state.likedList.some(x => x.id === partner.id)) { state.likedList.push({...partner}); stats.totalLikes++; saveStats(); if (!state.chatHistories[partner.id]) { const f = getChatFlow(); state.chatHistories[partner.id] = { step:0, done:false, messages: f?.length ? [{type:'theirs', text:f[0].theirs}] : [] }; } showSuccess('❤️ Лайк!'); } state.likedIndex++; saveGame(); renderTinder(); });
             document.getElementById('tinderDislike').addEventListener('click', () => { state.likedIndex++; saveGame(); renderTinder(); });
             document.getElementById('toChat').addEventListener('click', () => { if (!state.likedList.length) { showWarning('💬 Сначала лайкни кого-нибудь!'); return; } goToScene('scene3'); renderChatList(); });
             document.getElementById('backToTinderFromChats').addEventListener('click', () => { navigationHistory = ['scene2']; goBack(); });
 
+            // ============================================================
+            // 16. СЦЕНА 3
+            // ============================================================
+            
             function renderChatList() { const c = document.getElementById('chatListContainer'); document.getElementById('chatListLikeCount').textContent = state.likedList.length; if (!state.likedList.length) { c.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px">😔 Никого нет</div>'; return; } c.innerHTML = ''; state.likedList.forEach(p => { const h = getChatHistory(p.id); const lm = h.messages.length > 0 ? h.messages[h.messages.length-1].text : '💬 Начать'; const div = document.createElement('div'); div.className = 'chat-list-item'; div.innerHTML = `<img src="${p.avatar||''}"><div class="info"><div class="name">${p.name||'?'}, ${p.age||'?'}</div><div class="last-msg">${lm.substring(0,40)}</div></div>${!h.done?'<span class="unread-badge">новое</span>':''}<span style="color:#9088b0;font-size:18px;">→</span>`; div.addEventListener('click', () => { state.currentPartnerId = p.id; saveGame(); goToScene('scene3_5'); initConversation(); }); c.appendChild(div); }); }
 
+            // ============================================================
+            // 17. СЦЕНА 3.5
+            // ============================================================
+            
             const convoMessages = document.getElementById('convoMessages');
             const convoMessagesWrapper = document.getElementById('convoMessagesWrapper');
             const convoRepliesWrapper = document.getElementById('convoRepliesWrapper');
             const convoToLocationsBtn = document.getElementById('convoToLocationsBtn');
+            
             function initConversation() { const p = getCurrentPartner(); if (!p) return; document.getElementById('convoPartnerAvatar').src = p.avatar||''; document.getElementById('convoPartnerName').textContent = p.name||''; const h = getChatHistory(p.id); convoMessages.innerHTML = ''; h.messages.forEach(m => { const div = document.createElement('div'); div.className = 'message ' + m.type; div.textContent = m.text; convoMessages.appendChild(div); }); if (!h.messages.length) { const f = getChatFlow(); if (f?.length) { h.messages.push({type:'theirs', text:f[0].theirs}); const div = document.createElement('div'); div.className = 'message theirs'; div.textContent = f[0].theirs; convoMessages.appendChild(div); saveGame(); } } renderConvoReplies(h.step); convoToLocationsBtn.classList.toggle('visible', h.done); scrollToBottom(convoMessagesWrapper); }
             function renderConvoReplies(s) { const f = getChatFlow(); if (!f) return; const h = getChatHistory(state.currentPartnerId); convoRepliesWrapper.innerHTML = ''; if (h.done || s >= f.length) { convoToLocationsBtn.classList.add('visible'); h.done = true; saveGame(); return; } f[s].replies.forEach(r => { const b = document.createElement('button'); b.className = 'chat-reply-btn'; b.textContent = r; b.addEventListener('click', () => { h.messages.push({type:'mine', text:r}); const md = document.createElement('div'); md.className = 'message mine'; md.textContent = r; convoMessages.appendChild(md); convoRepliesWrapper.innerHTML = ''; const n = s + 1; if (n < f.length) { const tm = document.createElement('div'); tm.className = 'message typing'; tm.textContent = 'Печатает...'; convoMessages.appendChild(tm); scrollToBottom(convoMessagesWrapper); setTimeout(() => { if (tm.parentNode) tm.remove(); h.messages.push({type:'theirs', text:f[n].theirs}); const td = document.createElement('div'); td.className = 'message theirs'; td.textContent = f[n].theirs; convoMessages.appendChild(td); h.step = n; saveGame(); renderConvoReplies(n); scrollToBottom(convoMessagesWrapper); }, 1500); } else { h.done = true; stats.completedChats++; saveStats(); saveGame(); h.messages.push({type:'theirs', text:'✨ Договорились! Выбирай место ✨'}); const dd = document.createElement('div'); dd.className = 'message theirs'; dd.textContent = '✨ Договорились! Выбирай место ✨'; convoMessages.appendChild(dd); convoToLocationsBtn.classList.add('visible'); showSuccess('💬 Чат завершён! Выбирай локацию.'); scrollToBottom(convoMessagesWrapper); } scrollToBottom(convoMessagesWrapper); }); convoRepliesWrapper.appendChild(b); }); }
             document.getElementById('backToChatListBtn').addEventListener('click', () => goBack());
             convoToLocationsBtn.addEventListener('click', () => { if (!getChatHistory(state.currentPartnerId).done) { showWarning('⚠️ Сначала заверши переписку!'); return; } state.selectedLocationIndex = 0; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene4'); renderLocations(); });
 
-            function renderLocations() { const c = document.getElementById('locationCatalog'); const all = getLocations(); if (!all?.length) return; document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${all.length}`; c.innerHTML = ''; all.forEach((loc, i) => { const locked = i >= state.unlockedLocations; const d = document.createElement('div'); d.className = 'catalog-item' + (locked?' locked':'') + (i===state.selectedLocationIndex&&!locked?' selected':''); d.innerHTML = `<img src="${loc.bg||''}"><div class="info"><h4>${loc.name} ${locked?'🔒':''}</h4><p>${locked?'Откроется позже...':(loc.desc||'')}</p></div><span class="location-icon">${locked?'🔒':'📍'}</span>`; if (!locked) d.addEventListener('click', () => { state.selectedLocationIndex = i; document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected')); d.classList.add('selected'); saveGame(); }); c.appendChild(d); }); }
-            document.getElementById('toDate').addEventListener('click', () => { const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0]; if (!loc) { showError('❌ Нет доступных локаций!'); return; } state.currentLocationId = loc.id || 'cafe'; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene5'); updateAffectionUI(); document.getElementById('dateChat').innerHTML = ''; document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene(); });
+            // ============================================================
+            // 18. СЦЕНА 4 — ЛОКАЦИИ
+            // ============================================================
+            
+            function renderLocations() {
+                const c = document.getElementById('locationCatalog');
+                const all = getLocations();
+                if (!all?.length) return;
+                
+                document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${all.length}`;
+                c.innerHTML = '';
+                
+                all.forEach((loc, i) => {
+                    const isLocked = i >= state.unlockedLocations;
+                    const d = document.createElement('div');
+                    d.className = 'catalog-item' + (isLocked ? ' locked' : '') + (i === state.selectedLocationIndex && !isLocked ? ' selected' : '');
+                    
+                    d.innerHTML = `
+                        <img src="${loc.bg || ''}" onerror="this.style.display='none'">
+                        <div class="info">
+                            <h4>${loc.name} ${isLocked ? '🔒' : ''}</h4>
+                            <p>${isLocked ? '👆 Нажми, чтобы разблокировать за рекламу' : (loc.desc || '')}</p>
+                            ${isLocked ? `<button class="unlock-btn" onclick="event.stopPropagation(); unlockLocationWithAd(${i})">🎬 Разблокировать</button>` : ''}
+                        </div>
+                        <span class="location-icon">${isLocked ? '🔒' : '📍'}</span>
+                    `;
+                    
+                    if (!isLocked) {
+                        d.addEventListener('click', () => {
+                            state.selectedLocationIndex = i;
+                            document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
+                            d.classList.add('selected');
+                            saveGame();
+                        });
+                    }
+                    
+                    c.appendChild(d);
+                });
+            }
+            
+            document.getElementById('toDate').addEventListener('click', () => { 
+                const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0]; 
+                if (!loc) { showError('❌ Нет доступных локаций!'); return; } 
+                state.currentLocationId = loc.id || 'cafe'; 
+                state.locationDialogIndex = 0; 
+                state.affection = 50; 
+                state.roomDialogIndex = 0; 
+                state.roomAffection = 100; 
+                goToScene('scene5'); 
+                updateAffectionUI(); 
+                document.getElementById('dateChat').innerHTML = ''; 
+                document.getElementById('dateChoicesWrapper').innerHTML = ''; 
+                renderDateScene(); 
+            });
 
+            // ============================================================
+            // 19. СЦЕНА 5
+            // ============================================================
+            
             function updateAffectionUI() { const v = Math.min(100, Math.max(0, state.affection)); const f = document.getElementById('affectionFill'); f.style.width = v + '%'; document.getElementById('affectionLabel').textContent = v + '%'; f.style.background = v < 30 ? '#ff4444' : v < 60 ? '#ffaa44' : 'linear-gradient(90deg, #ff4d8a, #ff6b9d)'; }
             function renderDateScene() { const p = getCurrentPartner(); const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {}; document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg||''}')`; document.getElementById('dateAvatarFull').src = p?.avatar || ''; document.getElementById('datePartnerName').textContent = p?.name || ''; const dialogs = getLocationDialogs(p?.id, state.currentLocationId); document.getElementById('dateChoicesWrapper').innerHTML = ''; if (!dialogs || state.locationDialogIndex >= dialogs.length) { document.getElementById('dateChat').innerHTML += '<div class="date-msg system">🏁 Свидание окончено!</div>'; stats.completedDates++; saveStats(); setTimeout(() => goToRoom(), 1500); return; } const d = dialogs[state.locationDialogIndex]; document.getElementById('dateChat').innerHTML += `<div class="date-msg theirs">${d.text}</div>`; d.choices.forEach(c => { const b = document.createElement('button'); b.className = 'date-choice-btn'; b.textContent = c.text; b.addEventListener('click', () => { document.getElementById('dateChat').innerHTML += `<div class="date-msg mine">${c.full||c.text}</div>`; state.affection = Math.min(100, Math.max(0, state.affection + (c.effect||0))); updateAffectionUI(); state.locationDialogIndex++; saveGame(); document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene(); scrollToBottom(document.getElementById('dateChatWrapper')); }); document.getElementById('dateChoicesWrapper').appendChild(b); }); scrollToBottom(document.getElementById('dateChatWrapper')); }
 
+            // ============================================================
+            // 20. СЦЕНА 6
+            // ============================================================
+            
             function goToRoom() { if (roomTimer) { clearInterval(roomTimer); roomTimer = null; } state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene6'); document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')"; const p = getCurrentPartner(); document.getElementById('roomAvatarSmall').src = p?.avatar || ''; document.getElementById('roomPartnerName').textContent = p?.name || ''; document.getElementById('roomAffectionFill').style.width = '100%'; document.getElementById('roomAffectionValue').textContent = '100%'; document.getElementById('roomChat').innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>'; document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); }
             function renderRoomScene() { const dialogs = getRoomDialogs(); if (!dialogs?.length) return; document.getElementById('roomChoicesWrapper').innerHTML = ''; if (state.roomDialogIndex >= dialogs.length) { document.getElementById('roomChat').innerHTML += '<div class="room-msg system">💫 Волшебный вечер... ✨</div>'; unlockNextLocation(); saveGame(); startRoomCountdown(); return; } const d = dialogs[state.roomDialogIndex]; document.getElementById('roomChat').innerHTML += `<div class="room-msg theirs">${d.text}</div>`; (d.choices || d).forEach(c => { const b = document.createElement('button'); b.className = 'room-choice-btn'; b.textContent = typeof c === 'string' ? c : (c.text||c); b.addEventListener('click', () => { document.getElementById('roomChat').innerHTML += `<div class="room-msg mine">${typeof c === 'string' ? c : (c.full||c.text)}</div>`; state.roomDialogIndex++; saveGame(); document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); scrollToBottom(document.getElementById('roomChatWrapper')); }); document.getElementById('roomChoicesWrapper').appendChild(b); }); scrollToBottom(document.getElementById('roomChatWrapper')); }
             function startRoomCountdown() { let s = 3; const cd = document.createElement('div'); cd.className = 'room-msg countdown'; cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; document.getElementById('roomChat').appendChild(cd); document.getElementById('roomChoicesWrapper').innerHTML = ''; scrollToBottom(document.getElementById('roomChatWrapper')); roomTimer = setInterval(() => { s--; if (s <= 0) { clearInterval(roomTimer); roomTimer = null; cd.textContent = '✨ Переходим в чаты...'; setTimeout(() => { navigationHistory = []; showScene('scene3'); renderChatList(); }, 500); } else cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; scrollToBottom(document.getElementById('roomChatWrapper')); }, 1000); }
             function unlockNextLocation() { const all = getLocations(); if (state.unlockedLocations < all.length) { state.unlockedLocations++; saveGame(); showInfo('📍 Открыта новая локация!'); } }
 
+            // ============================================================
+            // 21. ЗАГРУЗКА
+            // ============================================================
+            
             async function loadGameData() { try { const r = await fetch('data.json'); if (r.ok) gameData = await r.json(); else showError('❌ Ошибка загрузки data.json!'); } catch(e) { showError('❌ Не удалось загрузить data.json!'); } }
             function restoreGameState() { if (!gameData) return; const s = Math.floor(state.step); if (s === 1) showScene('scene1'); else if (s === 2) { showScene('scene2'); renderTinder(); } else if (s === 3) { if (state.step === 3.5) { showScene('scene3_5'); initConversation(); } else { showScene('scene3'); renderChatList(); } } else if (s === 4) { showScene('scene4'); renderLocations(); } else if (s === 5) { showScene('scene5'); updateAffectionUI(); renderDateScene(); } else if (s === 6) goToRoom(); }
 
-            loadGameData().then(() => { loadSettings(); loadStats(); initMusic(); if (loadGame() && state.gender) { restoreGameState(); } else { state.unlockedLocations = 1; state.chatHistories = {}; saveGame(); showScene('scene1'); } updateShopButton(); });
+            // ============================================================
+            // 22. СТАРТ
+            // ============================================================
+            
+            loadGameData().then(() => { 
+                loadSettings(); 
+                loadStats(); 
+                initMusic(); 
+                if (loadGame() && state.gender) { 
+                    restoreGameState(); 
+                } else { 
+                    state.unlockedLocations = 1; 
+                    state.chatHistories = {}; 
+                    saveGame(); 
+                    showScene('scene1'); 
+                } 
+                updateProgressModal();
+            });
         })();
     </script>
 </body>
