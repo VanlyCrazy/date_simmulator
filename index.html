@@ -60,84 +60,33 @@
             transition: all 0.2s ease;
             font-size: 15px;
         }
-        .top-bar .icon-btn:hover {
-            background: rgba(255,255,255,0.1);
-            transform: scale(1.05);
-        }
-        .top-bar .shop-btn {
-            background: rgba(255,215,0,0.1);
-            border-color: rgba(255,215,0,0.3);
-            color: #ffd700;
-        }
-        .top-bar .settings-btn {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.1);
-        }
-        .top-bar .progress-btn {
-            background: rgba(255,77,138,0.15);
-            border-color: rgba(255,77,138,0.3);
-        }
+        .top-bar .icon-btn:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
+        .top-bar .shop-btn { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.3); color: #ffd700; }
+        .top-bar .settings-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        .top-bar .progress-btn { background: rgba(255,77,138,0.15); border-color: rgba(255,77,138,0.3); }
 
-        /* Модальные окна */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.2s ease;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.2s ease;
         }
         .modal-overlay.hidden { display: none; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .modal-content {
-            background: #1a1a36;
-            border-radius: 24px;
-            padding: 20px;
-            border: 2px solid #2a2a4e;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            max-width: 340px;
-            width: 90%;
-            animation: slideUp 0.3s ease;
-            max-height: 80vh;
-            overflow-y: auto;
+            background: #1a1a36; border-radius: 24px; padding: 20px;
+            border: 2px solid #2a2a4e; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            max-width: 340px; width: 90%; animation: slideUp 0.3s ease; max-height: 80vh; overflow-y: auto;
         }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .modal-header h3 {
-            font-size: 18px;
-            color: #e0d8f0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .modal-header h3 { font-size: 18px; color: #e0d8f0; display: flex; align-items: center; gap: 8px; }
         .modal-close {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #9088b0;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #9088b0; width: 32px; height: 32px; border-radius: 50%;
+            cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
         .modal-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
-        /* Настройки */
         .settings-section { margin-bottom: 16px; }
         .settings-section h4 { font-size: 14px; color: #9088b0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
         .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -145,8 +94,30 @@
         .settings-row input[type="range"] { width: 120px; accent-color: #ff4d8a; }
         .settings-row select { background: #16163a; border: 1px solid #2a2a4e; color: #d0c8f0; padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; }
         .settings-row .volume-value { font-size: 12px; color: #ff4d8a; min-width: 35px; text-align: right; }
+        
+        .btn-reset-full {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,50,50,0.15);
+            border: 1.5px solid rgba(255,50,50,0.3);
+            color: #ff6666;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 12px;
+            text-align: center;
+        }
+        .btn-reset-full:hover {
+            background: rgba(255,50,50,0.25);
+            border-color: rgba(255,50,50,0.5);
+        }
+        .btn-reset-full:active {
+            transform: scale(0.97);
+            background: rgba(255,50,50,0.3);
+        }
 
-        /* Магазин */
         .shop-grid { display: flex; flex-direction: column; gap: 10px; }
         .shop-item { background: #16163a; border-radius: 14px; padding: 14px; border: 1.5px solid #2a2a4e; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
         .shop-item:hover { background: #1e1e48; border-color: #3a3a5e; }
@@ -367,7 +338,7 @@
             <source src="assets/fon.mp3" type="audio/mpeg">
         </audio>
 
-        <!-- Модальные окна -->
+        <!-- Модальное окно НАСТРОЕК -->
         <div id="settingsModal" class="modal-overlay hidden">
             <div class="modal-content">
                 <div class="modal-header">
@@ -394,102 +365,56 @@
                         </select>
                     </div>
                 </div>
+                <div class="settings-section">
+                    <h4>⚠️ Сброс</h4>
+                    <button class="btn-reset-full" onclick="fullReset()">🔄 Полный сброс прогресса</button>
+                    <p style="font-size:10px; color:#666; margin-top:6px; text-align:center;">Обнуляет всю статистику, прогресс и историю</p>
+                </div>
             </div>
         </div>
 
+        <!-- Остальные модальные окна без изменений -->
         <div id="shopModal" class="modal-overlay hidden">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3>🛒 Магазин</h3>
-                    <button class="modal-close" onclick="document.getElementById('shopModal').classList.add('hidden')">✕</button>
-                </div>
-                <div class="shop-grid">
-                    <div class="shop-item">
-                        <div class="shop-icon">📍</div>
-                        <div class="shop-info">
-                            <div class="shop-title">Открыть следующую локацию</div>
-                            <div class="shop-desc">Просмотри рекламу и получи доступ к новой локации</div>
-                        </div>
-                        <button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd()">📺 Смотреть</button>
-                    </div>
-                </div>
+                <div class="modal-header"><h3>🛒 Магазин</h3><button class="modal-close" onclick="document.getElementById('shopModal').classList.add('hidden')">✕</button></div>
+                <div class="shop-grid"><div class="shop-item"><div class="shop-icon">📍</div><div class="shop-info"><div class="shop-title">Открыть следующую локацию</div><div class="shop-desc">Просмотри рекламу и получи доступ к новой локации</div></div><button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd()">📺 Смотреть</button></div></div>
                 <div class="ad-timer" id="adCooldown" style="display:none;"></div>
             </div>
         </div>
 
         <div id="adOverlay" class="ad-overlay hidden">
-            <div class="ad-content">
-                <div class="ad-icon">📺</div>
-                <div class="ad-text">Реклама...</div>
-                <div class="ad-timer-big" id="adTimerBig">5</div>
-                <button class="ad-skip" onclick="skipAd()">Пропустить ✕</button>
-            </div>
+            <div class="ad-content"><div class="ad-icon">📺</div><div class="ad-text">Реклама...</div><div class="ad-timer-big" id="adTimerBig">5</div><button class="ad-skip" onclick="skipAd()">Пропустить ✕</button></div>
         </div>
 
         <div id="progressModal" class="modal-overlay hidden">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3>📊 Твой прогресс</h3>
-                    <button class="modal-close" onclick="document.getElementById('progressModal').classList.add('hidden')">✕</button>
-                </div>
+                <div class="modal-header"><h3>📊 Твой прогресс</h3><button class="modal-close" onclick="document.getElementById('progressModal').classList.add('hidden')">✕</button></div>
                 <div class="progress-grid">
-                    <div class="progress-item">
-                        <div class="p-icon">❤️</div>
-                        <div class="p-info"><div class="p-title">Лайкнуто</div><div class="p-value" id="statLikes">0</div></div>
-                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statLikesBar" style="width:0%"></div></div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="p-icon">💬</div>
-                        <div class="p-info"><div class="p-title">Завершено чатов</div><div class="p-value" id="statChats">0</div></div>
-                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statChatsBar" style="width:0%"></div></div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="p-icon">📍</div>
-                        <div class="p-info"><div class="p-title">Локаций открыто</div><div class="p-value" id="statLocations">0 / 0</div></div>
-                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statLocationsBar" style="width:0%"></div></div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="p-icon">💕</div>
-                        <div class="p-info"><div class="p-title">Пройдено свиданий</div><div class="p-value" id="statDates">0</div></div>
-                        <div class="p-bar-wrap"><div class="p-bar-fill" id="statDatesBar" style="width:0%"></div></div>
-                    </div>
+                    <div class="progress-item"><div class="p-icon">❤️</div><div class="p-info"><div class="p-title">Лайкнуто</div><div class="p-value" id="statLikes">0</div></div><div class="p-bar-wrap"><div class="p-bar-fill" id="statLikesBar" style="width:0%"></div></div></div>
+                    <div class="progress-item"><div class="p-icon">💬</div><div class="p-info"><div class="p-title">Завершено чатов</div><div class="p-value" id="statChats">0</div></div><div class="p-bar-wrap"><div class="p-bar-fill" id="statChatsBar" style="width:0%"></div></div></div>
+                    <div class="progress-item"><div class="p-icon">📍</div><div class="p-info"><div class="p-title">Локаций открыто</div><div class="p-value" id="statLocations">0 / 0</div></div><div class="p-bar-wrap"><div class="p-bar-fill" id="statLocationsBar" style="width:0%"></div></div></div>
+                    <div class="progress-item"><div class="p-icon">💕</div><div class="p-info"><div class="p-title">Пройдено свиданий</div><div class="p-value" id="statDates">0</div></div><div class="p-bar-wrap"><div class="p-bar-fill" id="statDatesBar" style="width:0%"></div></div></div>
                 </div>
             </div>
         </div>
 
         <div id="sceneContainer" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-            <!-- СЦЕНА 1 -->
             <div id="scene1" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="gender-selector">
                     <span class="label">👤 Выбери свой пол</span>
-                    <div class="btn-group">
-                        <button id="genderMale" data-gender="male">Мужчина</button>
-                        <button id="genderFemale" data-gender="female">Женщина</button>
-                    </div>
+                    <div class="btn-group"><button id="genderMale" data-gender="male">Мужчина</button><button id="genderFemale" data-gender="female">Женщина</button></div>
                 </div>
                 <div class="next-btn-wrap"><button id="toScene2" disabled>Далее →</button></div>
             </div>
 
-            <!-- СЦЕНА 2 -->
             <div id="scene2" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="tinder-card-wrapper" id="tinderCard">
-                    <div class="tinder-photo">
-                        <img id="tinderAvatar" src="assets/girl1.png" alt="партнёр">
-                        <div class="tinder-counter" id="matchCounter"><span class="heart">❤️</span> <span id="matchCount">0</span></div>
-                    </div>
-                    <div class="tinder-info">
-                        <div class="name-age" id="tinderName">Анна, 24</div>
-                        <div class="desc" id="tinderDesc"><span class="job-badge">💼 Дизайнер</span><span class="badge">♏ Скорпион</span><span class="city-badge">📍 Москва</span><span class="personality-badge">💕 Романтик</span></div>
-                    </div>
-                    <div class="tinder-actions">
-                        <button class="btn-dislike" id="tinderDislike">✕</button>
-                        <button class="btn-chat" id="toChat">💬 Написать</button>
-                        <button class="btn-like" id="tinderLike">❤️</button>
-                    </div>
+                    <div class="tinder-photo"><img id="tinderAvatar" src="assets/girl1.png" alt="партнёр"><div class="tinder-counter" id="matchCounter"><span class="heart">❤️</span> <span id="matchCount">0</span></div></div>
+                    <div class="tinder-info"><div class="name-age" id="tinderName">Анна, 24</div><div class="desc" id="tinderDesc"><span class="job-badge">💼 Дизайнер</span><span class="badge">♏ Скорпион</span><span class="city-badge">📍 Москва</span><span class="personality-badge">💕 Романтик</span></div></div>
+                    <div class="tinder-actions"><button class="btn-dislike" id="tinderDislike">✕</button><button class="btn-chat" id="toChat">💬 Написать</button><button class="btn-like" id="tinderLike">❤️</button></div>
                 </div>
             </div>
 
-            <!-- СЦЕНА 3: СПИСОК ЧАТОВ -->
             <div id="scene3" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="simple-card">
                     <div class="chat-list-header"><span>💬 Чаты</span><span style="font-size:12px; color:#9088b0;">Лайков: <span id="chatListLikeCount">0</span></span></div>
@@ -498,69 +423,44 @@
                 </div>
             </div>
 
-            <!-- СЦЕНА 3.5: ОКНО ПЕРЕПИСКИ -->
             <div id="scene3_5" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="chat-conversation">
-                    <div class="chat-convo-header">
-                        <button class="back-btn" id="backToChatListBtn">←</button>
-                        <img id="convoPartnerAvatar" src="assets/girl1.png" alt="">
-                        <span class="name" id="convoPartnerName">Анна</span>
-                        <span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span>
-                    </div>
+                    <div class="chat-convo-header"><button class="back-btn" id="backToChatListBtn">←</button><img id="convoPartnerAvatar" src="assets/girl1.png" alt=""><span class="name" id="convoPartnerName">Анна</span><span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span></div>
                     <div class="chat-messages-wrapper" id="convoMessagesWrapper"><div class="chat-messages" id="convoMessages"></div></div>
                     <div class="chat-replies-wrapper" id="convoRepliesWrapper"></div>
                     <button class="chat-to-locations-btn" id="convoToLocationsBtn">Выбрать место →</button>
                 </div>
             </div>
 
-            <!-- СЦЕНА 4: ЛОКАЦИИ -->
             <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
-                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;">
-                        <span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span>
-                        <span style="margin-left:auto; font-size:11px; color:#9088b0;" id="unlockedLocationsInfo">1/5</span>
-                    </div>
+                    <div style="display:flex; gap:4px; align-items:center; flex-shrink:0; padding:4px 2px 8px;"><span style="font-size:16px;font-weight:700;color:#e0d8f0;">📍 Выбери место для встречи</span><span style="margin-left:auto; font-size:11px; color:#9088b0;" id="unlockedLocationsInfo">1/5</span></div>
                     <div id="locationCatalog" class="catalog-grid" style="flex:1; overflow-y:auto; padding:4px 2px 8px; display:flex; flex-direction:column; gap:8px; min-height:0;"></div>
                     <button id="toDate" style="margin-top:8px;padding:10px 32px;font-size:15px;font-weight:700;align-self:center;background:linear-gradient(135deg,#ff4d8a,#ff6b9d);border:none;color:white;border-radius:60px;cursor:pointer;flex-shrink:0;">Назначить встречу ❤️</button>
                 </div>
             </div>
 
-            <!-- СЦЕНА 5: СВИДАНИЕ -->
             <div id="scene5" class="hidden">
                 <div class="date-bg" id="dateBg"></div>
                 <div class="date-avatar-section"><img id="dateAvatarFull" src="assets/girl1.png" alt=""></div>
                 <div class="date-overlay-bottom"></div>
                 <div class="date-content">
-                    <div class="date-top">
-                        <div class="partner-name" id="datePartnerName">Анна</div>
-                        <div class="affection-wrap"><div class="bar"><div class="fill" id="affectionFill" style="width:50%;"></div></div><span class="label" id="affectionLabel">50%</span></div>
-                    </div>
+                    <div class="date-top"><div class="partner-name" id="datePartnerName">Анна</div><div class="affection-wrap"><div class="bar"><div class="fill" id="affectionFill" style="width:50%;"></div></div><span class="label" id="affectionLabel">50%</span></div></div>
                     <div class="date-chat-wrapper" id="dateChatWrapper"><div class="date-chat" id="dateChat"></div></div>
                     <div class="date-choices-wrapper" id="dateChoicesWrapper"></div>
                 </div>
                 <button class="btn-back" id="backFromDate">← Назад</button>
             </div>
 
-            <!-- СЦЕНА 6: КОМНАТА -->
             <div id="scene6" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="room-bg" id="roomBg"></div>
                 <div class="room-overlay"></div>
                 <div class="room-content">
-                    <div class="room-top-bar">
-                        <img id="roomAvatarSmall" class="room-avatar-small" src="assets/girl1.png" alt="">
-                        <div class="room-info-text"><div class="room-partner-name" id="roomPartnerName">Анна</div><div class="room-status">💕 Идеальное свидание</div></div>
-                        <span class="room-hearts">💗</span>
-                    </div>
+                    <div class="room-top-bar"><img id="roomAvatarSmall" class="room-avatar-small" src="assets/girl1.png" alt=""><div class="room-info-text"><div class="room-partner-name" id="roomPartnerName">Анна</div><div class="room-status">💕 Идеальное свидание</div></div><span class="room-hearts">💗</span></div>
                     <div class="room-chat-wrapper" id="roomChatWrapper"><div class="room-chat" id="roomChat"><div class="room-msg system">🕯️ Вы в уединённой обстановке...</div></div></div>
                     <div class="room-choices-wrapper" id="roomChoicesWrapper"></div>
                 </div>
-                <div class="room-affection-bar-wrap">
-                    <div class="room-affection-inner">
-                        <span class="aff-icon">🔥</span>
-                        <div class="aff-bar"><div class="aff-fill" id="roomAffectionFill" style="width:100%;"></div></div>
-                        <span class="aff-value" id="roomAffectionValue">100%</span>
-                    </div>
-                </div>
+                <div class="room-affection-bar-wrap"><div class="room-affection-inner"><span class="aff-icon">🔥</span><div class="aff-bar"><div class="aff-fill" id="roomAffectionFill" style="width:100%;"></div></div><span class="aff-value" id="roomAffectionValue">100%</span></div></div>
                 <button class="btn-back-room" id="backFromRoom">← Назад</button>
             </div>
         </div>
@@ -568,8 +468,6 @@
 
     <script>
         (function() {
-            console.log('[APP] Симулятор свиданий v5.0');
-
             const STORAGE_KEY = 'tantan_game_save';
             const STATS_KEY = 'tantan_stats';
             const SETTINGS_KEY = 'tantan_settings';
@@ -578,120 +476,96 @@
             let adTimer = null;
 
             const bgMusic = document.getElementById('bgMusic');
-
             let settings = { musicVolume: 50, language: 'ru' };
             let stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
 
             let state = {
-                step: 1,
-                gender: null,
-                style: 'style1',
-                likedIndex: 0,
-                likedList: [],
-                currentPartnerId: null,
-                currentLocationId: null,
-                locationDialogIndex: 0,
-                affection: 50,
-                roomDialogIndex: 0,
-                roomAffection: 100,
-                selectedLocationIndex: 0,
-                unlockedLocations: 1,
-                chatHistories: {},
+                step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
+                currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
+                affection: 50, roomDialogIndex: 0, roomAffection: 100,
+                selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
             };
 
-            // История навигации
             let navigationHistory = [];
 
             const scenes = {
-                scene1: document.getElementById('scene1'),
-                scene2: document.getElementById('scene2'),
-                scene3: document.getElementById('scene3'),
-                scene3_5: document.getElementById('scene3_5'),
-                scene4: document.getElementById('scene4'),
-                scene5: document.getElementById('scene5'),
+                scene1: document.getElementById('scene1'), scene2: document.getElementById('scene2'),
+                scene3: document.getElementById('scene3'), scene3_5: document.getElementById('scene3_5'),
+                scene4: document.getElementById('scene4'), scene5: document.getElementById('scene5'),
                 scene6: document.getElementById('scene6')
             };
             const mainTopBar = document.getElementById('mainTopBar');
             const clockDisplay = document.getElementById('clockDisplay');
 
-            // Музыка
-            function initMusic() {
-                bgMusic.volume = settings.musicVolume / 100;
-                const startMusic = () => { bgMusic.play().catch(e => {}); document.removeEventListener('click', startMusic); };
-                document.addEventListener('click', startMusic, { once: true });
-            }
-            function updateMusicVolume() {
-                bgMusic.volume = settings.musicVolume / 100;
-                if (settings.musicVolume === 0) bgMusic.pause();
-                else if (bgMusic.paused) bgMusic.play().catch(() => {});
-            }
+            // ==================== ПОЛНЫЙ СБРОС ====================
+            window.fullReset = function() {
+                if (confirm('⚠️ Ты уверен? Это удалит ВЕСЬ прогресс, статистику и историю чатов!')) {
+                    if (confirm('Точно-точно? Восстановить будет невозможно!')) {
+                        // Очищаем таймеры
+                        if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
+                        if (adTimer) { clearInterval(adTimer); adTimer = null; }
+                        
+                        // Очищаем всё хранилище
+                        localStorage.removeItem(STORAGE_KEY);
+                        localStorage.removeItem(STATS_KEY);
+                        
+                        // Сбрасываем состояние
+                        stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
+                        state = {
+                            step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
+                            currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
+                            affection: 50, roomDialogIndex: 0, roomAffection: 100,
+                            selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
+                        };
+                        navigationHistory = [];
+                        
+                        // Сохраняем сброшенное состояние
+                        saveGame();
+                        saveStats();
+                        
+                        // Закрываем настройки
+                        document.getElementById('settingsModal').classList.add('hidden');
+                        
+                        // Переходим на выбор пола
+                        showScene('scene1');
+                        
+                        // Сбрасываем UI первой сцены
+                        document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.classList.remove('active-male','active-female'));
+                        document.getElementById('toScene2').classList.remove('enabled');
+                        document.getElementById('toScene2').disabled = true;
+                        
+                        // Обновляем магазин
+                        updateShopButton();
+                        
+                        alert('✅ Прогресс полностью сброшен!');
+                    }
+                }
+            };
 
-            // Настройки
+            function initMusic() { bgMusic.volume = settings.musicVolume / 100; const s = () => { bgMusic.play().catch(()=>{}); document.removeEventListener('click', s); }; document.addEventListener('click', s, { once: true }); }
+            function updateMusicVolume() { bgMusic.volume = settings.musicVolume / 100; if (settings.musicVolume === 0) bgMusic.pause(); else if (bgMusic.paused) bgMusic.play().catch(()=>{}); }
             function loadSettings() { try { const r = localStorage.getItem(SETTINGS_KEY); if (r) settings = { ...settings, ...JSON.parse(r) }; } catch (e) {} applySettings(); }
             function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {} }
-            function applySettings() {
-                document.getElementById('musicVolume').value = settings.musicVolume;
-                document.getElementById('languageSelect').value = settings.language;
-                document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%';
-                updateMusicVolume();
-            }
+            function applySettings() { document.getElementById('musicVolume').value = settings.musicVolume; document.getElementById('languageSelect').value = settings.language; document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%'; updateMusicVolume(); }
             window.updateVolumeLabel = function() { settings.musicVolume = parseInt(document.getElementById('musicVolume').value); document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%'; saveSettings(); updateMusicVolume(); };
             window.changeLanguage = function(lang) { settings.language = lang; saveSettings(); alert('Язык изменён!'); };
 
-            // Магазин
-            window.watchAd = function() {
-                const orig = bgMusic.volume; bgMusic.volume = orig * 0.3;
-                let s = 5;
-                document.getElementById('adOverlay').classList.remove('hidden');
-                document.getElementById('adTimerBig').textContent = s;
-                adTimer = setInterval(() => { s--; document.getElementById('adTimerBig').textContent = s; if (s <= 0) { clearInterval(adTimer); adTimer = null; bgMusic.volume = orig; completeAd(); } }, 1000);
-            };
-            window.skipAd = function() {
-                if (adTimer) { clearInterval(adTimer); adTimer = null; }
-                updateMusicVolume();
-                document.getElementById('adOverlay').classList.add('hidden');
-                document.getElementById('adCooldown').style.display = 'block';
-                document.getElementById('adCooldown').textContent = '⏳ Пропущено.';
-                setTimeout(() => { document.getElementById('adCooldown').style.display = 'none'; }, 3000);
-            };
-            function completeAd() {
-                document.getElementById('adOverlay').classList.add('hidden');
-                const all = getLocations();
-                if (state.unlockedLocations < all.length) { state.unlockedLocations++; saveGame(); alert('🎉 Локация открыта!'); }
-                else alert('✅ Все локации открыты!');
-                updateShopButton();
-            }
-            function updateShopButton() {
-                const btn = document.getElementById('shopUnlockLocation');
-                if (state.unlockedLocations >= getLocations().length) { btn.textContent = '✅ Всё открыто'; btn.disabled = true; }
-                else { btn.textContent = '📺 Смотреть'; btn.disabled = false; }
-            }
+            window.watchAd = function() { const o = bgMusic.volume; bgMusic.volume = o * 0.3; let s = 5; document.getElementById('adOverlay').classList.remove('hidden'); document.getElementById('adTimerBig').textContent = s; adTimer = setInterval(() => { s--; document.getElementById('adTimerBig').textContent = s; if (s <= 0) { clearInterval(adTimer); adTimer = null; bgMusic.volume = o; completeAd(); } }, 1000); };
+            window.skipAd = function() { if (adTimer) { clearInterval(adTimer); adTimer = null; } updateMusicVolume(); document.getElementById('adOverlay').classList.add('hidden'); document.getElementById('adCooldown').style.display = 'block'; document.getElementById('adCooldown').textContent = '⏳ Пропущено.'; setTimeout(() => { document.getElementById('adCooldown').style.display = 'none'; }, 3000); };
+            function completeAd() { document.getElementById('adOverlay').classList.add('hidden'); const a = getLocations(); if (state.unlockedLocations < a.length) { state.unlockedLocations++; saveGame(); alert('🎉 Локация открыта!'); } else alert('✅ Все локации открыты!'); updateShopButton(); }
+            function updateShopButton() { const b = document.getElementById('shopUnlockLocation'); if (state.unlockedLocations >= getLocations().length) { b.textContent = '✅ Всё открыто'; b.disabled = true; } else { b.textContent = '📺 Смотреть'; b.disabled = false; } }
 
-            // Статистика
             function loadStats() { try { const r = localStorage.getItem(STATS_KEY); if (r) stats = { ...stats, ...JSON.parse(r) }; } catch (e) {} }
             function saveStats() { try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (e) {} }
-            function updateProgressModal() {
-                const tp = getPartners().length || 3;
-                const tl = getLocations().length || 5;
-                document.getElementById('statLikes').textContent = stats.totalLikes;
-                document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%';
-                document.getElementById('statChats').textContent = stats.completedChats;
-                document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / tp) * 100) + '%';
-                document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${tl}`;
-                document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / tl) * 100 + '%';
-                document.getElementById('statDates').textContent = stats.completedDates;
-                document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / tl) * 100) + '%';
-            }
+            function updateProgressModal() { const tp = getPartners().length || 3; const tl = getLocations().length || 5; document.getElementById('statLikes').textContent = stats.totalLikes; document.getElementById('statLikesBar').style.width = Math.min(100, (stats.totalLikes / 6) * 100) + '%'; document.getElementById('statChats').textContent = stats.completedChats; document.getElementById('statChatsBar').style.width = Math.min(100, (stats.completedChats / tp) * 100) + '%'; document.getElementById('statLocations').textContent = `${state.unlockedLocations} / ${tl}`; document.getElementById('statLocationsBar').style.width = (state.unlockedLocations / tl) * 100 + '%'; document.getElementById('statDates').textContent = stats.completedDates; document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / tl) * 100) + '%'; }
 
-            // Сохранение
             function saveGame() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(JSON.parse(JSON.stringify(state)))); } catch (e) {} }
             function loadGame() { try { const r = localStorage.getItem(STORAGE_KEY); if (r) { state = { ...state, ...JSON.parse(r) }; return true; } } catch (e) {} return false; }
 
-            // Вспомогательные
             function getPartners() { return gameData?.partners?.[state.gender === 'male' ? 'male' : 'female'] || []; }
             function getLocations() { return gameData?.locations || []; }
             function getNpc(id) { return gameData?.npcs?.[id] || null; }
-            function getLocationDialogs(npcId, locId) { const npc = getNpc(npcId); if (!npc?.dialogs) return null; return npc.dialogs[locId] || Object.values(npc.dialogs)[0] || null; }
+            function getLocationDialogs(npcId, locId) { const n = getNpc(npcId); if (!n?.dialogs) return null; return n.dialogs[locId] || Object.values(n.dialogs)[0] || null; }
             function getChatFlow() { return gameData?.chatFlow?.[state.gender === 'male' ? 'male' : 'female'] || []; }
             function getRoomDialogs() { return gameData?.roomDialogs?.[state.gender === 'male' ? 'male' : 'female'] || []; }
             function getPersonalityLabel(p) { const m = { romantic: '💕 Романтик', creative: '🎨 Креативный', adventurous: '🔥 Авантюрист', calm: '😌 Спокойный', energetic: '⚡ Энергичный' }; return m[p] || '💕 Романтик'; }
@@ -701,17 +575,18 @@
             function updateClock() { const n = new Date(); clockDisplay.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0'); }
             setInterval(updateClock, 1000); updateClock();
 
-            // Навигация с историей
             function goToScene(id) {
-                // Сохраняем текущую сцену в историю
                 const currentSceneId = Object.keys(scenes).find(k => !scenes[k].classList.contains('hidden'));
                 if (currentSceneId && currentSceneId !== id) {
-                    navigationHistory.push(currentSceneId);
+                    if (currentSceneId !== 'scene5' && currentSceneId !== 'scene6') {
+                        navigationHistory.push(currentSceneId);
+                    }
                 }
                 showScene(id);
             }
 
             function goBack() {
+                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
                 if (navigationHistory.length > 0) {
                     const prevScene = navigationHistory.pop();
                     showScene(prevScene);
@@ -738,174 +613,56 @@
             }
             function scrollToBottom(el) { if (el) el.scrollTop = el.scrollHeight; }
 
-            // Модалки
             document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsModal').classList.remove('hidden'));
             document.getElementById('shopBtn').addEventListener('click', () => { updateShopButton(); document.getElementById('shopModal').classList.remove('hidden'); });
             document.getElementById('progressBtn').addEventListener('click', () => { updateProgressModal(); document.getElementById('progressModal').classList.remove('hidden'); });
             document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', (e) => { if (e.target === o) o.classList.add('hidden'); }));
 
-            // Кнопки "Назад"
-            document.getElementById('backFromDate').addEventListener('click', () => goBack());
-            document.getElementById('backFromRoom').addEventListener('click', () => goBack());
+            document.getElementById('backFromDate').addEventListener('click', () => {
+                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
+                navigationHistory = ['scene4'];
+                goBack();
+            });
+            
+            document.getElementById('backFromRoom').addEventListener('click', () => {
+                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
+                navigationHistory = ['scene3'];
+                goBack();
+            });
 
-            // Сцена 1
             const toScene2Btn = document.getElementById('toScene2');
             function checkEnabled() { if (state.gender) { toScene2Btn.classList.add('enabled'); toScene2Btn.disabled = false; } else { toScene2Btn.classList.remove('enabled'); toScene2Btn.disabled = true; } }
-            document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() {
-                state.gender = this.dataset.gender;
-                document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male','active-female'));
-                this.classList.add(state.gender === 'male' ? 'active-male' : 'active-female');
-                checkEnabled(); saveGame();
-            }));
-            toScene2Btn.addEventListener('click', () => {
-                if (!state.gender) return;
-                state.likedIndex = 0; state.likedList = [];
-                document.getElementById('matchCount').textContent = '0';
-                navigationHistory = [];
-                goToScene('scene2'); renderTinder();
-            });
+            document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() { state.gender = this.dataset.gender; document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male','active-female')); this.classList.add(state.gender === 'male' ? 'active-male' : 'active-female'); checkEnabled(); saveGame(); }));
+            toScene2Btn.addEventListener('click', () => { if (!state.gender) return; state.likedIndex = 0; state.likedList = []; document.getElementById('matchCount').textContent = '0'; navigationHistory = []; goToScene('scene2'); renderTinder(); });
 
-            // Сцена 2
-            function renderTinder() {
-                const p = getPartners();
-                if (!p?.length) return;
-                const partner = p[state.likedIndex % p.length];
-                document.getElementById('tinderAvatar').src = partner.avatar || '';
-                document.getElementById('tinderName').textContent = `${partner.name||'?'}, ${partner.age||'?'}`;
-                let d = '';
-                if (partner.job) d += `<span class="job-badge">💼 ${partner.job}</span>`;
-                if (partner.zodiac) d += `<span class="badge">${partner.zodiac}</span>`;
-                if (partner.city) d += `<span class="city-badge">📍 ${partner.city}</span>`;
-                if (partner.personality) d += `<span class="personality-badge">${getPersonalityLabel(partner.personality)}</span>`;
-                document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc||''}</span>`;
-                document.getElementById('matchCount').textContent = state.likedList.length;
-            }
-            document.getElementById('tinderLike').addEventListener('click', () => {
-                const p = getPartners(); if (!p?.length) return;
-                const partner = p[state.likedIndex % p.length];
-                if (!state.likedList.some(x => x.id === partner.id)) {
-                    state.likedList.push({...partner}); stats.totalLikes++; saveStats();
-                    if (!state.chatHistories[partner.id]) { const f = getChatFlow(); state.chatHistories[partner.id] = { step:0, done:false, messages: f?.length ? [{type:'theirs', text:f[0].theirs}] : [] }; }
-                }
-                state.likedIndex++; saveGame(); renderTinder();
-            });
+            function renderTinder() { const p = getPartners(); if (!p?.length) return; const partner = p[state.likedIndex % p.length]; document.getElementById('tinderAvatar').src = partner.avatar || ''; document.getElementById('tinderName').textContent = `${partner.name||'?'}, ${partner.age||'?'}`; let d = ''; if (partner.job) d += `<span class="job-badge">💼 ${partner.job}</span>`; if (partner.zodiac) d += `<span class="badge">${partner.zodiac}</span>`; if (partner.city) d += `<span class="city-badge">📍 ${partner.city}</span>`; if (partner.personality) d += `<span class="personality-badge">${getPersonalityLabel(partner.personality)}</span>`; document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc||''}</span>`; document.getElementById('matchCount').textContent = state.likedList.length; }
+            document.getElementById('tinderLike').addEventListener('click', () => { const p = getPartners(); if (!p?.length) return; const partner = p[state.likedIndex % p.length]; if (!state.likedList.some(x => x.id === partner.id)) { state.likedList.push({...partner}); stats.totalLikes++; saveStats(); if (!state.chatHistories[partner.id]) { const f = getChatFlow(); state.chatHistories[partner.id] = { step:0, done:false, messages: f?.length ? [{type:'theirs', text:f[0].theirs}] : [] }; } } state.likedIndex++; saveGame(); renderTinder(); });
             document.getElementById('tinderDislike').addEventListener('click', () => { state.likedIndex++; saveGame(); renderTinder(); });
             document.getElementById('toChat').addEventListener('click', () => { if (!state.likedList.length) { alert('Выбери кого-нибудь ❤️'); return; } goToScene('scene3'); renderChatList(); });
-            document.getElementById('backToTinderFromChats').addEventListener('click', () => goBack());
+            document.getElementById('backToTinderFromChats').addEventListener('click', () => { navigationHistory = ['scene2']; goBack(); });
 
-            // Сцена 3
-            function renderChatList() {
-                const c = document.getElementById('chatListContainer');
-                document.getElementById('chatListLikeCount').textContent = state.likedList.length;
-                if (!state.likedList.length) { c.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px">😔 Никого нет</div>'; return; }
-                c.innerHTML = '';
-                state.likedList.forEach(p => {
-                    const h = getChatHistory(p.id);
-                    const lm = h.messages.length > 0 ? h.messages[h.messages.length-1].text : '💬 Начать';
-                    const div = document.createElement('div'); div.className = 'chat-list-item';
-                    div.innerHTML = `<img src="${p.avatar||''}"><div class="info"><div class="name">${p.name||'?'}, ${p.age||'?'}</div><div class="last-msg">${lm.substring(0,40)}</div></div>${!h.done?'<span class="unread-badge">новое</span>':''}<span style="color:#9088b0;font-size:18px;">→</span>`;
-                    div.addEventListener('click', () => { state.currentPartnerId = p.id; saveGame(); goToScene('scene3_5'); initConversation(); });
-                    c.appendChild(div);
-                });
-            }
+            function renderChatList() { const c = document.getElementById('chatListContainer'); document.getElementById('chatListLikeCount').textContent = state.likedList.length; if (!state.likedList.length) { c.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px">😔 Никого нет</div>'; return; } c.innerHTML = ''; state.likedList.forEach(p => { const h = getChatHistory(p.id); const lm = h.messages.length > 0 ? h.messages[h.messages.length-1].text : '💬 Начать'; const div = document.createElement('div'); div.className = 'chat-list-item'; div.innerHTML = `<img src="${p.avatar||''}"><div class="info"><div class="name">${p.name||'?'}, ${p.age||'?'}</div><div class="last-msg">${lm.substring(0,40)}</div></div>${!h.done?'<span class="unread-badge">новое</span>':''}<span style="color:#9088b0;font-size:18px;">→</span>`; div.addEventListener('click', () => { state.currentPartnerId = p.id; saveGame(); goToScene('scene3_5'); initConversation(); }); c.appendChild(div); }); }
 
-            // Сцена 3.5
             const convoMessages = document.getElementById('convoMessages');
             const convoMessagesWrapper = document.getElementById('convoMessagesWrapper');
             const convoRepliesWrapper = document.getElementById('convoRepliesWrapper');
             const convoToLocationsBtn = document.getElementById('convoToLocationsBtn');
-            function initConversation() {
-                const p = getCurrentPartner(); if (!p) return;
-                document.getElementById('convoPartnerAvatar').src = p.avatar||'';
-                document.getElementById('convoPartnerName').textContent = p.name||'';
-                const h = getChatHistory(p.id); convoMessages.innerHTML = '';
-                h.messages.forEach(m => { const div = document.createElement('div'); div.className = 'message ' + m.type; div.textContent = m.text; convoMessages.appendChild(div); });
-                if (!h.messages.length) { const f = getChatFlow(); if (f?.length) { h.messages.push({type:'theirs', text:f[0].theirs}); const div = document.createElement('div'); div.className = 'message theirs'; div.textContent = f[0].theirs; convoMessages.appendChild(div); saveGame(); } }
-                renderConvoReplies(h.step); convoToLocationsBtn.classList.toggle('visible', h.done); scrollToBottom(convoMessagesWrapper);
-            }
-            function renderConvoReplies(s) {
-                const f = getChatFlow(); if (!f) return;
-                const h = getChatHistory(state.currentPartnerId); convoRepliesWrapper.innerHTML = '';
-                if (h.done || s >= f.length) { convoToLocationsBtn.classList.add('visible'); h.done = true; saveGame(); return; }
-                f[s].replies.forEach(r => {
-                    const b = document.createElement('button'); b.className = 'chat-reply-btn'; b.textContent = r;
-                    b.addEventListener('click', () => {
-                        h.messages.push({type:'mine', text:r}); const md = document.createElement('div'); md.className = 'message mine'; md.textContent = r;
-                        convoMessages.appendChild(md); convoRepliesWrapper.innerHTML = ''; const n = s + 1;
-                        if (n < f.length) {
-                            const tm = document.createElement('div'); tm.className = 'message typing'; tm.textContent = 'Печатает...';
-                            convoMessages.appendChild(tm); scrollToBottom(convoMessagesWrapper);
-                            setTimeout(() => { if (tm.parentNode) tm.remove(); h.messages.push({type:'theirs', text:f[n].theirs}); const td = document.createElement('div'); td.className = 'message theirs'; td.textContent = f[n].theirs; convoMessages.appendChild(td); h.step = n; saveGame(); renderConvoReplies(n); scrollToBottom(convoMessagesWrapper); }, 1500);
-                        } else {
-                            h.done = true; stats.completedChats++; saveStats(); saveGame();
-                            h.messages.push({type:'theirs', text:'✨ Договорились! Выбирай место ✨'});
-                            const dd = document.createElement('div'); dd.className = 'message theirs'; dd.textContent = '✨ Договорились! Выбирай место ✨';
-                            convoMessages.appendChild(dd); convoToLocationsBtn.classList.add('visible'); scrollToBottom(convoMessagesWrapper);
-                        }
-                        scrollToBottom(convoMessagesWrapper);
-                    });
-                    convoRepliesWrapper.appendChild(b);
-                });
-            }
+            function initConversation() { const p = getCurrentPartner(); if (!p) return; document.getElementById('convoPartnerAvatar').src = p.avatar||''; document.getElementById('convoPartnerName').textContent = p.name||''; const h = getChatHistory(p.id); convoMessages.innerHTML = ''; h.messages.forEach(m => { const div = document.createElement('div'); div.className = 'message ' + m.type; div.textContent = m.text; convoMessages.appendChild(div); }); if (!h.messages.length) { const f = getChatFlow(); if (f?.length) { h.messages.push({type:'theirs', text:f[0].theirs}); const div = document.createElement('div'); div.className = 'message theirs'; div.textContent = f[0].theirs; convoMessages.appendChild(div); saveGame(); } } renderConvoReplies(h.step); convoToLocationsBtn.classList.toggle('visible', h.done); scrollToBottom(convoMessagesWrapper); }
+            function renderConvoReplies(s) { const f = getChatFlow(); if (!f) return; const h = getChatHistory(state.currentPartnerId); convoRepliesWrapper.innerHTML = ''; if (h.done || s >= f.length) { convoToLocationsBtn.classList.add('visible'); h.done = true; saveGame(); return; } f[s].replies.forEach(r => { const b = document.createElement('button'); b.className = 'chat-reply-btn'; b.textContent = r; b.addEventListener('click', () => { h.messages.push({type:'mine', text:r}); const md = document.createElement('div'); md.className = 'message mine'; md.textContent = r; convoMessages.appendChild(md); convoRepliesWrapper.innerHTML = ''; const n = s + 1; if (n < f.length) { const tm = document.createElement('div'); tm.className = 'message typing'; tm.textContent = 'Печатает...'; convoMessages.appendChild(tm); scrollToBottom(convoMessagesWrapper); setTimeout(() => { if (tm.parentNode) tm.remove(); h.messages.push({type:'theirs', text:f[n].theirs}); const td = document.createElement('div'); td.className = 'message theirs'; td.textContent = f[n].theirs; convoMessages.appendChild(td); h.step = n; saveGame(); renderConvoReplies(n); scrollToBottom(convoMessagesWrapper); }, 1500); } else { h.done = true; stats.completedChats++; saveStats(); saveGame(); h.messages.push({type:'theirs', text:'✨ Договорились! Выбирай место ✨'}); const dd = document.createElement('div'); dd.className = 'message theirs'; dd.textContent = '✨ Договорились! Выбирай место ✨'; convoMessages.appendChild(dd); convoToLocationsBtn.classList.add('visible'); scrollToBottom(convoMessagesWrapper); } scrollToBottom(convoMessagesWrapper); }); convoRepliesWrapper.appendChild(b); }); }
             document.getElementById('backToChatListBtn').addEventListener('click', () => goBack());
-            convoToLocationsBtn.addEventListener('click', () => {
-                if (!getChatHistory(state.currentPartnerId).done) return;
-                state.selectedLocationIndex = 0; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100;
-                goToScene('scene4'); renderLocations();
-            });
+            convoToLocationsBtn.addEventListener('click', () => { if (!getChatHistory(state.currentPartnerId).done) return; state.selectedLocationIndex = 0; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene4'); renderLocations(); });
 
-            // Сцена 4
-            function renderLocations() {
-                const c = document.getElementById('locationCatalog'); const all = getLocations(); if (!all?.length) return;
-                document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${all.length}`; c.innerHTML = '';
-                all.forEach((loc, i) => {
-                    const locked = i >= state.unlockedLocations;
-                    const d = document.createElement('div'); d.className = 'catalog-item' + (locked?' locked':'') + (i===state.selectedLocationIndex&&!locked?' selected':'');
-                    d.innerHTML = `<img src="${loc.bg||''}"><div class="info"><h4>${loc.name} ${locked?'🔒':''}</h4><p>${locked?'Откроется позже...':(loc.desc||'')}</p></div><span class="location-icon">${locked?'🔒':'📍'}</span>`;
-                    if (!locked) d.addEventListener('click', () => { state.selectedLocationIndex = i; document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected')); d.classList.add('selected'); saveGame(); });
-                    c.appendChild(d);
-                });
-            }
-            document.getElementById('toDate').addEventListener('click', () => {
-                const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0]; if (!loc) return;
-                state.currentLocationId = loc.id || 'cafe'; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100;
-                goToScene('scene5'); updateAffectionUI();
-                document.getElementById('dateChat').innerHTML = ''; document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene();
-            });
+            function renderLocations() { const c = document.getElementById('locationCatalog'); const all = getLocations(); if (!all?.length) return; document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${all.length}`; c.innerHTML = ''; all.forEach((loc, i) => { const locked = i >= state.unlockedLocations; const d = document.createElement('div'); d.className = 'catalog-item' + (locked?' locked':'') + (i===state.selectedLocationIndex&&!locked?' selected':''); d.innerHTML = `<img src="${loc.bg||''}"><div class="info"><h4>${loc.name} ${locked?'🔒':''}</h4><p>${locked?'Откроется позже...':(loc.desc||'')}</p></div><span class="location-icon">${locked?'🔒':'📍'}</span>`; if (!locked) d.addEventListener('click', () => { state.selectedLocationIndex = i; document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected')); d.classList.add('selected'); saveGame(); }); c.appendChild(d); }); }
+            document.getElementById('toDate').addEventListener('click', () => { const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0]; if (!loc) return; state.currentLocationId = loc.id || 'cafe'; state.locationDialogIndex = 0; state.affection = 50; state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene5'); updateAffectionUI(); document.getElementById('dateChat').innerHTML = ''; document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene(); });
 
-            // Сцена 5
             function updateAffectionUI() { const v = Math.min(100, Math.max(0, state.affection)); const f = document.getElementById('affectionFill'); f.style.width = v + '%'; document.getElementById('affectionLabel').textContent = v + '%'; f.style.background = v < 30 ? '#ff4444' : v < 60 ? '#ffaa44' : 'linear-gradient(90deg, #ff4d8a, #ff6b9d)'; }
-            function renderDateScene() {
-                const p = getCurrentPartner(); const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {};
-                document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg||''}')`;
-                document.getElementById('dateAvatarFull').src = p?.avatar || ''; document.getElementById('datePartnerName').textContent = p?.name || '';
-                const dialogs = getLocationDialogs(p?.id, state.currentLocationId); document.getElementById('dateChoicesWrapper').innerHTML = '';
-                if (!dialogs || state.locationDialogIndex >= dialogs.length) {
-                    document.getElementById('dateChat').innerHTML += '<div class="date-msg system">🏁 Свидание окончено!</div>';
-                    stats.completedDates++; saveStats(); setTimeout(() => goToRoom(), 1500); return;
-                }
-                const d = dialogs[state.locationDialogIndex]; document.getElementById('dateChat').innerHTML += `<div class="date-msg theirs">${d.text}</div>`;
-                d.choices.forEach(c => {
-                    const b = document.createElement('button'); b.className = 'date-choice-btn'; b.textContent = c.text;
-                    b.addEventListener('click', () => { document.getElementById('dateChat').innerHTML += `<div class="date-msg mine">${c.full||c.text}</div>`; state.affection = Math.min(100, Math.max(0, state.affection + (c.effect||0))); updateAffectionUI(); state.locationDialogIndex++; saveGame(); document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene(); scrollToBottom(document.getElementById('dateChatWrapper')); });
-                    document.getElementById('dateChoicesWrapper').appendChild(b);
-                });
-                scrollToBottom(document.getElementById('dateChatWrapper'));
-            }
+            function renderDateScene() { const p = getCurrentPartner(); const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {}; document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg||''}')`; document.getElementById('dateAvatarFull').src = p?.avatar || ''; document.getElementById('datePartnerName').textContent = p?.name || ''; const dialogs = getLocationDialogs(p?.id, state.currentLocationId); document.getElementById('dateChoicesWrapper').innerHTML = ''; if (!dialogs || state.locationDialogIndex >= dialogs.length) { document.getElementById('dateChat').innerHTML += '<div class="date-msg system">🏁 Свидание окончено!</div>'; stats.completedDates++; saveStats(); setTimeout(() => goToRoom(), 1500); return; } const d = dialogs[state.locationDialogIndex]; document.getElementById('dateChat').innerHTML += `<div class="date-msg theirs">${d.text}</div>`; d.choices.forEach(c => { const b = document.createElement('button'); b.className = 'date-choice-btn'; b.textContent = c.text; b.addEventListener('click', () => { document.getElementById('dateChat').innerHTML += `<div class="date-msg mine">${c.full||c.text}</div>`; state.affection = Math.min(100, Math.max(0, state.affection + (c.effect||0))); updateAffectionUI(); state.locationDialogIndex++; saveGame(); document.getElementById('dateChoicesWrapper').innerHTML = ''; renderDateScene(); scrollToBottom(document.getElementById('dateChatWrapper')); }); document.getElementById('dateChoicesWrapper').appendChild(b); }); scrollToBottom(document.getElementById('dateChatWrapper')); }
 
-            // Сцена 6
             function goToRoom() { if (roomTimer) { clearInterval(roomTimer); roomTimer = null; } state.roomDialogIndex = 0; state.roomAffection = 100; goToScene('scene6'); document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')"; const p = getCurrentPartner(); document.getElementById('roomAvatarSmall').src = p?.avatar || ''; document.getElementById('roomPartnerName').textContent = p?.name || ''; document.getElementById('roomAffectionFill').style.width = '100%'; document.getElementById('roomAffectionValue').textContent = '100%'; document.getElementById('roomChat').innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>'; document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); }
-            function renderRoomScene() {
-                const dialogs = getRoomDialogs(); if (!dialogs?.length) return; document.getElementById('roomChoicesWrapper').innerHTML = '';
-                if (state.roomDialogIndex >= dialogs.length) { document.getElementById('roomChat').innerHTML += '<div class="room-msg system">💫 Волшебный вечер... ✨</div>'; unlockNextLocation(); saveGame(); startRoomCountdown(); return; }
-                const d = dialogs[state.roomDialogIndex]; document.getElementById('roomChat').innerHTML += `<div class="room-msg theirs">${d.text}</div>`;
-                (d.choices || d).forEach(c => { const b = document.createElement('button'); b.className = 'room-choice-btn'; b.textContent = typeof c === 'string' ? c : (c.text||c); b.addEventListener('click', () => { document.getElementById('roomChat').innerHTML += `<div class="room-msg mine">${typeof c === 'string' ? c : (c.full||c.text)}</div>`; state.roomDialogIndex++; saveGame(); document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); scrollToBottom(document.getElementById('roomChatWrapper')); }); document.getElementById('roomChoicesWrapper').appendChild(b); });
-                scrollToBottom(document.getElementById('roomChatWrapper'));
-            }
-            function startRoomCountdown() { let s = 3; const cd = document.createElement('div'); cd.className = 'room-msg countdown'; cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; document.getElementById('roomChat').appendChild(cd); document.getElementById('roomChoicesWrapper').innerHTML = ''; scrollToBottom(document.getElementById('roomChatWrapper')); roomTimer = setInterval(() => { s--; if (s <= 0) { clearInterval(roomTimer); roomTimer = null; cd.textContent = '✨ Переходим в чаты...'; setTimeout(() => { showScene('scene3'); renderChatList(); }, 500); } else cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; scrollToBottom(document.getElementById('roomChatWrapper')); }, 1000); }
+            function renderRoomScene() { const dialogs = getRoomDialogs(); if (!dialogs?.length) return; document.getElementById('roomChoicesWrapper').innerHTML = ''; if (state.roomDialogIndex >= dialogs.length) { document.getElementById('roomChat').innerHTML += '<div class="room-msg system">💫 Волшебный вечер... ✨</div>'; unlockNextLocation(); saveGame(); startRoomCountdown(); return; } const d = dialogs[state.roomDialogIndex]; document.getElementById('roomChat').innerHTML += `<div class="room-msg theirs">${d.text}</div>`; (d.choices || d).forEach(c => { const b = document.createElement('button'); b.className = 'room-choice-btn'; b.textContent = typeof c === 'string' ? c : (c.text||c); b.addEventListener('click', () => { document.getElementById('roomChat').innerHTML += `<div class="room-msg mine">${typeof c === 'string' ? c : (c.full||c.text)}</div>`; state.roomDialogIndex++; saveGame(); document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); scrollToBottom(document.getElementById('roomChatWrapper')); }); document.getElementById('roomChoicesWrapper').appendChild(b); }); scrollToBottom(document.getElementById('roomChatWrapper')); }
+            function startRoomCountdown() { let s = 3; const cd = document.createElement('div'); cd.className = 'room-msg countdown'; cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; document.getElementById('roomChat').appendChild(cd); document.getElementById('roomChoicesWrapper').innerHTML = ''; scrollToBottom(document.getElementById('roomChatWrapper')); roomTimer = setInterval(() => { s--; if (s <= 0) { clearInterval(roomTimer); roomTimer = null; cd.textContent = '✨ Переходим в чаты...'; setTimeout(() => { navigationHistory = []; showScene('scene3'); renderChatList(); }, 500); } else cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; scrollToBottom(document.getElementById('roomChatWrapper')); }, 1000); }
             function unlockNextLocation() { const all = getLocations(); if (state.unlockedLocations < all.length) { state.unlockedLocations++; saveGame(); } }
 
-            // Загрузка
             async function loadGameData() { try { const r = await fetch('data.json'); if (r.ok) gameData = await r.json(); } catch(e) { alert('data.json не найден'); } }
             function restoreGameState() { if (!gameData) return; const s = Math.floor(state.step); if (s === 1) showScene('scene1'); else if (s === 2) { showScene('scene2'); renderTinder(); } else if (s === 3) { if (state.step === 3.5) { showScene('scene3_5'); initConversation(); } else { showScene('scene3'); renderChatList(); } } else if (s === 4) { showScene('scene4'); renderLocations(); } else if (s === 5) { showScene('scene5'); updateAffectionUI(); renderDateScene(); } else if (s === 6) goToRoom(); }
 
