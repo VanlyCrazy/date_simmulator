@@ -215,16 +215,6 @@
             color: #9088b0;
             line-height: 1.3;
         }
-        .shop-item .shop-cost {
-            background: rgba(255,215,0,0.1);
-            border: 1px solid rgba(255,215,0,0.3);
-            color: #ffd700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
         .shop-btn-watch {
             background: linear-gradient(135deg, #ff4d8a, #ff6b9d);
             border: none;
@@ -314,7 +304,6 @@
 
         .hidden { display: none !important; }
 
-        /* Остальные стили... */
         #scene1 { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 6px; }
         .gender-selector { flex-shrink: 0; text-align: center; padding: 2px 0; }
         .gender-selector .label { font-size: 16px; font-weight: 600; color: #b0a8d0; margin-bottom: 6px; display: block; }
@@ -558,13 +547,8 @@
                     <h4>🔊 Звук</h4>
                     <div class="settings-row">
                         <span class="s-label">🎵 Музыка</span>
-                        <input type="range" id="musicVolume" min="0" max="100" value="50" oninput="updateVolumeLabel('music')">
+                        <input type="range" id="musicVolume" min="0" max="100" value="50" oninput="updateVolumeLabel()">
                         <span class="volume-value" id="musicVolumeLabel">50%</span>
-                    </div>
-                    <div class="settings-row">
-                        <span class="s-label">🔔 Звуки интерфейса</span>
-                        <input type="range" id="sfxVolume" min="0" max="100" value="70" oninput="updateVolumeLabel('sfx')">
-                        <span class="volume-value" id="sfxVolumeLabel">70%</span>
                     </div>
                 </div>
                 <div class="settings-section">
@@ -596,23 +580,7 @@
                             <div class="shop-title">Открыть следующую локацию</div>
                             <div class="shop-desc">Просмотри рекламу и получи доступ к новой локации</div>
                         </div>
-                        <button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd('location')">📺 Смотреть</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-icon">🔥</div>
-                        <div class="shop-info">
-                            <div class="shop-title">Hot концовка</div>
-                            <div class="shop-desc">Разблокируй особую сцену после свидания</div>
-                        </div>
-                        <button class="shop-btn-watch" id="shopHotEnding" onclick="watchAd('hot')">📺 Смотреть</button>
-                    </div>
-                    <div class="shop-item">
-                        <div class="shop-icon">💎</div>
-                        <div class="shop-info">
-                            <div class="shop-title">Premium статус</div>
-                            <div class="shop-desc">Нет рекламы + эксклюзивные стили</div>
-                        </div>
-                        <span class="shop-cost">💎 199</span>
+                        <button class="shop-btn-watch" id="shopUnlockLocation" onclick="watchAd()">📺 Смотреть</button>
                     </div>
                 </div>
                 <div class="ad-timer" id="adCooldown" style="display:none;"></div>
@@ -812,7 +780,7 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v4.0 - Shop & Settings Edition');
+            console.log('[APP] Tantan v4.1 - Clean');
 
             const STORAGE_KEY = 'tantan_game_save';
             const STATS_KEY = 'tantan_stats';
@@ -820,14 +788,11 @@
             let gameData = null;
             let roomTimer = null;
             let adTimer = null;
-            let adRewardType = null;
 
             // Настройки
             let settings = {
                 musicVolume: 50,
-                sfxVolume: 70,
-                language: 'ru',
-                hotEndingUnlocked: false
+                language: 'ru'
             };
 
             // Статистика
@@ -877,26 +842,18 @@
             }
 
             function saveSettings() {
-                try {
-                    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-                } catch (e) {}
-                applySettings();
+                try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
             }
 
             function applySettings() {
                 document.getElementById('musicVolume').value = settings.musicVolume;
-                document.getElementById('sfxVolume').value = settings.sfxVolume;
                 document.getElementById('languageSelect').value = settings.language;
-                updateVolumeLabel('music');
-                updateVolumeLabel('sfx');
-                console.log(`[SETTINGS] Музыка: ${settings.musicVolume}%, SFX: ${settings.sfxVolume}%, Язык: ${settings.language}`);
+                document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%';
             }
 
-            window.updateVolumeLabel = function(type) {
-                const val = document.getElementById(type + 'Volume').value;
-                document.getElementById(type + 'VolumeLabel').textContent = val + '%';
-                if (type === 'music') settings.musicVolume = parseInt(val);
-                else settings.sfxVolume = parseInt(val);
+            window.updateVolumeLabel = function() {
+                settings.musicVolume = parseInt(document.getElementById('musicVolume').value);
+                document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%';
                 saveSettings();
             };
 
@@ -907,8 +864,7 @@
             };
 
             // ==================== МАГАЗИН И РЕКЛАМА ====================
-            window.watchAd = function(type) {
-                adRewardType = type;
+            window.watchAd = function() {
                 let seconds = 5;
                 document.getElementById('adOverlay').classList.remove('hidden');
                 document.getElementById('adTimerBig').textContent = seconds;
@@ -925,58 +881,34 @@
             };
 
             window.skipAd = function() {
-                if (adTimer) {
-                    clearInterval(adTimer);
-                    adTimer = null;
-                }
+                if (adTimer) { clearInterval(adTimer); adTimer = null; }
                 document.getElementById('adOverlay').classList.add('hidden');
                 document.getElementById('adCooldown').style.display = 'block';
                 document.getElementById('adCooldown').textContent = '⏳ Реклама пропущена. Награда не получена.';
-                setTimeout(() => {
-                    document.getElementById('adCooldown').style.display = 'none';
-                }, 3000);
+                setTimeout(() => { document.getElementById('adCooldown').style.display = 'none'; }, 3000);
             };
 
             function completeAd() {
                 document.getElementById('adOverlay').classList.add('hidden');
-                
-                if (adRewardType === 'location') {
-                    const allLocations = getLocations();
-                    if (state.unlockedLocations < allLocations.length) {
-                        state.unlockedLocations++;
-                        saveGame();
-                        alert('🎉 Локация открыта! Теперь доступна новая локация.');
-                    } else {
-                        alert('✅ Все локации уже открыты!');
-                    }
-                } else if (adRewardType === 'hot') {
-                    settings.hotEndingUnlocked = true;
-                    saveSettings();
-                    alert('🔥 Hot концовка разблокирована! Увидишь её после следующего свидания.');
+                const allLocations = getLocations();
+                if (state.unlockedLocations < allLocations.length) {
+                    state.unlockedLocations++;
+                    saveGame();
+                    alert('🎉 Локация открыта!');
+                } else {
+                    alert('✅ Все локации уже открыты!');
                 }
-                
-                adRewardType = null;
-                updateShopButtons();
+                updateShopButton();
             }
 
-            function updateShopButtons() {
-                const allLocations = getLocations();
-                const locBtn = document.getElementById('shopUnlockLocation');
-                if (state.unlockedLocations >= allLocations.length) {
-                    locBtn.textContent = '✅ Всё открыто';
-                    locBtn.disabled = true;
+            function updateShopButton() {
+                const btn = document.getElementById('shopUnlockLocation');
+                if (state.unlockedLocations >= getLocations().length) {
+                    btn.textContent = '✅ Всё открыто';
+                    btn.disabled = true;
                 } else {
-                    locBtn.textContent = '📺 Смотреть';
-                    locBtn.disabled = false;
-                }
-
-                const hotBtn = document.getElementById('shopHotEnding');
-                if (settings.hotEndingUnlocked) {
-                    hotBtn.textContent = '✅ Разблокировано';
-                    hotBtn.disabled = true;
-                } else {
-                    hotBtn.textContent = '📺 Смотреть';
-                    hotBtn.disabled = false;
+                    btn.textContent = '📺 Смотреть';
+                    btn.disabled = false;
                 }
             }
 
@@ -988,9 +920,7 @@
                 } catch (e) {}
             }
 
-            function saveStats() {
-                try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (e) {}
-            }
+            function saveStats() { try { localStorage.setItem(STATS_KEY, JSON.stringify(stats)); } catch (e) {} }
 
             function updateProgressModal() {
                 const totalPartners = getPartners().length || 3;
@@ -1005,12 +935,9 @@
                 document.getElementById('statDatesBar').style.width = Math.min(100, (stats.completedDates / totalLocations) * 100) + '%';
             }
 
-            // ==================== СОХРАНЕНИЕ / ЗАГРУЗКА ====================
+            // ==================== СОХРАНЕНИЕ ====================
             function saveGame() {
-                try {
-                    const saveData = JSON.parse(JSON.stringify(state));
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
-                } catch (e) {}
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(JSON.parse(JSON.stringify(state)))); } catch (e) {}
             }
 
             function loadGame() {
@@ -1021,55 +948,32 @@
                 return false;
             }
 
-            // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
-            function getPartners() {
-                if (!gameData?.partners) return [];
-                return gameData.partners[state.gender === 'male' ? 'male' : 'female'] || [];
-            }
-
-            function getLocations() {
-                return gameData?.locations || [];
-            }
-
-            function getNpc(npcId) {
-                return gameData?.npcs?.[npcId] || null;
-            }
-
-            function getLocationDialogs(npcId, locationId) {
+            // ==================== ВСПОМОГАТЕЛЬНЫЕ ====================
+            function getPartners() { return gameData?.partners?.[state.gender === 'male' ? 'male' : 'female'] || []; }
+            function getLocations() { return gameData?.locations || []; }
+            function getNpc(id) { return gameData?.npcs?.[id] || null; }
+            function getLocationDialogs(npcId, locId) {
                 const npc = getNpc(npcId);
                 if (!npc?.dialogs) return null;
-                return npc.dialogs[locationId] || Object.values(npc.dialogs)[0] || null;
+                return npc.dialogs[locId] || Object.values(npc.dialogs)[0] || null;
             }
-
-            function getChatFlow() {
-                return gameData?.chatFlow?.[state.gender === 'male' ? 'male' : 'female'] || [];
-            }
-
-            function getRoomDialogs() {
-                return gameData?.roomDialogs?.[state.gender === 'male' ? 'male' : 'female'] || [];
-            }
-
+            function getChatFlow() { return gameData?.chatFlow?.[state.gender === 'male' ? 'male' : 'female'] || []; }
+            function getRoomDialogs() { return gameData?.roomDialogs?.[state.gender === 'male' ? 'male' : 'female'] || []; }
             function getPersonalityLabel(p) {
-                const map = { romantic: '💕 Романтик', creative: '🎨 Креативный', adventurous: '🔥 Авантюрист', calm: '😌 Спокойный', energetic: '⚡ Энергичный' };
-                return map[p] || '💕 Романтик';
+                const m = { romantic: '💕 Романтик', creative: '🎨 Креативный', adventurous: '🔥 Авантюрист', calm: '😌 Спокойный', energetic: '⚡ Энергичный' };
+                return m[p] || '💕 Романтик';
             }
-
             function getPartnerById(id) { return getPartners().find(p => p.id === id) || null; }
             function getCurrentPartner() { return getPartnerById(state.currentPartnerId); }
-
-            function getChatHistory(partnerId) {
-                if (!state.chatHistories[partnerId]) {
-                    state.chatHistories[partnerId] = { step: 0, done: false, messages: [] };
-                }
-                return state.chatHistories[partnerId];
+            function getChatHistory(pid) {
+                if (!state.chatHistories[pid]) state.chatHistories[pid] = { step: 0, done: false, messages: [] };
+                return state.chatHistories[pid];
             }
-
             function updateClock() {
-                const now = new Date();
-                clockDisplay.textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                const n = new Date();
+                clockDisplay.textContent = String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
             }
-            setInterval(updateClock, 1000);
-            updateClock();
+            setInterval(updateClock, 1000); updateClock();
 
             function showScene(id) {
                 Object.keys(scenes).forEach(k => scenes[k].classList.toggle('hidden', k !== id));
@@ -1079,40 +983,23 @@
                     document.getElementById('app').style.border = 'none';
                     document.getElementById('app').style.boxShadow = 'none';
                     document.getElementById('app').style.padding = '0';
-                    document.getElementById('app').style.background = id === 'scene6' ? '#1a0a1a' : '#0d0d20';
                 } else {
                     mainTopBar.style.display = 'flex';
                     document.getElementById('app').style.borderRadius = '36px';
                     document.getElementById('app').style.border = '1px solid #222244';
                     document.getElementById('app').style.boxShadow = '0 20px 60px rgba(0,0,0,0.95)';
                     document.getElementById('app').style.padding = '10px 12px 12px';
-                    document.getElementById('app').style.background = '#111122';
                 }
-                state.step = parseInt(id.replace('scene', '').replace('_', '.'));
+                state.step = parseInt(id.replace('scene','').replace('_','.'));
                 saveGame();
             }
-
             function scrollToBottom(el) { if (el) el.scrollTop = el.scrollHeight; }
 
-            // ==================== МОДАЛЬНЫЕ ОКНА ====================
-            document.getElementById('settingsBtn').addEventListener('click', () => {
-                document.getElementById('settingsModal').classList.remove('hidden');
-            });
-            document.getElementById('shopBtn').addEventListener('click', () => {
-                updateShopButtons();
-                document.getElementById('shopModal').classList.remove('hidden');
-            });
-            document.getElementById('progressBtn').addEventListener('click', () => {
-                updateProgressModal();
-                document.getElementById('progressModal').classList.remove('hidden');
-            });
-
-            // Закрытие модальных окон по клику вне
-            document.querySelectorAll('.modal-overlay').forEach(overlay => {
-                overlay.addEventListener('click', (e) => {
-                    if (e.target === overlay) overlay.classList.add('hidden');
-                });
-            });
+            // ==================== МОДАЛКИ ====================
+            document.getElementById('settingsBtn').addEventListener('click', () => document.getElementById('settingsModal').classList.remove('hidden'));
+            document.getElementById('shopBtn').addEventListener('click', () => { updateShopButton(); document.getElementById('shopModal').classList.remove('hidden'); });
+            document.getElementById('progressBtn').addEventListener('click', () => { updateProgressModal(); document.getElementById('progressModal').classList.remove('hidden'); });
+            document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', (e) => { if (e.target === o) o.classList.add('hidden'); }));
 
             // ==================== СЦЕНА 1 ====================
             const mainAvatar = document.getElementById('mainAvatar');
@@ -1121,49 +1008,31 @@
                 male: { style1: 'assets/boy1.png', style2: 'assets/boy2.png', style3: 'assets/boy3.png' },
                 female: { style1: 'assets/girl1.png', style2: 'assets/girl2.png', style3: 'assets/girl3.png' }
             };
-
             function updateAvatar() {
                 if (!state.gender || !state.style) return;
                 mainAvatar.src = styleImgs[state.gender]?.[state.style] || '';
-                mainAvatar.style.display = 'block';
-                mainAvatar.nextElementSibling.style.display = 'none';
             }
-
             function checkEnabled() {
-                if (state.gender && state.style) {
-                    toScene2Btn.classList.add('enabled');
-                    toScene2Btn.disabled = false;
-                } else {
-                    toScene2Btn.classList.remove('enabled');
-                    toScene2Btn.disabled = true;
-                }
+                if (state.gender && state.style) { toScene2Btn.classList.add('enabled'); toScene2Btn.disabled = false; }
+                else { toScene2Btn.classList.remove('enabled'); toScene2Btn.disabled = true; }
             }
-
             document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.addEventListener('click', function() {
                 state.gender = this.dataset.gender;
-                document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male', 'active-female'));
+                document.querySelectorAll('#scene1 .gender-selector button').forEach(x => x.classList.remove('active-male','active-female'));
                 this.classList.add(state.gender === 'male' ? 'active-male' : 'active-female');
-                updateAvatar();
-                checkEnabled();
-                saveGame();
+                updateAvatar(); checkEnabled(); saveGame();
             }));
-
             document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.addEventListener('click', function() {
                 document.querySelectorAll('#scene1 .style-selector button').forEach(x => x.classList.remove('active'));
                 this.classList.add('active');
                 state.style = this.dataset.style;
-                updateAvatar();
-                checkEnabled();
-                saveGame();
+                updateAvatar(); checkEnabled(); saveGame();
             }));
-
             toScene2Btn.addEventListener('click', () => {
                 if (!state.gender || !state.style) return;
-                state.likedIndex = 0;
-                state.likedList = [];
+                state.likedIndex = 0; state.likedList = [];
                 document.getElementById('matchCount').textContent = '0';
-                showScene('scene2');
-                renderTinder();
+                showScene('scene2'); renderTinder();
             });
 
             // ==================== СЦЕНА 2 ====================
@@ -1172,166 +1041,122 @@
                 if (!p?.length) return;
                 const partner = p[state.likedIndex % p.length];
                 document.getElementById('tinderAvatar').src = partner.avatar || '';
-                document.getElementById('tinderName').textContent = `${partner.name || '?'}, ${partner.age || '?'}`;
+                document.getElementById('tinderName').textContent = `${partner.name||'?'}, ${partner.age||'?'}`;
                 let d = '';
                 if (partner.job) d += `<span class="job-badge">💼 ${partner.job}</span>`;
                 if (partner.zodiac) d += `<span class="badge">${partner.zodiac}</span>`;
                 if (partner.city) d += `<span class="city-badge">📍 ${partner.city}</span>`;
                 if (partner.personality) d += `<span class="personality-badge">${getPersonalityLabel(partner.personality)}</span>`;
-                document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc || ''}</span>`;
+                document.getElementById('tinderDesc').innerHTML = d || `<span>${partner.desc||''}</span>`;
                 document.getElementById('matchCount').textContent = state.likedList.length;
             }
-
             document.getElementById('tinderLike').addEventListener('click', () => {
                 const p = getPartners();
                 if (!p?.length) return;
                 const partner = p[state.likedIndex % p.length];
                 if (!state.likedList.some(x => x.id === partner.id)) {
-                    state.likedList.push({ ...partner });
-                    stats.totalLikes++;
-                    saveStats();
+                    state.likedList.push({...partner});
+                    stats.totalLikes++; saveStats();
                     if (!state.chatHistories[partner.id]) {
                         const f = getChatFlow();
-                        state.chatHistories[partner.id] = {
-                            step: 0, done: false,
-                            messages: f?.length ? [{ type: 'theirs', text: f[0].theirs }] : []
-                        };
+                        state.chatHistories[partner.id] = { step:0, done:false, messages: f?.length ? [{type:'theirs', text:f[0].theirs}] : [] };
                     }
                 }
-                state.likedIndex++;
-                saveGame();
-                renderTinder();
+                state.likedIndex++; saveGame(); renderTinder();
             });
-
-            document.getElementById('tinderDislike').addEventListener('click', () => {
-                state.likedIndex++;
-                saveGame();
-                renderTinder();
-            });
-
+            document.getElementById('tinderDislike').addEventListener('click', () => { state.likedIndex++; saveGame(); renderTinder(); });
             document.getElementById('toChat').addEventListener('click', () => {
                 if (!state.likedList.length) { alert('Выбери кого-нибудь ❤️'); return; }
-                showScene('scene3');
-                renderChatList();
+                showScene('scene3'); renderChatList();
             });
+            document.getElementById('backToTinderFromChats').addEventListener('click', () => { showScene('scene2'); renderTinder(); });
 
-            document.getElementById('backToTinderFromChats').addEventListener('click', () => {
-                showScene('scene2');
-                renderTinder();
-            });
-
-            // ==================== СЦЕНА 3: СПИСОК ЧАТОВ ====================
+            // ==================== СЦЕНА 3 ====================
             function renderChatList() {
-                const container = document.getElementById('chatListContainer');
+                const c = document.getElementById('chatListContainer');
                 document.getElementById('chatListLikeCount').textContent = state.likedList.length;
-                if (!state.likedList.length) {
-                    container.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px 20px;">😔 Пока никого не лайкнули</div>';
-                    return;
-                }
-                container.innerHTML = '';
-                state.likedList.forEach(partner => {
-                    const history = getChatHistory(partner.id);
-                    const lastMsg = history.messages.length > 0 ? history.messages[history.messages.length - 1].text : '💬 Начать чат';
+                if (!state.likedList.length) { c.innerHTML = '<div style="text-align:center;color:#9088b0;padding:40px">😔 Никого нет</div>'; return; }
+                c.innerHTML = '';
+                state.likedList.forEach(p => {
+                    const h = getChatHistory(p.id);
+                    const lm = h.messages.length > 0 ? h.messages[h.messages.length-1].text : '💬 Начать';
                     const div = document.createElement('div');
                     div.className = 'chat-list-item';
-                    div.innerHTML = `<img src="${partner.avatar || ''}" onerror="this.style.display='none'"><div class="info"><div class="name">${partner.name || '?'}, ${partner.age || '?'}</div><div class="last-msg">${lastMsg.substring(0, 40)}</div></div>${!history.done ? '<span class="unread-badge">новое</span>' : ''}<span style="color:#9088b0;font-size:18px;">→</span>`;
-                    div.addEventListener('click', () => {
-                        state.currentPartnerId = partner.id;
-                        saveGame();
-                        showScene('scene3_5');
-                        initConversation();
-                    });
-                    container.appendChild(div);
+                    div.innerHTML = `<img src="${p.avatar||''}"><div class="info"><div class="name">${p.name||'?'}, ${p.age||'?'}</div><div class="last-msg">${lm.substring(0,40)}</div></div>${!h.done?'<span class="unread-badge">новое</span>':''}<span style="color:#9088b0;font-size:18px;">→</span>`;
+                    div.addEventListener('click', () => { state.currentPartnerId = p.id; saveGame(); showScene('scene3_5'); initConversation(); });
+                    c.appendChild(div);
                 });
             }
 
-            // ==================== СЦЕНА 3.5: ОКНО ПЕРЕПИСКИ ====================
+            // ==================== СЦЕНА 3.5 ====================
             const convoMessages = document.getElementById('convoMessages');
             const convoMessagesWrapper = document.getElementById('convoMessagesWrapper');
             const convoRepliesWrapper = document.getElementById('convoRepliesWrapper');
             const convoToLocationsBtn = document.getElementById('convoToLocationsBtn');
 
             function initConversation() {
-                const partner = getCurrentPartner();
-                if (!partner) return;
-                document.getElementById('convoPartnerAvatar').src = partner.avatar || '';
-                document.getElementById('convoPartnerName').textContent = partner.name || '';
-                const history = getChatHistory(partner.id);
+                const p = getCurrentPartner();
+                if (!p) return;
+                document.getElementById('convoPartnerAvatar').src = p.avatar||'';
+                document.getElementById('convoPartnerName').textContent = p.name||'';
+                const h = getChatHistory(p.id);
                 convoMessages.innerHTML = '';
-                history.messages.forEach(msg => {
+                h.messages.forEach(m => {
                     const div = document.createElement('div');
-                    div.className = `message ${msg.type}`;
-                    div.textContent = msg.text;
+                    div.className = 'message ' + m.type;
+                    div.textContent = m.text;
                     convoMessages.appendChild(div);
                 });
-                if (history.messages.length === 0) {
+                if (!h.messages.length) {
                     const f = getChatFlow();
                     if (f?.length) {
-                        const firstMsg = { type: 'theirs', text: f[0].theirs };
-                        history.messages.push(firstMsg);
+                        h.messages.push({type:'theirs', text:f[0].theirs});
                         const div = document.createElement('div');
-                        div.className = `message ${firstMsg.type}`;
-                        div.textContent = firstMsg.text;
+                        div.className = 'message theirs';
+                        div.textContent = f[0].theirs;
                         convoMessages.appendChild(div);
                         saveGame();
                     }
                 }
-                renderConvoReplies(history.step);
-                convoToLocationsBtn.classList.toggle('visible', history.done);
+                renderConvoReplies(h.step);
+                convoToLocationsBtn.classList.toggle('visible', h.done);
                 scrollToBottom(convoMessagesWrapper);
             }
 
             function renderConvoReplies(s) {
                 const f = getChatFlow();
                 if (!f) return;
-                const history = getChatHistory(state.currentPartnerId);
+                const h = getChatHistory(state.currentPartnerId);
                 convoRepliesWrapper.innerHTML = '';
-                if (history.done || s >= f.length) {
-                    convoToLocationsBtn.classList.add('visible');
-                    history.done = true;
-                    saveGame();
-                    return;
-                }
-                f[s].replies.forEach((r) => {
+                if (h.done || s >= f.length) { convoToLocationsBtn.classList.add('visible'); h.done = true; saveGame(); return; }
+                f[s].replies.forEach(r => {
                     const b = document.createElement('button');
                     b.className = 'chat-reply-btn';
                     b.textContent = r;
                     b.addEventListener('click', () => {
-                        history.messages.push({ type: 'mine', text: r });
-                        const myDiv = document.createElement('div');
-                        myDiv.className = 'message mine';
-                        myDiv.textContent = r;
-                        convoMessages.appendChild(myDiv);
+                        h.messages.push({type:'mine', text:r});
+                        const md = document.createElement('div'); md.className = 'message mine'; md.textContent = r;
+                        convoMessages.appendChild(md);
                         convoRepliesWrapper.innerHTML = '';
                         const n = s + 1;
                         if (n < f.length) {
-                            const typingMsg = document.createElement('div');
-                            typingMsg.className = 'message typing';
-                            typingMsg.textContent = 'Печатает...';
-                            convoMessages.appendChild(typingMsg);
+                            const tm = document.createElement('div'); tm.className = 'message typing'; tm.textContent = 'Печатает...';
+                            convoMessages.appendChild(tm);
                             scrollToBottom(convoMessagesWrapper);
                             setTimeout(() => {
-                                if (typingMsg.parentNode) typingMsg.remove();
-                                history.messages.push({ type: 'theirs', text: f[n].theirs });
-                                const theirDiv = document.createElement('div');
-                                theirDiv.className = 'message theirs';
-                                theirDiv.textContent = f[n].theirs;
-                                convoMessages.appendChild(theirDiv);
-                                history.step = n;
-                                saveGame();
+                                if (tm.parentNode) tm.remove();
+                                h.messages.push({type:'theirs', text:f[n].theirs});
+                                const td = document.createElement('div'); td.className = 'message theirs'; td.textContent = f[n].theirs;
+                                convoMessages.appendChild(td);
+                                h.step = n; saveGame();
                                 renderConvoReplies(n);
                                 scrollToBottom(convoMessagesWrapper);
                             }, 1500);
                         } else {
-                            history.done = true;
-                            stats.completedChats++;
-                            saveStats();
-                            saveGame();
-                            history.messages.push({ type: 'theirs', text: '✨ Договорились! Выбирай место ✨' });
-                            const doneDiv = document.createElement('div');
-                            doneDiv.className = 'message theirs';
-                            doneDiv.textContent = '✨ Договорились! Выбирай место ✨';
-                            convoMessages.appendChild(doneDiv);
+                            h.done = true; stats.completedChats++; saveStats(); saveGame();
+                            h.messages.push({type:'theirs', text:'✨ Договорились! Выбирай место ✨'});
+                            const dd = document.createElement('div'); dd.className = 'message theirs'; dd.textContent = '✨ Договорились! Выбирай место ✨';
+                            convoMessages.appendChild(dd);
                             convoToLocationsBtn.classList.add('visible');
                             scrollToBottom(convoMessagesWrapper);
                         }
@@ -1339,285 +1164,209 @@
                     });
                     convoRepliesWrapper.appendChild(b);
                 });
-                scrollToBottom(convoMessagesWrapper);
             }
-
-            document.getElementById('backToChatListBtn').addEventListener('click', () => {
-                showScene('scene3');
-                renderChatList();
-            });
-
+            document.getElementById('backToChatListBtn').addEventListener('click', () => { showScene('scene3'); renderChatList(); });
             convoToLocationsBtn.addEventListener('click', () => {
                 if (!getChatHistory(state.currentPartnerId).done) return;
-                state.selectedLocationIndex = 0;
-                state.locationDialogIndex = 0;
-                state.affection = 50;
-                state.roomDialogIndex = 0;
-                state.roomAffection = 100;
-                showScene('scene4');
-                renderLocations();
+                state.selectedLocationIndex = 0; state.locationDialogIndex = 0; state.affection = 50;
+                state.roomDialogIndex = 0; state.roomAffection = 100;
+                showScene('scene4'); renderLocations();
             });
 
-            // ==================== СЦЕНА 4: ЛОКАЦИИ ====================
+            // ==================== СЦЕНА 4 ====================
             function renderLocations() {
                 const c = document.getElementById('locationCatalog');
-                const allLocations = getLocations();
-                if (!allLocations?.length) return;
-                document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${allLocations.length}`;
+                const all = getLocations();
+                if (!all?.length) return;
+                document.getElementById('unlockedLocationsInfo').textContent = `${state.unlockedLocations}/${all.length}`;
                 c.innerHTML = '';
-                allLocations.forEach((loc, i) => {
-                    const isLocked = i >= state.unlockedLocations;
+                all.forEach((loc, i) => {
+                    const locked = i >= state.unlockedLocations;
                     const d = document.createElement('div');
-                    d.className = 'catalog-item' + (isLocked ? ' locked' : '') + (i === state.selectedLocationIndex && !isLocked ? ' selected' : '');
-                    let icon = '📍';
-                    d.innerHTML = `<img src="${loc.bg || ''}" onerror="this.style.display='none'"><div class="info"><h4>${loc.name} ${isLocked ? '🔒' : ''}</h4><p>${isLocked ? 'Откроется позже...' : (loc.desc || '')}</p></div><span class="location-icon">${isLocked ? '🔒' : icon}</span>`;
-                    if (!isLocked) {
-                        d.addEventListener('click', () => {
-                            state.selectedLocationIndex = i;
-                            document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
-                            d.classList.add('selected');
-                            saveGame();
-                        });
-                    }
+                    d.className = 'catalog-item' + (locked?' locked':'') + (i===state.selectedLocationIndex&&!locked?' selected':'');
+                    d.innerHTML = `<img src="${loc.bg||''}"><div class="info"><h4>${loc.name} ${locked?'🔒':''}</h4><p>${locked?'Откроется позже...':(loc.desc||'')}</p></div><span class="location-icon">${locked?'🔒':'📍'}</span>`;
+                    if (!locked) d.addEventListener('click', () => {
+                        state.selectedLocationIndex = i;
+                        document.querySelectorAll('.catalog-item').forEach(el => el.classList.remove('selected'));
+                        d.classList.add('selected');
+                        saveGame();
+                    });
                     c.appendChild(d);
                 });
             }
-
             document.getElementById('toDate').addEventListener('click', () => {
                 const loc = getLocations()?.[state.selectedLocationIndex] || getLocations()?.[0];
                 if (!loc) return;
                 state.currentLocationId = loc.id || 'cafe';
-                state.locationDialogIndex = 0;
-                state.affection = 50;
-                state.roomDialogIndex = 0;
-                state.roomAffection = 100;
-                showScene('scene5');
-                updateAffectionUI();
+                state.locationDialogIndex = 0; state.affection = 50;
+                state.roomDialogIndex = 0; state.roomAffection = 100;
+                showScene('scene5'); updateAffectionUI();
                 document.getElementById('dateChat').innerHTML = '';
                 document.getElementById('dateChoicesWrapper').innerHTML = '';
                 renderDateScene();
             });
 
-            // ==================== СЦЕНА 5: СВИДАНИЕ ====================
-            const dateChat = document.getElementById('dateChat');
-            const dateChatWrapper = document.getElementById('dateChatWrapper');
-            const dateChoicesWrapper = document.getElementById('dateChoicesWrapper');
-
+            // ==================== СЦЕНА 5 ====================
             function updateAffectionUI() {
                 const v = Math.min(100, Math.max(0, state.affection));
-                const fill = document.getElementById('affectionFill');
-                fill.style.width = v + '%';
+                const f = document.getElementById('affectionFill');
+                f.style.width = v + '%';
                 document.getElementById('affectionLabel').textContent = v + '%';
-                fill.style.background = v < 30 ? '#ff4444' : v < 60 ? '#ffaa44' : 'linear-gradient(90deg, #ff4d8a, #ff6b9d)';
+                f.style.background = v < 30 ? '#ff4444' : v < 60 ? '#ffaa44' : 'linear-gradient(90deg, #ff4d8a, #ff6b9d)';
             }
-
             function renderDateScene() {
-                const partner = getCurrentPartner();
+                const p = getCurrentPartner();
                 const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {};
-                document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg || ''}')`;
-                document.getElementById('dateAvatarFull').src = partner?.avatar || '';
-                document.getElementById('datePartnerName').textContent = partner?.name || '';
-                const dialogs = getLocationDialogs(partner?.id, state.currentLocationId);
-                dateChoicesWrapper.innerHTML = '';
+                document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg||''}')`;
+                document.getElementById('dateAvatarFull').src = p?.avatar || '';
+                document.getElementById('datePartnerName').textContent = p?.name || '';
+                const dialogs = getLocationDialogs(p?.id, state.currentLocationId);
+                document.getElementById('dateChoicesWrapper').innerHTML = '';
                 if (!dialogs || state.locationDialogIndex >= dialogs.length) {
-                    let end = state.affection >= 70 ? '💖 Идеальное свидание!' : state.affection >= 45 ? '❤️ Неплохо!' : '💔 Уходит...';
-                    dateChat.innerHTML += `<div class="date-msg system">🏁 ${end}</div>`;
-                    scrollToBottom(dateChatWrapper);
-                    stats.completedDates++;
-                    saveStats();
+                    document.getElementById('dateChat').innerHTML += '<div class="date-msg system">🏁 Свидание окончено!</div>';
+                    stats.completedDates++; saveStats();
                     setTimeout(() => goToRoom(), 1500);
                     return;
                 }
                 const d = dialogs[state.locationDialogIndex];
-                dateChat.innerHTML += `<div class="date-msg theirs">${d.text}</div>`;
-                scrollToBottom(dateChatWrapper);
-                d.choices.forEach((choice) => {
+                document.getElementById('dateChat').innerHTML += `<div class="date-msg theirs">${d.text}</div>`;
+                d.choices.forEach(c => {
                     const b = document.createElement('button');
                     b.className = 'date-choice-btn';
-                    b.textContent = choice.text;
+                    b.textContent = c.text;
                     b.addEventListener('click', () => {
-                        dateChat.innerHTML += `<div class="date-msg mine">${choice.full || choice.text}</div>`;
-                        state.affection = Math.min(100, Math.max(0, state.affection + (choice.effect || 0)));
+                        document.getElementById('dateChat').innerHTML += `<div class="date-msg mine">${c.full||c.text}</div>`;
+                        state.affection = Math.min(100, Math.max(0, state.affection + (c.effect||0)));
                         updateAffectionUI();
                         state.locationDialogIndex++;
                         saveGame();
-                        dateChoicesWrapper.innerHTML = '';
+                        document.getElementById('dateChoicesWrapper').innerHTML = '';
                         renderDateScene();
-                        scrollToBottom(dateChatWrapper);
+                        scrollToBottom(document.getElementById('dateChatWrapper'));
                     });
-                    dateChoicesWrapper.appendChild(b);
+                    document.getElementById('dateChoicesWrapper').appendChild(b);
                 });
-                scrollToBottom(dateChoicesWrapper);
+                scrollToBottom(document.getElementById('dateChatWrapper'));
             }
 
-            // ==================== СЦЕНА 6: КОМНАТА ====================
-            const roomChat = document.getElementById('roomChat');
-            const roomChatWrapper = document.getElementById('roomChatWrapper');
-            const roomChoicesWrapper = document.getElementById('roomChoicesWrapper');
-
+            // ==================== СЦЕНА 6 ====================
             function goToRoom() {
-                if (roomTimer) { clearTimeout(roomTimer); roomTimer = null; }
-                state.roomDialogIndex = 0;
-                state.roomAffection = 100;
+                if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
+                state.roomDialogIndex = 0; state.roomAffection = 100;
                 showScene('scene6');
                 document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')";
-                const partner = getCurrentPartner();
-                document.getElementById('roomAvatarSmall').src = partner?.avatar || '';
-                document.getElementById('roomPartnerName').textContent = partner?.name || '';
+                const p = getCurrentPartner();
+                document.getElementById('roomAvatarSmall').src = p?.avatar || '';
+                document.getElementById('roomPartnerName').textContent = p?.name || '';
                 document.getElementById('roomAffectionFill').style.width = '100%';
                 document.getElementById('roomAffectionValue').textContent = '100%';
-                roomChat.innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>';
-                roomChoicesWrapper.innerHTML = '';
-                
-                // Hot концовка если разблокирована
-                if (settings.hotEndingUnlocked) {
-                    roomChat.innerHTML += '<div class="room-msg system" style="background:rgba(255,0,0,0.2);border-color:rgba(255,0,0,0.4);color:#ff6666;">🔥 HOT КОНЦОВКА АКТИВИРОВАНА! 🔥</div>';
-                }
-                
+                document.getElementById('roomChat').innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>';
+                document.getElementById('roomChoicesWrapper').innerHTML = '';
                 renderRoomScene();
             }
-
             function renderRoomScene() {
                 const dialogs = getRoomDialogs();
                 if (!dialogs?.length) return;
-                roomChoicesWrapper.innerHTML = '';
+                document.getElementById('roomChoicesWrapper').innerHTML = '';
                 if (state.roomDialogIndex >= dialogs.length) {
-                    let endMsg = '💫 Волшебный вечер... Это начало чего-то прекрасного ✨';
-                    if (settings.hotEndingUnlocked) {
-                        endMsg = '🔥 Страстная ночь! Вы провели незабываемое время вместе... 💋';
-                        settings.hotEndingUnlocked = false;
-                        saveSettings();
-                    }
-                    roomChat.innerHTML += `<div class="room-msg system">${endMsg}</div>`;
-                    scrollToBottom(roomChatWrapper);
-                    unlockNextLocation();
-                    saveGame();
+                    document.getElementById('roomChat').innerHTML += '<div class="room-msg system">💫 Волшебный вечер... ✨</div>';
+                    unlockNextLocation(); saveGame();
                     startRoomCountdown();
                     return;
                 }
                 const d = dialogs[state.roomDialogIndex];
-                roomChat.innerHTML += `<div class="room-msg theirs">${d.text}</div>`;
-                scrollToBottom(roomChatWrapper);
-                (d.choices || d).forEach((choice, i) => {
+                document.getElementById('roomChat').innerHTML += `<div class="room-msg theirs">${d.text}</div>`;
+                (d.choices || d).forEach(c => {
                     const b = document.createElement('button');
                     b.className = 'room-choice-btn';
-                    b.textContent = typeof choice === 'string' ? choice : (choice.text || choice);
+                    b.textContent = typeof c === 'string' ? c : (c.text||c);
                     b.addEventListener('click', () => {
-                        roomChat.innerHTML += `<div class="room-msg mine">${typeof choice === 'string' ? choice : (choice.full || choice.text)}</div>`;
-                        state.roomDialogIndex++;
-                        saveGame();
-                        roomChoicesWrapper.innerHTML = '';
+                        document.getElementById('roomChat').innerHTML += `<div class="room-msg mine">${typeof c === 'string' ? c : (c.full||c.text)}</div>`;
+                        state.roomDialogIndex++; saveGame();
+                        document.getElementById('roomChoicesWrapper').innerHTML = '';
                         renderRoomScene();
-                        scrollToBottom(roomChatWrapper);
+                        scrollToBottom(document.getElementById('roomChatWrapper'));
                     });
-                    roomChoicesWrapper.appendChild(b);
+                    document.getElementById('roomChoicesWrapper').appendChild(b);
                 });
-                scrollToBottom(roomChoicesWrapper);
+                scrollToBottom(document.getElementById('roomChatWrapper'));
             }
-
             function startRoomCountdown() {
-                let secondsLeft = 3;
-                const countdownDiv = document.createElement('div');
-                countdownDiv.className = 'room-msg countdown';
-                countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
-                roomChat.appendChild(countdownDiv);
-                scrollToBottom(roomChatWrapper);
-                roomChoicesWrapper.innerHTML = '';
+                let s = 3;
+                const cd = document.createElement('div');
+                cd.className = 'room-msg countdown';
+                cd.textContent = `⏳ Возврат в чаты через ${s} сек...`;
+                document.getElementById('roomChat').appendChild(cd);
+                document.getElementById('roomChoicesWrapper').innerHTML = '';
+                scrollToBottom(document.getElementById('roomChatWrapper'));
                 roomTimer = setInterval(() => {
-                    secondsLeft--;
-                    if (secondsLeft <= 0) {
-                        clearInterval(roomTimer);
-                        roomTimer = null;
-                        countdownDiv.textContent = '✨ Переходим в чаты...';
+                    s--;
+                    if (s <= 0) {
+                        clearInterval(roomTimer); roomTimer = null;
+                        cd.textContent = '✨ Переходим в чаты...';
                         setTimeout(() => { showScene('scene3'); renderChatList(); }, 500);
-                    } else {
-                        countdownDiv.textContent = `⏳ Возврат в чаты через ${secondsLeft} сек...`;
-                    }
-                    scrollToBottom(roomChatWrapper);
+                    } else cd.textContent = `⏳ Возврат в чаты через ${s} сек...`;
+                    scrollToBottom(document.getElementById('roomChatWrapper'));
                 }, 1000);
             }
-
             function unlockNextLocation() {
-                const allLocations = getLocations();
-                if (state.unlockedLocations < allLocations.length) {
-                    state.unlockedLocations++;
-                    saveGame();
-                }
+                const all = getLocations();
+                if (state.unlockedLocations < all.length) { state.unlockedLocations++; saveGame(); }
             }
 
             // ==================== СБРОС ====================
             function resetGame() {
                 if (roomTimer) { clearInterval(roomTimer); roomTimer = null; }
-                const savedUnlocked = state.unlockedLocations;
-                const savedChatHistories = state.chatHistories;
+                const ul = state.unlockedLocations;
+                const ch = state.chatHistories;
                 state = {
-                    step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
-                    currentPartnerId: null, currentLocationId: null, locationDialogIndex: 0,
-                    affection: 50, roomDialogIndex: 0, roomAffection: 100,
-                    selectedLocationIndex: 0, unlockedLocations: savedUnlocked, chatHistories: savedChatHistories,
+                    step:1, gender:null, style:'style1', likedIndex:0, likedList:[],
+                    currentPartnerId:null, currentLocationId:null, locationDialogIndex:0,
+                    affection:50, roomDialogIndex:0, roomAffection:100,
+                    selectedLocationIndex:0, unlockedLocations:ul, chatHistories:ch,
                 };
-                saveGame();
-                showScene('scene1');
-                document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.classList.remove('active-male', 'active-female'));
+                saveGame(); showScene('scene1');
+                document.querySelectorAll('#scene1 .gender-selector button').forEach(b => b.classList.remove('active-male','active-female'));
                 document.querySelectorAll('#scene1 .style-selector button').forEach(b => b.classList.remove('active'));
                 document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
-                toScene2Btn.classList.remove('enabled');
-                toScene2Btn.disabled = true;
+                toScene2Btn.classList.remove('enabled'); toScene2Btn.disabled = true;
                 mainAvatar.src = 'assets/boy1.png';
             }
+            document.getElementById('resetGame').addEventListener('click', () => { if(confirm('Сбросить?')) resetGame(); });
+            document.getElementById('resetFromRoom').addEventListener('click', () => { if(confirm('Сбросить?')) resetGame(); });
 
-            document.getElementById('resetGame').addEventListener('click', () => {
-                if (confirm('Сбросить игру?')) resetGame();
-            });
-            document.getElementById('resetFromRoom').addEventListener('click', () => {
-                if (confirm('Сбросить игру?')) resetGame();
-            });
-
-            // ==================== ЗАГРУЗКА ДАННЫХ ====================
+            // ==================== ЗАГРУЗКА ====================
             async function loadGameData() {
                 try {
-                    const response = await fetch('data.json');
-                    if (!response.ok) throw new Error('Файл не найден');
-                    gameData = await response.json();
-                } catch (e) {
-                    console.warn('[DATA] Ошибка:', e);
-                    alert('Не удалось загрузить data.json');
-                }
+                    const r = await fetch('data.json');
+                    if (r.ok) gameData = await r.json();
+                } catch(e) { alert('data.json не найден'); }
             }
-
             function restoreGameState() {
                 if (!gameData) return;
-                const step = Math.floor(state.step);
-                if (step === 1) { showScene('scene1'); }
-                else if (step === 2) { showScene('scene2'); renderTinder(); }
-                else if (step === 3) {
+                const s = Math.floor(state.step);
+                if (s === 1) showScene('scene1');
+                else if (s === 2) { showScene('scene2'); renderTinder(); }
+                else if (s === 3) {
                     if (state.step === 3.5) { showScene('scene3_5'); initConversation(); }
                     else { showScene('scene3'); renderChatList(); }
                 }
-                else if (step === 4) { showScene('scene4'); renderLocations(); }
-                else if (step === 5) { showScene('scene5'); updateAffectionUI(); renderDateScene(); }
-                else if (step === 6) { goToRoom(); }
+                else if (s === 4) { showScene('scene4'); renderLocations(); }
+                else if (s === 5) { showScene('scene5'); updateAffectionUI(); renderDateScene(); }
+                else if (s === 6) goToRoom();
             }
 
-            // ==================== ИНИЦИАЛИЗАЦИЯ ====================
             loadGameData().then(() => {
-                loadSettings();
-                loadStats();
-                const loaded = loadGame();
-                if (loaded && state.gender) {
-                    restoreGameState();
-                } else {
-                    state.unlockedLocations = 1;
-                    state.chatHistories = {};
-                    saveGame();
+                loadSettings(); loadStats();
+                if (loadGame() && state.gender) { restoreGameState(); }
+                else {
+                    state.unlockedLocations = 1; state.chatHistories = {}; saveGame();
                     showScene('scene1');
                     document.querySelector('#scene1 .style-selector button[data-style="style1"]').classList.add('active');
-                    state.style = 'style1';
-                    updateAvatar();
+                    state.style = 'style1'; updateAvatar();
                 }
-                updateShopButtons();
+                updateShopButton();
             });
-
         })();
     </script>
 </body>
