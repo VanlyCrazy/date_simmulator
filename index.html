@@ -536,6 +536,11 @@
             </div>
         </div>
 
+        <!-- Аудио элемент для фоновой музыки -->
+        <audio id="bgMusic" loop preload="auto">
+            <source src="assets/fon.mp3" type="audio/mpeg">
+        </audio>
+
         <!-- Модальное окно НАСТРОЕК -->
         <div id="settingsModal" class="modal-overlay hidden">
             <div class="modal-content">
@@ -780,7 +785,7 @@
 
     <script>
         (function() {
-            console.log('[APP] Tantan v4.1 - Clean');
+            console.log('[APP] Tantan v4.2 - Music Edition');
 
             const STORAGE_KEY = 'tantan_game_save';
             const STATS_KEY = 'tantan_stats';
@@ -788,6 +793,9 @@
             let gameData = null;
             let roomTimer = null;
             let adTimer = null;
+
+            // Фоновая музыка
+            const bgMusic = document.getElementById('bgMusic');
 
             // Настройки
             let settings = {
@@ -832,6 +840,27 @@
             const mainTopBar = document.getElementById('mainTopBar');
             const clockDisplay = document.getElementById('clockDisplay');
 
+            // ==================== МУЗЫКА ====================
+            function initMusic() {
+                bgMusic.volume = settings.musicVolume / 100;
+                
+                // Запускаем музыку при первом взаимодействии пользователя
+                const startMusic = () => {
+                    bgMusic.play().catch(e => console.log('[MUSIC] Автовоспроизведение заблокировано браузером. Нажмите на экран.'));
+                    document.removeEventListener('click', startMusic);
+                };
+                document.addEventListener('click', startMusic, { once: true });
+            }
+
+            function updateMusicVolume() {
+                bgMusic.volume = settings.musicVolume / 100;
+                if (settings.musicVolume === 0) {
+                    bgMusic.pause();
+                } else if (bgMusic.paused) {
+                    bgMusic.play().catch(() => {});
+                }
+            }
+
             // ==================== НАСТРОЙКИ ====================
             function loadSettings() {
                 try {
@@ -841,20 +870,22 @@
                 applySettings();
             }
 
-            function saveSettings() {
-                try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
+            function saveSettings() { 
+                try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {} 
             }
 
             function applySettings() {
                 document.getElementById('musicVolume').value = settings.musicVolume;
                 document.getElementById('languageSelect').value = settings.language;
                 document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%';
+                updateMusicVolume();
             }
 
             window.updateVolumeLabel = function() {
                 settings.musicVolume = parseInt(document.getElementById('musicVolume').value);
                 document.getElementById('musicVolumeLabel').textContent = settings.musicVolume + '%';
                 saveSettings();
+                updateMusicVolume();
             };
 
             window.changeLanguage = function(lang) {
@@ -865,6 +896,10 @@
 
             // ==================== МАГАЗИН И РЕКЛАМА ====================
             window.watchAd = function() {
+                // Приглушаем музыку на время рекламы
+                const originalVolume = bgMusic.volume;
+                bgMusic.volume = originalVolume * 0.3;
+                
                 let seconds = 5;
                 document.getElementById('adOverlay').classList.remove('hidden');
                 document.getElementById('adTimerBig').textContent = seconds;
@@ -875,6 +910,7 @@
                     if (seconds <= 0) {
                         clearInterval(adTimer);
                         adTimer = null;
+                        bgMusic.volume = originalVolume;
                         completeAd();
                     }
                 }, 1000);
@@ -882,6 +918,7 @@
 
             window.skipAd = function() {
                 if (adTimer) { clearInterval(adTimer); adTimer = null; }
+                updateMusicVolume();
                 document.getElementById('adOverlay').classList.add('hidden');
                 document.getElementById('adCooldown').style.display = 'block';
                 document.getElementById('adCooldown').textContent = '⏳ Реклама пропущена. Награда не получена.';
@@ -1358,6 +1395,7 @@
 
             loadGameData().then(() => {
                 loadSettings(); loadStats();
+                initMusic(); // Инициализируем музыку
                 if (loadGame() && state.gender) { restoreGameState(); }
                 else {
                     state.unlockedLocations = 1; state.chatHistories = {}; saveGame();
