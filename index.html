@@ -292,42 +292,32 @@
         .btn-back { position: relative; z-index: 4; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); padding: 5px 18px; border-radius: 60px; font-weight: 500; color: #9088b0; font-size: 12px; cursor: pointer; flex: 0 0 auto; backdrop-filter: blur(8px); margin: 2px auto 20px; transition: 0.2s; align-self: center; }
         .btn-back:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
 
+        /* Новая СЦЕНА 6 — как сцена 5, но с hotAvatar */
         #scene6 { flex: 1; display: flex; flex-direction: column; min-height: 0; position: relative; border-radius: 0; overflow: hidden; background: #1a0a1a; border: none; margin: -10px -12px -12px; padding: 0; width: calc(100% + 24px); }
-        .room-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
-        .room-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(10,5,15,0.6) 0%, rgba(20,10,30,0.4) 30%, rgba(20,10,30,0.4) 70%, rgba(10,5,15,0.85) 100%); z-index: 1; pointer-events: none; }
-        .room-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; padding: 16px 12px 0; min-height: 0; }
-        .room-top-bar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255,77,138,0.15); flex-shrink: 0; margin-bottom: 8px; }
-        .room-top-bar .room-avatar-small { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ff4d8a; flex-shrink: 0; }
-        .room-top-bar .room-info-text { flex: 1; min-width: 0; }
-        .room-top-bar .room-partner-name { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
-        .room-top-bar .room-status { font-size: 11px; color: #ff8aad; font-weight: 500; }
-        .room-top-bar .room-hearts { font-size: 18px; }
-        .room-chat-wrapper { flex: 1; overflow-y: auto; padding: 4px 4px 8px; min-height: 0; }
-        .room-chat-wrapper::-webkit-scrollbar { width: 4px; }
-        .room-chat-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; margin: 4px 0; }
-        .room-chat-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.4); border-radius: 10px; }
-        .room-chat { display: flex; flex-direction: column; gap: 6px; }
-        .room-msg { max-width: 85%; padding: 10px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; animation: msgAppear 0.3s ease; word-break: break-word; }
-        .room-msg.theirs { background: rgba(255,77,138,0.15); align-self: flex-start; border-bottom-left-radius: 6px; border: 1px solid rgba(255,77,138,0.25); color: #f0d0e0; backdrop-filter: blur(8px); }
-        .room-msg.mine { background: linear-gradient(135deg, rgba(255,77,138,0.55), rgba(255,100,150,0.45)); align-self: flex-end; border-bottom-right-radius: 6px; color: #fff; border: 1px solid rgba(255,77,138,0.35); }
-        .room-msg.system { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #d090b0; font-size: 12px; border-radius: 40px; padding: 6px 16px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); }
-        .room-msg.countdown { background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); align-self: center; color: #ffd700; font-size: 13px; border-radius: 40px; padding: 8px 18px; max-width: 90%; text-align: center; backdrop-filter: blur(8px); }
-        .room-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 8px; max-height: 130px; overflow-y: auto; }
-        .room-choices-wrapper::-webkit-scrollbar { width: 3px; }
-        .room-choices-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
-        .room-choices-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.2); border-radius: 10px; }
-        .room-choice-btn { background: rgba(255,77,138,0.1); border: 1px solid rgba(255,77,138,0.2); padding: 8px 14px; border-radius: 14px; color: #e0c0d8; font-size: 13px; font-weight: 400; text-align: left; cursor: pointer; transition: 0.2s ease; width: 100%; backdrop-filter: blur(8px); line-height: 1.3; flex-shrink: 0; }
-        .room-choice-btn:hover { background: rgba(255,77,138,0.2); border-color: rgba(255,77,138,0.4); }
-        .room-choice-btn:active { transform: scale(0.97); background: rgba(255,77,138,0.3); }
-        .room-affection-bar-wrap { position: relative; z-index: 3; flex-shrink: 0; padding: 10px 16px 8px; background: linear-gradient(0deg, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.7) 60%, transparent 100%); }
-        .room-affection-inner { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); padding: 8px 14px; border-radius: 30px; border: 1px solid rgba(255,77,138,0.3); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .room-affection-inner .aff-icon { font-size: 18px; flex-shrink: 0; }
-        .room-affection-inner .aff-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; position: relative; }
-        .room-affection-inner .aff-bar .aff-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #ff2d6a, #ff4d8a, #ff9ec4); border-radius: 10px; transition: width 0.5s ease; }
-        .room-affection-inner .aff-value { font-size: 13px; font-weight: 700; color: #ff4d8a; min-width: 36px; text-align: right; flex-shrink: 0; }
-        .btn-back-room { position: relative; z-index: 3; flex-shrink: 0; margin: 6px auto 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 8px 24px; border-radius: 60px; font-weight: 600; color: #b090a0; font-size: 13px; cursor: pointer; backdrop-filter: blur(8px); transition: 0.2s; }
-        .btn-back-room:hover { background: rgba(255,255,255,0.1); color: #d0b0c0; }
-        .btn-back-room:active { transform: scale(0.95); background: rgba(255,255,255,0.15); }
+        .room-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; z-index: 0; }
+        .room-avatar-section { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; z-index: 1; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+        .room-avatar-section img { height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: bottom center; }
+        .room-overlay-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(0deg, rgba(10,5,15,0.85) 0%, rgba(10,5,15,0.3) 50%, transparent 100%); z-index: 2; pointer-events: none; }
+        .room-content { position: relative; z-index: 3; flex: 1; display: flex; flex-direction: column; padding: 8px 12px 4px; min-height: 0; }
+        .room-top { flex-shrink: 0; padding: 4px 4px 6px; display: flex; align-items: center; justify-content: space-between; }
+        .room-top .partner-name { font-weight: 700; font-size: 24px; color: #fff; letter-spacing: 0.5px; text-shadow: 0 2px 20px rgba(0,0,0,0.8); }
+        .room-top .room-status { font-size: 12px; color: #ff8aad; background: rgba(255,77,138,0.2); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(255,77,138,0.25); }
+        .room-chat-wrapper { flex: 0 1 auto; overflow-y: auto; padding: 4px 2px 4px; max-height: 160px; min-height: 40px; margin-bottom: 4px; }
+        .room-chat-wrapper::-webkit-scrollbar { width: 3px; }
+        .room-chat-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .room-chat-wrapper::-webkit-scrollbar-thumb { background: rgba(255,77,138,0.3); border-radius: 10px; }
+        .room-chat { display: flex; flex-direction: column; gap: 4px; }
+        .room-msg { max-width: 90%; padding: 6px 12px; border-radius: 14px; font-size: 13px; line-height: 1.4; animation: msgAppear 0.3s ease; word-break: break-word; }
+        .room-msg.theirs { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.06); color: #e8e4f0; }
+        .room-msg.mine { background: #ff4d8a; align-self: flex-end; border-bottom-right-radius: 4px; color: #fff; }
+        .room-msg.system { background: rgba(255,77,138,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,77,138,0.15); align-self: center; color: #ff8aad; font-size: 12px; border-radius: 40px; padding: 4px 14px; max-width: 92%; text-align: center; }
+        .room-msg.countdown { background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); align-self: center; color: #ffd700; font-size: 12px; border-radius: 40px; padding: 4px 14px; max-width: 92%; text-align: center; }
+        .room-choices-wrapper { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; padding: 4px 0 6px; position: relative; z-index: 4; }
+        .room-choice-btn { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); padding: 7px 14px; border-radius: 60px; color: #fff; font-size: 12px; font-weight: 500; text-align: left; cursor: pointer; transition: 0.15s ease; width: 100%; line-height: 1.3; flex-shrink: 0; letter-spacing: 0.2px; }
+        .room-choice-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+        .room-choice-btn:active { transform: scale(0.97); background: rgba(255,255,255,0.12); }
+        .btn-back-room { position: relative; z-index: 4; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); padding: 5px 18px; border-radius: 60px; font-weight: 500; color: #9088b0; font-size: 12px; cursor: pointer; flex: 0 0 auto; backdrop-filter: blur(8px); margin: 2px auto 20px; transition: 0.2s; align-self: center; }
+        .btn-back-room:active { transform: scale(0.95); background: rgba(255,255,255,0.08); }
         .simple-card { background: #1a1a36; border-radius: 20px; padding: 12px; border: 1px solid #2a2a4e; flex: 1; display: flex; flex-direction: column; min-height: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
     </style>
 </head>
@@ -388,7 +378,7 @@
             <div id="scene2" class="hidden" style="flex:1; display:flex; flex-direction:column;">
                 <div class="tinder-card-wrapper" id="tinderCard">
                     <div class="tinder-photo">
-                        <img id="tinderAvatar" src="assets/girl1.png" alt="партнёр">
+                        <img id="tinderAvatar" src="assets/girl1.jpg" alt="партнёр">
                         <div class="tinder-counter" id="matchCounter"><span class="heart">❤️</span> <span id="matchCount">0</span></div>
                     </div>
                     <div class="tinder-info">
@@ -408,7 +398,7 @@
                 <div class="simple-card"><div class="chat-list-header"><span>💬 Чаты</span><span style="font-size:12px; color:#9088b0;">Лайков: <span id="chatListLikeCount">0</span></span></div><div class="chat-list" id="chatListContainer"></div><button id="backToTinderFromChats" style="margin-top:8px; padding:8px 20px; font-size:13px; align-self:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#9088b0; border-radius:60px; cursor:pointer; flex-shrink:0;">← Назад к ленте</button></div>
             </div>
             <div id="scene3_5" class="hidden" style="flex:1; display:flex; flex-direction:column;">
-                <div class="chat-conversation"><div class="chat-convo-header"><button class="back-btn" id="backToChatListBtn">←</button><img id="convoPartnerAvatar" src="assets/girl1.png" alt=""><span class="name" id="convoPartnerName">Анна</span><span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span></div><div class="chat-messages-wrapper" id="convoMessagesWrapper"><div class="chat-messages" id="convoMessages"></div></div><div class="chat-replies-wrapper" id="convoRepliesWrapper"></div><button class="chat-to-locations-btn" id="convoToLocationsBtn">Выбрать место →</button></div>
+                <div class="chat-conversation"><div class="chat-convo-header"><button class="back-btn" id="backToChatListBtn">←</button><img id="convoPartnerAvatar" src="assets/girl1.jpg" alt=""><span class="name" id="convoPartnerName">Анна</span><span class="status" style="margin-left:auto; font-size:11px; color:#6a6290;">онлайн</span></div><div class="chat-messages-wrapper" id="convoMessagesWrapper"><div class="chat-messages" id="convoMessages"></div></div><div class="chat-replies-wrapper" id="convoRepliesWrapper"></div><button class="chat-to-locations-btn" id="convoToLocationsBtn">Выбрать место →</button></div>
             </div>
             <div id="scene4" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
                 <div class="simple-card" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; padding:12px;">
@@ -418,14 +408,13 @@
                 </div>
             </div>
             <div id="scene5" class="hidden">
-                <div class="date-bg" id="dateBg"></div><div class="date-avatar-section"><img id="dateAvatarFull" src="assets/girl1.png" alt=""></div><div class="date-overlay-bottom"></div>
+                <div class="date-bg" id="dateBg"></div><div class="date-avatar-section"><img id="dateAvatarFull" src="assets/girl1.jpg" alt=""></div><div class="date-overlay-bottom"></div>
                 <div class="date-content"><div class="date-top"><div class="partner-name" id="datePartnerName">Анна</div><div class="affection-wrap"><div class="bar"><div class="fill" id="affectionFill" style="width:50%;"></div></div><span class="label" id="affectionLabel">50%</span></div></div><div class="date-chat-wrapper" id="dateChatWrapper"><div class="date-chat" id="dateChat"></div></div><div class="date-choices-wrapper" id="dateChoicesWrapper"></div></div>
                 <button class="btn-back" id="backFromDate">← Назад</button>
             </div>
-            <div id="scene6" class="hidden" style="flex:1; display:flex; flex-direction:column; min-height:0;">
-                <div class="room-bg" id="roomBg"></div><div class="room-overlay"></div>
-                <div class="room-content"><div class="room-top-bar"><img id="roomAvatarSmall" class="room-avatar-small" src="assets/girl1.png" alt=""><div class="room-info-text"><div class="room-partner-name" id="roomPartnerName">Анна</div><div class="room-status">💕 Идеальное свидание</div></div><span class="room-hearts">💗</span></div><div class="room-chat-wrapper" id="roomChatWrapper"><div class="room-chat" id="roomChat"><div class="room-msg system">🕯️ Вы в уединённой обстановке...</div></div></div><div class="room-choices-wrapper" id="roomChoicesWrapper"></div></div>
-                <div class="room-affection-bar-wrap"><div class="room-affection-inner"><span class="aff-icon">🔥</span><div class="aff-bar"><div class="aff-fill" id="roomAffectionFill" style="width:100%;"></div></div><span class="aff-value" id="roomAffectionValue">100%</span></div></div>
+            <div id="scene6" class="hidden">
+                <div class="room-bg" id="roomBg"></div><div class="room-avatar-section"><img id="roomAvatarFull" src="assets/hotgirl1.jpg" alt=""></div><div class="room-overlay-bottom"></div>
+                <div class="room-content"><div class="room-top"><div class="partner-name" id="roomPartnerName">Анна</div><div class="room-status">🔥 Горячее свидание</div></div><div class="room-chat-wrapper" id="roomChatWrapper"><div class="room-chat" id="roomChat"><div class="room-msg system">🕯️ Вы в уединённой обстановке...</div></div></div><div class="room-choices-wrapper" id="roomChoicesWrapper"></div></div>
                 <button class="btn-back-room" id="backFromRoom">← Назад</button>
             </div>
         </div>
@@ -435,7 +424,7 @@
         (function() {
             'use strict';
 
-            console.log('[APP] Симулятор свиданий — обновлённая версия с рекламой и скипом');
+            console.log('[APP] Симулятор свиданий — обновлённая версия');
 
             // ============================================================
             // 1. ЗАГРУЗКА ДАННЫХ ИЗ JSON
@@ -540,7 +529,6 @@
                     return true;
                 } catch (e) {
                     console.error('[LOAD] Ошибка загрузки:', e);
-                    showError('❌ Ошибка загрузки данных!');
                     return false;
                 }
             }
@@ -595,6 +583,7 @@
             const SETTINGS_KEY = 'tantan_settings';
             let roomTimer = null;
             let isAdShowing = false;
+            let isFirstLaunch = true;
 
             let state = {
                 step: 1, gender: null, style: 'style1', likedIndex: 0, likedList: [],
@@ -607,10 +596,9 @@
                 maxDateAttempts: 3,
                 isDatePerfect: false,
                 currentDateDialogs: [],
+                totalHints: 3,
                 usedHints: 0,
-                maxHints: 3,
                 showHint: false,
-                hintsRemaining: 3,
                 retryMode: false,
                 retryAdWatched: false
             };
@@ -630,17 +618,11 @@
             const clockDisplay = document.getElementById('clockDisplay');
 
             // ============================================================
-            // 5. РЕКЛАМА (INTERSTITIAL)
+            // 5. РЕКЛАМА (INTERSTITIAL) — без сообщений об ошибках
             // ============================================================
             async function showInterstitialAd() {
-                if (!ysdk || !isSDKReady) {
-                    console.log('[AD] SDK не готов, пропускаем рекламу');
-                    return;
-                }
-                if (isAdShowing) {
-                    console.log('[AD] Реклама уже показывается');
-                    return;
-                }
+                if (!ysdk || !isSDKReady) return;
+                if (isAdShowing) return;
                 
                 try {
                     isAdShowing = true;
@@ -661,8 +643,7 @@
                                     bgMusic.play().catch(() => {});
                                 }
                             },
-                            onError: (error) => {
-                                console.error('[AD] Ошибка рекламы:', error);
+                            onError: () => {
                                 isAdShowing = false;
                             }
                         }
@@ -699,6 +680,15 @@
             function getPartnerById(id) { return getAllPartners().find(p => p.id === id) || null; }
             function getCurrentPartner() { return getPartnerById(state.currentPartnerId); }
             function getPersonalityLabel(p) { const m = { romantic: '💕 Романтик', creative: '🎨 Креативный', adventurous: '🔥 Авантюрист', calm: '😌 Спокойный', energetic: '⚡ Энергичный' }; return m[p] || '💕 Романтик'; }
+            
+            // Получение горячего аватара для комнаты (используем hotAvatar из JSON)
+            function getHotAvatar(partner) {
+                if (!partner) return '';
+                // Если есть поле hotAvatar — используем его
+                if (partner.hotAvatar) return partner.hotAvatar;
+                // Если нет — возвращаем обычный аватар
+                return partner.avatar || '';
+            }
             
             function getLocationDialogs(npcId, locId, count = 5) { 
                 const n = getNpc(npcId); 
@@ -765,7 +755,7 @@
             }
 
             // ============================================================
-            // 7. НАВИГАЦИЯ (С ПОКАЗОМ РЕКЛАМЫ ПОСЛЕ СМЕНЫ СЦЕНЫ)
+            // 7. НАВИГАЦИЯ
             // ============================================================
             function goToScene(id) {
                 const currentSceneId = Object.keys(scenes).find(k => !scenes[k].classList.contains('hidden'));
@@ -798,7 +788,6 @@
                 state.step = parseInt(id.replace('scene','').replace('_','.'));
                 saveGame();
                 
-                // Показываем рекламу после смены сцены (кроме scene5, scene6 и scene1)
                 if (id !== 'scene1' && id !== 'scene5' && id !== 'scene6') {
                     setTimeout(() => {
                         showInterstitialAd();
@@ -822,8 +811,8 @@
                             selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
                             selectedDialogs: null, unlockedPartners: [],
                             dateAttempts: 0, maxDateAttempts: 3, isDatePerfect: false,
-                            currentDateDialogs: [], usedHints: 0, maxHints: 3,
-                            showHint: false, hintsRemaining: 3, retryMode: false, retryAdWatched: false };
+                            currentDateDialogs: [], totalHints: 3, usedHints: 0, showHint: false,
+                            retryMode: false, retryAdWatched: false };
                         navigationHistory = [];
                         saveGame(); saveStats();
                         document.getElementById('settingsModal').classList.add('hidden');
@@ -912,7 +901,7 @@
             });
 
             // ============================================================
-            // 11. СЦЕНА 2 — СВАЙП С КНОПКОЙ СКИПА
+            // 11. СЦЕНА 2 — СВАЙП
             // ============================================================
             document.getElementById('goToChatsBtn').addEventListener('click', () => {
                 if (state.likedList.length === 0) {
@@ -923,7 +912,6 @@
                 renderChatList();
             });
 
-            // Кнопка пропуска премиального персонажа
             document.getElementById('skipPremiumBtn').addEventListener('click', () => {
                 const all = getAllPartners();
                 if (!all.length) return;
@@ -961,12 +949,10 @@
                 const chatsBtn = document.getElementById('goToChatsBtn');
                 const skipBtn = document.getElementById('skipPremiumBtn');
                 
-                // Удаляем старую кнопку разблокировки если есть
                 const oldUnlock = document.querySelector('.btn-unlock');
                 if (oldUnlock) oldUnlock.remove();
                 
                 if (isLocked) {
-                    // 🔒 Партнёр ЗАБЛОКИРОВАН — показываем кнопки: Чаты, Пропустить, Разблокировать
                     chatsBtn.style.display = 'flex';
                     skipBtn.style.display = 'flex';
                     
@@ -983,7 +969,6 @@
                     });
                     document.querySelector('.tinder-actions').appendChild(newUnlockBtn);
                 } else {
-                    // ✅ Партнёр РАЗБЛОКИРОВАН — скрываем кнопки чатов и скипа
                     chatsBtn.style.display = 'none';
                     skipBtn.style.display = 'none';
                     
@@ -1000,12 +985,11 @@
                 }
                 
                 if (!ysdk || !isSDKReady) {
-                    showWarning('⚠️ Реклама временно недоступна');
                     return;
                 }
                 
                 const partner = getAllPartners().find(p => p.id === partnerId);
-                if (!partner) { showError('❌ Партнёр не найден!'); return; }
+                if (!partner) return;
                 
                 showHot(`🔥 ЭКСКЛЮЗИВНЫЙ ПЕРСОНАЖ! ${partner.name} ждёт тебя с самым горячим сюжетом!`);
                 
@@ -1023,10 +1007,12 @@
                             onClose: (wasShown) => {
                                 if (!wasShown) showWarning('Досмотрите рекламу до конца!');
                             },
-                            onError: (error) => { showError('Ошибка показа рекламы.'); }
+                            onError: () => {}
                         }
                     });
-                } catch (error) { showError('Ошибка: ' + error.message); }
+                } catch (error) {
+                    console.error('[YANDEX] Ошибка:', error);
+                }
             }
 
             document.getElementById('tinderLike').addEventListener('click', () => { 
@@ -1155,9 +1141,6 @@
                 state.isDatePerfect = false;
                 state.usedHints = 0;
                 state.showHint = false;
-                state.hintsRemaining = state.maxHints;
-                state.retryMode = false;
-                state.retryAdWatched = false;
                 goToScene('scene4'); 
                 renderLocations(); 
             });
@@ -1202,10 +1185,13 @@
             window.unlockLocationWithAd = async function(index) {
                 const allLocations = getLocations();
                 if (index >= allLocations.length) return;
-                if (index < state.unlockedLocations) { showWarning('📍 Эта локация уже открыта!'); return; }
+                if (index < state.unlockedLocations) {
+                    showWarning('📍 Эта локация уже открыта!');
+                    return;
+                }
                 if (!ysdk || !isSDKReady) {
                     await initYandexSDK();
-                    if (!ysdk || !isSDKReady) { showError('❌ SDK Яндекс Игр не инициализирован.'); return; }
+                    if (!ysdk || !isSDKReady) return;
                 }
                 try {
                     showHot('🔥 Открой новое место для свидания!');
@@ -1222,10 +1208,12 @@
                             onClose: (wasShown) => {
                                 if (!wasShown) showWarning('Досмотрите видео до конца!');
                             },
-                            onError: (error) => { showError('Ошибка показа рекламы.'); }
+                            onError: () => {}
                         }
                     });
-                } catch (error) { showError('Ошибка: ' + error.message); }
+                } catch (error) {
+                    console.error('[YANDEX] Ошибка:', error);
+                }
             };
 
             // ============================================================
@@ -1244,9 +1232,6 @@
                 state.isDatePerfect = false;
                 state.usedHints = 0;
                 state.showHint = false;
-                state.hintsRemaining = state.maxHints;
-                state.retryMode = false;
-                state.retryAdWatched = false;
                 goToScene('scene5'); 
                 updateAffectionUI(); 
                 document.getElementById('dateChat').innerHTML = ''; 
@@ -1291,10 +1276,7 @@
             }
 
             function showAdForRetry() {
-                if (!ysdk || !isSDKReady) {
-                    showWarning('⚠️ Реклама временно недоступна');
-                    return;
-                }
+                if (!ysdk || !isSDKReady) return;
                 if (state.dateAttempts >= state.maxDateAttempts) {
                     showWarning('⚠️ Ты исчерпал все попытки!');
                     return;
@@ -1310,7 +1292,6 @@
                                 state.dateAttempts++;
                                 state.retryMode = true;
                                 state.retryAdWatched = true;
-                                state.hintsRemaining = state.maxHints;
                                 state.usedHints = 0;
                                 state.showHint = false;
                                 state.locationDialogIndex = 0;
@@ -1320,7 +1301,7 @@
                                 saveGame();
                                 
                                 const attemptsLeft = state.maxDateAttempts - state.dateAttempts;
-                                showHot(`🔥 Попытка ${state.dateAttempts} из ${state.maxDateAttempts}! У тебя есть ${state.maxHints} подсказок! Покажи, что ты достоин ЭТОЙ НОЧИ!`);
+                                showHot(`🔥 Попытка ${state.dateAttempts} из ${state.maxDateAttempts}! У тебя есть ${state.totalHints} подсказок на всё свидание!`);
                                 
                                 document.getElementById('dateChat').innerHTML = '';
                                 document.getElementById('dateChoicesWrapper').innerHTML = '';
@@ -1330,34 +1311,34 @@
                             onClose: (wasShown) => {
                                 if (!wasShown) showWarning('Досмотрите рекламу до конца!');
                             },
-                            onError: (error) => { showError('Ошибка показа рекламы.'); }
+                            onError: () => {}
                         }
                     });
-                } catch (error) { showError('Ошибка: ' + error.message); }
+                } catch (error) {
+                    console.error('[YANDEX] Ошибка:', error);
+                }
             }
 
             function showAdForHint() {
-                if (!ysdk || !isSDKReady) {
-                    showWarning('⚠️ Реклама временно недоступна');
-                    return;
-                }
-                if (state.hintsRemaining <= 0) {
-                    showWarning('⚠️ В этой попытке у тебя больше нет подсказок!');
+                if (!ysdk || !isSDKReady) return;
+                if (state.usedHints >= state.totalHints) {
+                    showWarning(`⚠️ Ты использовал все ${state.totalHints} подсказки!`);
                     return;
                 }
                 
-                showHot('🔥 Хочешь узнать правильный ответ? Смотри рекламу и получи ПОДСКАЗКУ!');
+                const hintsLeft = state.totalHints - state.usedHints;
+                showHot(`🔥 Хочешь подсказку? Осталось ${hintsLeft} из ${state.totalHints}!`);
                 
                 try {
                     ysdk.adv.showRewardedVideo({
                         callbacks: {
                             onOpen: () => { console.log('[YANDEX] 🎬 Реклама для подсказки'); },
                             onRewarded: () => {
-                                state.hintsRemaining--;
-                                state.showHint = true;
                                 state.usedHints++;
+                                state.showHint = true;
                                 saveGame();
-                                showSuccess(`💡 Подсказка активирована! Осталось ${state.hintsRemaining}`);
+                                const left = state.totalHints - state.usedHints;
+                                showSuccess(`💡 Подсказка активирована! Осталось ${left} подсказок`);
                                 document.getElementById('dateChat').innerHTML = '';
                                 document.getElementById('dateChoicesWrapper').innerHTML = '';
                                 renderDateScene();
@@ -1365,10 +1346,12 @@
                             onClose: (wasShown) => {
                                 if (!wasShown) showWarning('Досмотрите рекламу до конца!');
                             },
-                            onError: (error) => { showError('Ошибка показа рекламы.'); }
+                            onError: () => {}
                         }
                     });
-                } catch (error) { showError('Ошибка: ' + error.message); }
+                } catch (error) {
+                    console.error('[YANDEX] Ошибка:', error);
+                }
             }
 
             function showDateResultMenu() {
@@ -1379,18 +1362,18 @@
                 
                 if (state.affection === 100) {
                     msg.className = 'date-msg hot-info';
-                    msg.textContent = '🌡️ 100%! ИДЕАЛЬНО! ОН/ОНА приглашает тебя к себе... 🔥';
+                    msg.textContent = '🌡️ 100%! ИДЕАЛЬНО! Партнер приглашает тебя к себе... 🔥';
                     document.getElementById('dateChat').appendChild(msg);
                     state.isDatePerfect = true;
                     stats.completedDates++;
                     saveStats();
                     saveGame();
-                    showHot('🔥 ИДЕАЛЬНО! Ты открыл дверь в ЕГО/ЕЁ комнату!');
+                    showHot('🔥 ИДЕАЛЬНО! Ты открыл дверь в комнату!');
                     setTimeout(() => goToRoom(), 1500);
                     return;
                 } else {
                     msg.className = 'date-msg hot-info';
-                    msg.textContent = `😏 Ты набрал ${state.affection}% из 100%. ОН/ОНА хочет пригласить тебя к себе, но ты должен показать себя идеально! Попробуй ещё раз...`;
+                    msg.textContent = `😏 Ты набрал ${state.affection}% из 100%. Партнер хочет пригласить тебя к себе, но нужно 100%! Попробуй ещё раз...`;
                     document.getElementById('dateChat').appendChild(msg);
                 }
                 
@@ -1406,14 +1389,17 @@
                     });
                     wrapper.appendChild(retryBtn);
                 } 
-                else if (state.retryMode && state.hintsRemaining > 0) {
-                    const hintBtn = document.createElement('button');
-                    hintBtn.className = 'date-choice-btn hint-btn';
-                    hintBtn.textContent = `💡 Подсказка (осталось ${state.hintsRemaining})`;
-                    hintBtn.addEventListener('click', () => { showAdForHint(); });
-                    wrapper.appendChild(hintBtn);
+                else if (state.retryMode) {
+                    if (state.usedHints < state.totalHints) {
+                        const hintBtn = document.createElement('button');
+                        hintBtn.className = 'date-choice-btn hint-btn';
+                        const left = state.totalHints - state.usedHints;
+                        hintBtn.textContent = `💡 Подсказка (осталось ${left} из ${state.totalHints})`;
+                        hintBtn.addEventListener('click', () => { showAdForHint(); });
+                        wrapper.appendChild(hintBtn);
+                    }
                     
-                    if (state.hintsRemaining === 0 && state.dateAttempts < state.maxDateAttempts) {
+                    if (state.dateAttempts < state.maxDateAttempts) {
                         const retryBtn = document.createElement('button');
                         retryBtn.className = 'date-choice-btn hot-btn';
                         retryBtn.textContent = `🔥 ЕЩЁ ШАНС! Перепройти (осталось ${state.maxDateAttempts - state.dateAttempts})`;
@@ -1426,7 +1412,7 @@
                 } else if (state.dateAttempts >= state.maxDateAttempts) {
                     const msg2 = document.createElement('div');
                     msg2.className = 'date-msg hot-info';
-                    msg2.textContent = '😅 Попытки закончились. Но ты всегда можешь попробовать с другим партнёром! Возвращайся в чаты.';
+                    msg2.textContent = '😅 Попытки закончились. Возвращайся в чаты и попробуй с другим партнёром!';
                     document.getElementById('dateChat').appendChild(msg2);
                 }
                 
@@ -1475,7 +1461,7 @@
                         stats.completedDates++; 
                         saveStats(); 
                         saveGame();
-                        showHot('🌡️ 100%! ИДЕАЛЬНО! ОН/ОНА ЖДЁТ ТЕБЯ!');
+                        showHot('🌡️ 100%! ИДЕАЛЬНО! Партнер ждёт тебя!');
                         setTimeout(() => goToRoom(), 1500); 
                     } else {
                         state.isDatePerfect = false;
@@ -1526,7 +1512,7 @@
             }
 
             // ============================================================
-            // 16. СЦЕНА 6 — ROOM
+            // 16. СЦЕНА 6 — ROOM (с горячей картинкой на пол-экрана)
             // ============================================================
             function goToRoom() { 
                 if (roomTimer) { clearInterval(roomTimer); roomTimer = null; } 
@@ -1537,12 +1523,18 @@
                 state.roomDialogIndex = 0; 
                 state.roomAffection = 100; 
                 goToScene('scene6'); 
+                
+                // Фон комнаты
                 document.getElementById('roomBg').style.backgroundImage = "url('assets/room.png')"; 
+                
                 const p = getCurrentPartner(); 
-                document.getElementById('roomAvatarSmall').src = p?.avatar || ''; 
+                const hotAvatar = getHotAvatar(p);
+                
+                // Большая картинка партнёра (hotAvatar)
+                document.getElementById('roomAvatarFull').src = hotAvatar || p?.avatar || ''; 
                 document.getElementById('roomPartnerName').textContent = p?.name || ''; 
-                document.getElementById('roomAffectionFill').style.width = '100%'; 
-                document.getElementById('roomAffectionValue').textContent = '100%'; 
+                
+                // Очищаем чат и кнопки
                 document.getElementById('roomChat').innerHTML = '<div class="room-msg system">🕯️ Вы в уединённой обстановке...</div>'; 
                 document.getElementById('roomChoicesWrapper').innerHTML = ''; 
                 renderRoomScene(); 
@@ -1553,6 +1545,7 @@
                 const partnerId = state.currentPartnerId;
                 let partnerDialogs = roomDialogs && partnerId && roomDialogs[partnerId] ? roomDialogs[partnerId] : null;
                 document.getElementById('roomChoicesWrapper').innerHTML = ''; 
+                
                 if (!partnerDialogs || state.roomDialogIndex >= partnerDialogs.length) { 
                     document.getElementById('roomChat').innerHTML += '<div class="room-msg system">💫 Волшебный вечер... ✨</div>'; 
                     unlockNextLocation(); 
@@ -1560,28 +1553,38 @@
                     startRoomCountdown(); 
                     return; 
                 } 
+                
                 const d = partnerDialogs[state.roomDialogIndex]; 
                 document.getElementById('roomChat').innerHTML += `<div class="room-msg theirs">${d.text}</div>`; 
+                
                 if (d.choices && Array.isArray(d.choices)) {
                     d.choices.forEach(c => { 
-                        const b = document.createElement('button'); b.className = 'room-choice-btn'; 
+                        const b = document.createElement('button'); 
+                        b.className = 'room-choice-btn'; 
                         b.textContent = c.text || c; 
                         b.addEventListener('click', () => { 
                             document.getElementById('roomChat').innerHTML += `<div class="room-msg mine">${c.full || c.text || c}</div>`; 
-                            state.roomDialogIndex++; saveGame(); 
+                            state.roomDialogIndex++; 
+                            saveGame(); 
                             document.getElementById('roomChoicesWrapper').innerHTML = ''; 
                             renderRoomScene(); 
                             scrollToBottom(document.getElementById('roomChatWrapper')); 
                         }); 
                         document.getElementById('roomChoicesWrapper').appendChild(b); 
                     });
-                } else { state.roomDialogIndex++; saveGame(); document.getElementById('roomChoicesWrapper').innerHTML = ''; renderRoomScene(); }
+                } else { 
+                    state.roomDialogIndex++; 
+                    saveGame(); 
+                    document.getElementById('roomChoicesWrapper').innerHTML = ''; 
+                    renderRoomScene(); 
+                }
                 scrollToBottom(document.getElementById('roomChatWrapper')); 
             }
 
             function startRoomCountdown() { 
                 let s = 3; 
-                const cd = document.createElement('div'); cd.className = 'room-msg countdown'; 
+                const cd = document.createElement('div'); 
+                cd.className = 'room-msg countdown'; 
                 cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; 
                 document.getElementById('roomChat').appendChild(cd); 
                 document.getElementById('roomChoicesWrapper').innerHTML = ''; 
@@ -1589,9 +1592,14 @@
                 roomTimer = setInterval(() => { 
                     s--; 
                     if (s <= 0) { 
-                        clearInterval(roomTimer); roomTimer = null; 
+                        clearInterval(roomTimer); 
+                        roomTimer = null; 
                         cd.textContent = '✨ Переходим в чаты...'; 
-                        setTimeout(() => { navigationHistory = []; showScene('scene3'); renderChatList(); }, 500); 
+                        setTimeout(() => { 
+                            navigationHistory = []; 
+                            showScene('scene3'); 
+                            renderChatList(); 
+                        }, 500); 
                     } else cd.textContent = `⏳ Возврат в чаты через ${s} сек...`; 
                     scrollToBottom(document.getElementById('roomChatWrapper')); 
                 }, 1000); 
@@ -1634,9 +1642,6 @@
                     state.isDatePerfect = false;
                     state.usedHints = 0;
                     state.showHint = false;
-                    state.hintsRemaining = state.maxHints;
-                    state.retryMode = false;
-                    state.retryAdWatched = false;
                     
                     const allPartners = getAllPartners();
                     const first7 = allPartners.slice(0, 7).map(p => p.id);
@@ -1646,6 +1651,13 @@
                     showScene('scene1');
                 }
                 updateProgressModal();
+                
+                if (isFirstLaunch) {
+                    isFirstLaunch = false;
+                    setTimeout(() => {
+                        showInterstitialAd();
+                    }, 1000);
+                }
             }
 
             function restoreGameState() { 
