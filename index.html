@@ -834,17 +834,14 @@
             const bgMusic = document.getElementById('bgMusic');
             let musicWasPlaying = false;
 
-            // Останавливаем музыку при скрытии страницы
             document.addEventListener('visibilitychange', function() {
                 if (document.hidden) {
-                    // Страница скрыта — останавливаем музыку
                     if (!bgMusic.paused) {
                         musicWasPlaying = true;
                         bgMusic.pause();
                         console.log('[AUDIO] Музыка остановлена (вкладка скрыта)');
                     }
                 } else {
-                    // Страница снова активна — возобновляем, если музыка играла
                     if (musicWasPlaying && settings.musicVolume > 0) {
                         bgMusic.play().catch(() => {});
                         musicWasPlaying = false;
@@ -853,7 +850,6 @@
                 }
             });
 
-            // Также обрабатываем событие blur/focus для дополнительной надёжности
             window.addEventListener('blur', function() {
                 if (!bgMusic.paused) {
                     musicWasPlaying = true;
@@ -1041,12 +1037,10 @@
                 isDatePerfect: false,
                 currentDateDialogs: [],
                 totalHints: 3,
-                usedHints: 0,
-                showHint: false,
                 retryMode: false,
                 retryAdWatched: false,
-                hintIndices: [],
-                datePartnerId: null
+                // Данные подсказок для каждого партнёра
+                hintData: {}
             };
 
             let stats = { totalLikes: 0, completedChats: 0, completedDates: 0 };
@@ -1143,6 +1137,18 @@
             function getChatHistory(pid) { 
                 if (!state.chatHistories[pid]) state.chatHistories[pid] = { step: 0, done: false, messages: [] }; 
                 return state.chatHistories[pid]; 
+            }
+
+            // Функция получения данных подсказок для конкретного партнёра
+            function getHintDataForPartner(partnerId) {
+                if (!state.hintData[partnerId]) {
+                    state.hintData[partnerId] = {
+                        hintIndices: [],
+                        usedHints: 0,
+                        showHint: false
+                    };
+                }
+                return state.hintData[partnerId];
             }
 
             function updateClock() { 
@@ -1258,9 +1264,8 @@
                             selectedLocationIndex: 0, unlockedLocations: 1, chatHistories: {},
                             selectedDialogs: null, unlockedPartners: [],
                             dateAttempts: 0, maxDateAttempts: 3, isDatePerfect: false,
-                            currentDateDialogs: [], totalHints: 3, usedHints: 0, showHint: false,
-                            retryMode: false, retryAdWatched: false,
-                            hintIndices: [], datePartnerId: null };
+                            currentDateDialogs: [], totalHints: 3, retryMode: false, retryAdWatched: false,
+                            hintData: {} };
                         navigationHistory = [];
                         saveGame(); saveStats();
                         document.getElementById('settingsModal').classList.add('hidden');
@@ -1593,10 +1598,12 @@
                 state.selectedDialogs = null;
                 state.dateAttempts = 0;
                 state.isDatePerfect = false;
-                state.usedHints = 0;
-                state.showHint = false;
-                state.hintIndices = [];
-                state.datePartnerId = state.currentPartnerId;
+                // Сбрасываем подсказки для этого партнёра при начале нового свидания
+                const hintData = getHintDataForPartner(state.currentPartnerId);
+                hintData.hintIndices = [];
+                hintData.usedHints = 0;
+                hintData.showHint = false;
+                saveGame();
                 goToScene('scene4'); 
                 renderLocations(); 
             });
@@ -1686,10 +1693,12 @@
                 state.selectedDialogs = null;
                 state.dateAttempts = 0;
                 state.isDatePerfect = false;
-                state.usedHints = 0;
-                state.showHint = false;
-                state.hintIndices = [];
-                state.datePartnerId = state.currentPartnerId;
+                // Сбрасываем подсказки для этого партнёра при новом свидании
+                const hintData = getHintDataForPartner(state.currentPartnerId);
+                hintData.hintIndices = [];
+                hintData.usedHints = 0;
+                hintData.showHint = false;
+                saveGame();
                 goToScene('scene5'); 
                 updateAffectionUI(); 
                 document.getElementById('dateChat').innerHTML = ''; 
@@ -1758,13 +1767,15 @@
                                 state.dateAttempts++;
                                 state.retryMode = true;
                                 state.retryAdWatched = true;
-                                state.usedHints = 0;
-                                state.showHint = false;
                                 state.locationDialogIndex = 0;
                                 state.affection = 50;
                                 state.selectedDialogs = state.currentDateDialogs ? [...state.currentDateDialogs] : null;
                                 state.isDatePerfect = false;
-                                state.hintIndices = [];
+                                // Сбрасываем подсказки при перепрохождении
+                                const hintData = getHintDataForPartner(state.currentPartnerId);
+                                hintData.hintIndices = [];
+                                hintData.usedHints = 0;
+                                hintData.showHint = false;
                                 saveGame();
                                 
                                 const attemptsLeft = state.maxDateAttempts - state.dateAttempts;
@@ -1788,12 +1799,13 @@
 
             function showAdForHint() {
                 if (!ysdk || !isSDKReady) return;
-                if (state.usedHints >= state.totalHints) {
+                const hintData = getHintDataForPartner(state.currentPartnerId);
+                if (hintData.usedHints >= state.totalHints) {
                     showWarning(`⚠️ Ты использовал все ${state.totalHints} подсказки!`);
                     return;
                 }
                 
-                const hintsLeft = state.totalHints - state.usedHints;
+                const hintsLeft = state.totalHints - hintData.usedHints;
                 showHot(`🔥 Хочешь подсказку? Осталось ${hintsLeft} из ${state.totalHints}!`);
                 
                 try {
@@ -1801,10 +1813,10 @@
                         callbacks: {
                             onOpen: () => { console.log('[YANDEX] 🎬 Реклама для подсказки'); },
                             onRewarded: () => {
-                                state.usedHints++;
-                                state.showHint = true;
+                                hintData.usedHints++;
+                                hintData.showHint = true;
                                 saveGame();
-                                const left = state.totalHints - state.usedHints;
+                                const left = state.totalHints - hintData.usedHints;
                                 showSuccess(`💡 Подсказка активирована! Осталось ${left} подсказок`);
                                 document.getElementById('dateChat').innerHTML = '';
                                 document.getElementById('dateChoicesWrapper').innerHTML = '';
@@ -1845,6 +1857,7 @@
                 }
                 
                 const attemptsLeft = state.maxDateAttempts - state.dateAttempts;
+                const hintData = getHintDataForPartner(state.currentPartnerId);
                 
                 if (attemptsLeft > 0 && !state.retryMode) {
                     const retryBtn = document.createElement('button');
@@ -1857,10 +1870,10 @@
                     wrapper.appendChild(retryBtn);
                 } 
                 else if (state.retryMode) {
-                    if (state.usedHints < state.totalHints) {
+                    if (hintData.usedHints < state.totalHints) {
                         const hintBtn = document.createElement('button');
                         hintBtn.className = 'date-choice-btn hint-btn';
-                        const left = state.totalHints - state.usedHints;
+                        const left = state.totalHints - hintData.usedHints;
                         hintBtn.textContent = `💡 Подсказка (осталось ${left} из ${state.totalHints})`;
                         hintBtn.addEventListener('click', () => { showAdForHint(); });
                         wrapper.appendChild(hintBtn);
@@ -1901,13 +1914,8 @@
                 const p = getCurrentPartner(); 
                 if (!p) { console.error('[DATE] Нет текущего партнёра!'); return; }
                 
-                if (state.datePartnerId !== state.currentPartnerId) {
-                    state.hintIndices = [];
-                    state.datePartnerId = state.currentPartnerId;
-                    state.usedHints = 0;
-                    state.showHint = false;
-                    saveGame();
-                }
+                const hintData = getHintDataForPartner(p.id);
+                const hintIndices = hintData.hintIndices;
                 
                 const loc = getLocations()?.find(l => l.id === state.currentLocationId) || getLocations()?.[0] || {}; 
                 document.getElementById('dateBg').style.backgroundImage = `url('${loc.bg||''}')`; 
@@ -1946,20 +1954,22 @@
                     return; 
                 } 
                 
-                if (state.hintIndices.length === 0 && dialogs.length > 0) {
-                    state.hintIndices = generateHintIndices(dialogs.length);
+                // Генерируем индексы подсказок только если их ещё нет для этого партнёра
+                if (hintIndices.length === 0 && dialogs.length > 0) {
+                    const newIndices = generateHintIndices(dialogs.length);
+                    hintIndices.push(...newIndices);
                     saveGame();
                 }
                 
                 const d = dialogs[state.locationDialogIndex]; 
                 document.getElementById('dateChat').innerHTML += `<div class="date-msg theirs">${d.text}</div>`; 
                 
-                const hasHintForThisQuestion = state.hintIndices.includes(state.locationDialogIndex);
+                const hasHintForThisQuestion = hintIndices.includes(state.locationDialogIndex);
                 
-                if (state.showHint && hasHintForThisQuestion) {
+                if (hintData.showHint && hasHintForThisQuestion) {
                     const hint = getHintForDialog(d);
                     document.getElementById('dateChat').innerHTML += `<div class="date-msg hint">${hint}</div>`;
-                    state.showHint = false;
+                    hintData.showHint = false;
                     saveGame();
                 }
                 
@@ -1974,7 +1984,7 @@
                     const b = document.createElement('button'); 
                     b.className = 'date-choice-btn';
                     const isBestChoice = c.text === bestChoiceText;
-                    const shouldShowBest = hasHintForThisQuestion && (state.retryMode || state.usedHints > 0);
+                    const shouldShowBest = hasHintForThisQuestion && (state.retryMode || hintData.usedHints > 0);
                     
                     if (isBestChoice && shouldShowBest) {
                         b.classList.add('best-choice');
@@ -2122,10 +2132,7 @@
                     state.selectedDialogs = null;
                     state.dateAttempts = 0;
                     state.isDatePerfect = false;
-                    state.usedHints = 0;
-                    state.showHint = false;
-                    state.hintIndices = [];
-                    state.datePartnerId = null;
+                    state.hintData = {};
                     
                     const allPartners = getAllPartners();
                     const first7 = allPartners.slice(0, 7).map(p => p.id);
