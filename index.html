@@ -9,7 +9,6 @@
     <script src="/sdk.js"></script>
     
     <style>
-        /* ... весь CSS без изменений (слишком длинный, оставляем как есть) ... */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -34,6 +33,7 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            margin: 0 auto;
         }
         .top-bar {
             display: flex;
@@ -69,7 +69,6 @@
         .top-bar .settings-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
         .top-bar .progress-btn { background: rgba(255,77,138,0.15); border-color: rgba(255,77,138,0.3); }
 
-        /* Кастомные уведомления */
         .custom-toast {
             position: fixed;
             top: 20px;
@@ -87,36 +86,13 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             pointer-events: none;
         }
-        .custom-toast.success {
-            background: rgba(0,200,100,0.2);
-            border: 1.5px solid rgba(0,200,100,0.4);
-            color: #80ffb0;
-        }
-        .custom-toast.error {
-            background: rgba(255,50,50,0.2);
-            border: 1.5px solid rgba(255,50,50,0.4);
-            color: #ff8080;
-        }
-        .custom-toast.warning {
-            background: rgba(255,180,0,0.2);
-            border: 1.5px solid rgba(255,180,0,0.4);
-            color: #ffd700;
-        }
-        .custom-toast.info {
-            background: rgba(74,138,244,0.2);
-            border: 1.5px solid rgba(74,138,244,0.4);
-            color: #8ab8ff;
-        }
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(-30px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        @keyframes toastOut {
-            from { opacity: 1; transform: translateX(-50%) translateY(0); }
-            to { opacity: 0; transform: translateX(-50%) translateY(-30px); }
-        }
+        .custom-toast.success { background: rgba(0,200,100,0.2); border: 1.5px solid rgba(0,200,100,0.4); color: #80ffb0; }
+        .custom-toast.error { background: rgba(255,50,50,0.2); border: 1.5px solid rgba(255,50,50,0.4); color: #ff8080; }
+        .custom-toast.warning { background: rgba(255,180,0,0.2); border: 1.5px solid rgba(255,180,0,0.4); color: #ffd700; }
+        .custom-toast.info { background: rgba(74,138,244,0.2); border: 1.5px solid rgba(74,138,244,0.4); color: #8ab8ff; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-30px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateX(-50%) translateY(0); } to { opacity: 0; transform: translateX(-50%) translateY(-30px); } }
 
-        /* Кастомный диалог подтверждения */
         .custom-dialog-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -140,27 +116,10 @@
             animation: slideUp 0.3s ease;
             text-align: center;
         }
-        .custom-dialog .dialog-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-        .custom-dialog .dialog-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #e0d8f0;
-            margin-bottom: 8px;
-        }
-        .custom-dialog .dialog-message {
-            font-size: 14px;
-            color: #9088b0;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .custom-dialog .dialog-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
+        .custom-dialog .dialog-icon { font-size: 48px; margin-bottom: 12px; }
+        .custom-dialog .dialog-title { font-size: 18px; font-weight: 700; color: #e0d8f0; margin-bottom: 8px; }
+        .custom-dialog .dialog-message { font-size: 14px; color: #9088b0; margin-bottom: 20px; line-height: 1.5; }
+        .custom-dialog .dialog-buttons { display: flex; gap: 10px; justify-content: center; }
         .custom-dialog .dialog-btn {
             padding: 10px 24px;
             border-radius: 60px;
@@ -171,26 +130,12 @@
             border: none;
             min-width: 100px;
         }
-        .custom-dialog .dialog-btn.confirm {
-            background: linear-gradient(135deg, #ff4d8a, #ff6b9d);
-            color: white;
-        }
+        .custom-dialog .dialog-btn.confirm { background: linear-gradient(135deg, #ff4d8a, #ff6b9d); color: white; }
         .custom-dialog .dialog-btn.confirm:hover { transform: scale(1.05); }
-        .custom-dialog .dialog-btn.cancel {
-            background: rgba(255,255,255,0.05);
-            border: 1.5px solid rgba(255,255,255,0.15);
-            color: #9088b0;
-        }
+        .custom-dialog .dialog-btn.cancel { background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.15); color: #9088b0; }
         .custom-dialog .dialog-btn.cancel:hover { background: rgba(255,255,255,0.1); }
-        .custom-dialog .dialog-btn.danger {
-            background: rgba(255,50,50,0.2);
-            border: 1.5px solid rgba(255,50,50,0.4);
-            color: #ff6666;
-        }
-        .custom-dialog .dialog-btn.danger:hover {
-            background: rgba(255,50,50,0.3);
-            transform: scale(1.05);
-        }
+        .custom-dialog .dialog-btn.danger { background: rgba(255,50,50,0.2); border: 1.5px solid rgba(255,50,50,0.4); color: #ff6666; }
+        .custom-dialog .dialog-btn.danger:hover { background: rgba(255,50,50,0.3); transform: scale(1.05); }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -239,15 +184,6 @@
         .btn-reset-full:hover { background: rgba(255,50,50,0.25); border-color: rgba(255,50,50,0.5); }
         .btn-reset-full:active { transform: scale(0.97); background: rgba(255,50,50,0.3); }
 
-        .ad-timer { font-size: 11px; color: #ffd700; text-align: center; margin-top: 4px; }
-        .ad-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
-        .ad-overlay.hidden { display: none; }
-        .ad-content { text-align: center; animation: pulse 1.5s ease-in-out infinite; }
-        .ad-content .ad-icon { font-size: 60px; margin-bottom: 16px; }
-        .ad-content .ad-text { font-size: 18px; margin-bottom: 8px; }
-        .ad-content .ad-timer-big { font-size: 32px; font-weight: 700; color: #ff4d8a; }
-        .ad-skip { margin-top: 24px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #9088b0; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 13px; }
-
         .progress-grid { display: flex; flex-direction: column; gap: 12px; }
         .progress-item { background: #16163a; border-radius: 16px; padding: 14px 16px; border: 1.5px solid #2a2a4e; display: flex; align-items: center; gap: 12px; }
         .progress-item .p-icon { font-size: 28px; flex-shrink: 0; }
@@ -267,9 +203,6 @@
         .gender-selector .btn-group button:hover { background: rgba(255,255,255,0.08); }
         .gender-selector .btn-group button.active-male { border-color: #4a8af4; background: rgba(74,138,244,0.15); color: #8ab8ff; }
         .gender-selector .btn-group button.active-female { border-color: #ff4d8a; background: rgba(255,77,138,0.15); color: #ff8aad; }
-
-        .avatar-display { display: none; }
-        .style-selector { display: none; }
 
         .next-btn-wrap { flex-shrink: 0; display: flex; justify-content: center; padding: 2px 0; }
         .next-btn-wrap button { padding: 10px 40px; border-radius: 60px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.2s; border: none; background: #4a6aaa; color: white; width: 100%; max-width: 200px; opacity: 0.4; pointer-events: none; }
@@ -362,19 +295,9 @@
         .catalog-item.selected { border: 2px solid #ff4d8a; background: #1e1e4a; box-shadow: 0 0 20px rgba(255,77,138,0.15); }
         .catalog-item.selected .location-icon { opacity: 1; color: #ff4d8a; }
         
-        /* Стили для заблокированных локаций с кнопкой разблокировки */
-        .catalog-item.locked {
-            opacity: 0.7;
-            filter: none;
-            border-color: rgba(255,255,255,0.05);
-        }
-        .catalog-item.locked .info h4 {
-            color: #6a6290;
-        }
-        .catalog-item.locked .info p {
-            font-size: 11px;
-            color: #ff8aad;
-        }
+        .catalog-item.locked { opacity: 0.7; filter: none; border-color: rgba(255,255,255,0.05); }
+        .catalog-item.locked .info h4 { color: #6a6290; }
+        .catalog-item.locked .info p { font-size: 11px; color: #ff8aad; }
         .unlock-btn {
             background: linear-gradient(135deg, #fc3f5c, #ff6b9d);
             border: none;
@@ -389,18 +312,9 @@
             box-shadow: 0 2px 8px rgba(255,77,138,0.3);
             width: 100%;
         }
-        .unlock-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(255,77,138,0.5);
-        }
-        .unlock-btn:active {
-            transform: scale(0.95);
-        }
-        .unlock-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
+        .unlock-btn:hover { transform: scale(1.02); box-shadow: 0 4px 16px rgba(255,77,138,0.5); }
+        .unlock-btn:active { transform: scale(0.95); }
+        .unlock-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
         #toDate { margin-top: 8px; padding: 10px 32px; font-size: 15px; font-weight: 700; align-self: center; background: linear-gradient(135deg, #ff4d8a, #ff6b9d); border: none; color: white; border-radius: 60px; cursor: pointer; flex-shrink: 0; }
         #toDate:active { transform: scale(0.97); }
@@ -487,7 +401,6 @@
             <source src="assets/fon.mp3" type="audio/mpeg">
         </audio>
 
-        <!-- Кастомный диалог подтверждения -->
         <div id="customDialog" class="custom-dialog-overlay hidden">
             <div class="custom-dialog">
                 <div class="dialog-icon" id="dialogIcon">⚠️</div>
@@ -500,7 +413,6 @@
             </div>
         </div>
 
-        <!-- Модальные окна -->
         <div id="settingsModal" class="modal-overlay hidden">
             <div class="modal-content">
                 <div class="modal-header"><h3>⚙️ Настройки</h3><button class="modal-close" onclick="document.getElementById('settingsModal').classList.add('hidden')">✕</button></div>
@@ -508,11 +420,6 @@
                 <div class="settings-section"><h4>🌐 Язык</h4><div class="settings-row"><span class="s-label">Язык интерфейса</span><select id="languageSelect" onchange="changeLanguage(this.value)"><option value="ru">🇷🇺 Русский</option><option value="en">🇬🇧 English</option><option value="es">🇪🇸 Español</option><option value="de">🇩🇪 Deutsch</option></select></div></div>
                 <div class="settings-section"><h4>⚠️ Сброс</h4><button class="btn-reset-full" onclick="fullReset()">🔄 Полный сброс прогресса</button><p style="font-size:10px; color:#666; margin-top:6px; text-align:center;">Обнуляет всю статистику, прогресс и историю</p></div>
             </div>
-        </div>
-
-        <!-- Рекламный оверлей (только для fallback) -->
-        <div id="adOverlay" class="ad-overlay hidden">
-            <div class="ad-content"><div class="ad-icon">📺</div><div class="ad-text">Реклама...</div><div class="ad-timer-big" id="adTimerBig">5</div><button class="ad-skip" onclick="skipAd()">Пропустить ✕</button></div>
         </div>
 
         <div id="progressModal" class="modal-overlay hidden">
@@ -592,8 +499,9 @@
             // Функция для выбора N случайных элементов из массива
             function pickRandom(arr, n) {
                 if (!arr || arr.length === 0) return [];
+                if (n >= arr.length) return arr;
                 const shuffled = shuffleArray(arr);
-                return shuffled.slice(0, Math.min(n, shuffled.length));
+                return shuffled.slice(0, n);
             }
 
             async function loadAllJson() {
@@ -643,6 +551,7 @@
                     const npcs = {};
                     
                     // Функция для добавления диалогов из структуры
+                    // Теперь каждый партнёр получает ВСЕ диалоги для каждой локации
                     function addDialogsFromStructure(data, genderKey, locKey) {
                         if (!data) return;
                         const locData = data[locKey];
@@ -653,32 +562,32 @@
                         
                         const partnerList = gameData.partners[genderKey] || [];
                         
-                        for (const [locId, dialogs] of Object.entries(locData)) {
-                            // Берем все диалоги для этой локации
-                            dialogs.forEach((d, index) => {
-                                const partnerIndex = index % partnerList.length;
-                                const partner = partnerList[partnerIndex];
-                                if (!partner) {
-                                    console.warn('[LOAD] Нет партнёра для индекса', index, 'в списке', genderKey);
-                                    return;
+                        // Для каждого партнёра добавляем все диалоги из всех локаций
+                        partnerList.forEach(partner => {
+                            const partnerId = partner.id;
+                            if (!partnerId) return;
+                            
+                            if (!npcs[partnerId]) npcs[partnerId] = { dialogs: {} };
+                            
+                            // Проходим по всем локациям в данных
+                            for (const [locId, dialogs] of Object.entries(locData)) {
+                                if (!npcs[partnerId].dialogs[locId]) {
+                                    npcs[partnerId].dialogs[locId] = [];
                                 }
                                 
-                                const partnerId = partner.id;
-                                if (!partnerId) return;
-                                
-                                if (!npcs[partnerId]) npcs[partnerId] = { dialogs: {} };
-                                if (!npcs[partnerId].dialogs[locId]) npcs[partnerId].dialogs[locId] = [];
-                                
-                                npcs[partnerId].dialogs[locId].push({
-                                    text: d.text,
-                                    choices: d.choices.map(c => ({
-                                        text: c.text,
-                                        full: c.full || c.text,
-                                        effect: c.effect || 0
-                                    }))
+                                // Добавляем все диалоги для этой локации
+                                dialogs.forEach(d => {
+                                    npcs[partnerId].dialogs[locId].push({
+                                        text: d.text,
+                                        choices: d.choices.map(c => ({
+                                            text: c.text,
+                                            full: c.full || c.text,
+                                            effect: c.effect || 0
+                                        }))
+                                    });
                                 });
-                            });
-                        }
+                            }
+                        });
                     }
 
                     // Добавляем диалоги для парней (их говорят парни, их слушают девушки)
@@ -1044,14 +953,16 @@
                 } else {
                     const keys = Object.keys(n.dialogs);
                     if (keys.length > 0) {
-                        console.log('[DEBUG] Диалогов для локации', locId, 'нет, берём:', keys[0]);
+                        console.log('[DEBUG] Диалогов для локации', locId, 'нет, берём из:', keys[0]);
                         allDialogs = n.dialogs[keys[0]];
+                    } else {
+                        return null;
                     }
                 }
                 
                 if (!allDialogs || allDialogs.length === 0) return null;
                 
-                // Выбираем случайные count диалогов
+                // Выбираем случайные count диалогов (максимум 5)
                 const selected = pickRandom(allDialogs, count);
                 console.log(`[DEBUG] Выбрано ${selected.length} диалогов из ${allDialogs.length} для ${npcId} → ${locId}`);
                 return selected;
@@ -1233,8 +1144,8 @@
                     const allDialogs = getLocationDialogs(p?.id, state.currentLocationId, 5);
                     if (allDialogs && allDialogs.length > 0) {
                         state.selectedDialogs = allDialogs;
-                        console.log('[DATE] Выбрано 5 случайных диалогов для', p.id, 'в локации', state.currentLocationId);
-                        console.log('[DATE] Диалоги:', state.selectedDialogs.map((d, i) => `${i+1}. ${d.text.substring(0, 30)}...`));
+                        console.log('[DATE] Выбрано', state.selectedDialogs.length, 'диалогов для', p.id, 'в локации', state.currentLocationId);
+                        console.log('[DATE] Диалоги:', state.selectedDialogs.map((d, i) => `${i+1}. ${d.text.substring(0, 30)}...`).join('\n'));
                     } else {
                         state.selectedDialogs = [];
                         console.warn('[DATE] Нет диалогов для', p.id, 'в локации', state.currentLocationId);
